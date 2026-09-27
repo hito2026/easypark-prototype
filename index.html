@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EasyPark Prototype</title>
+    <style>
+      :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; --brand: #2563eb; --ink: #172033; --muted: #667085; --bg: #eef4ff; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--ink); }
+      .phone { max-width: 430px; min-height: 100vh; margin: 0 auto; background: #f8fbff; box-shadow: 0 0 50px #b7c5e0; }
+      header { padding: 22px 20px 12px; background: linear-gradient(135deg, #1d4ed8, #38bdf8); color: white; border-radius: 0 0 28px 28px; }
+      h1, h2, h3, p { margin: 0; }
+      h1 { font-size: 28px; } h2 { font-size: 22px; margin-bottom: 12px; } h3 { font-size: 16px; }
+      main { padding: 18px; display: grid; gap: 16px; }
+      .card { background: white; border: 1px solid #dde7f7; border-radius: 22px; padding: 16px; box-shadow: 0 10px 30px #d7e1f033; }
+      .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+      .muted { color: var(--muted); font-size: 13px; line-height: 1.4; }
+      input, select, button { width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px; font: inherit; }
+      button { background: var(--brand); color: white; border: 0; font-weight: 700; cursor: pointer; }
+      button.secondary { background: #e0ecff; color: #174ea6; }
+      .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+      .tabs button { padding: 10px 4px; font-size: 12px; background: white; color: var(--muted); border: 1px solid #dde7f7; }
+      .tabs button.active { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+      .option { display: grid; gap: 8px; border: 1px solid #e2e8f0; border-radius: 18px; padding: 14px; margin-top: 10px; }
+      .badge { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 700; }
+      .price { font-size: 20px; font-weight: 800; }
+      .steps { display: grid; gap: 8px; }
+      .step { padding: 10px 12px; border-radius: 14px; background: #eff6ff; font-size: 14px; }
+      .hidden { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <header>
+        <p class="muted" style="color:#dbeafe">Mobile-first clickable prototype</p>
+        <h1>EasyPark</h1>
+        <p>Find reliable parking near your destination.</p>
+      </header>
+      <main>
+        <section class="card">
+          <label class="muted" for="destination">Destination</label>
+          <input id="destination" value="Palermo Soho" />
+          <div style="height:10px"></div>
+          <button id="search">Search parking</button>
+        </section>
+
+        <nav class="tabs" aria-label="Prototype sections">
+          <button class="active" data-tab="searchTab">Search</button>
+          <button data-tab="checkoutTab">Checkout</button>
+          <button data-tab="sessionTab">Session</button>
+          <button data-tab="copilotTab">Copilot</button>
+        </nav>
+
+        <section id="searchTab" class="card tab">
+          <h2>Best options</h2>
+          <p class="muted">Private spaces can be reserved in-app. Parkings and street spots are guidance-only in this prototype.</p>
+          <div id="options"></div>
+        </section>
+
+        <section id="checkoutTab" class="card tab hidden">
+          <h2>Simulated checkout</h2>
+          <div id="selected" class="muted">Choose a private space to continue.</div>
+          <div class="steps" style="margin-top:12px">
+            <div class="step">1. Temporary hold: <strong id="hold">not started</strong></div>
+            <div class="step">2. Payment: <strong id="payment">not started</strong></div>
+            <div class="step">3. Reservation: <strong id="reservation">not confirmed</strong></div>
+          </div>
+          <div style="height:12px"></div>
+          <button id="reserve">Simulate reserve + pay</button>
+        </section>
+
+        <section id="sessionTab" class="card tab hidden">
+          <h2>Active session</h2>
+          <p id="sessionState" class="muted">No active reservation yet.</p>
+          <div class="steps" style="margin-top:12px">
+            <div class="step">Navigation: 4 min walk from destination</div>
+            <div class="step">Remaining time: <strong id="remaining">--</strong></div>
+            <div class="step">Owner settlement: manual operations queue</div>
+          </div>
+          <div style="height:12px"></div>
+          <button class="secondary" id="endSession">End session</button>
+        </section>
+
+        <section id="copilotTab" class="card tab hidden">
+          <h2>AI copilot mock</h2>
+          <p class="muted">The copilot explains options only. It cannot create reservations, payment truth, or settlement records.</p>
+          <div class="option">
+            <strong>Recommendation</strong>
+            <p id="copilotText">Private garage is fastest and reservable. Street option is cheapest but uncertain.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      const options = [
+        { id: 'garage-12', kind: 'Private space', title: 'Covered garage near Armenia', meters: 120, price: '$2,100', reservable: true },
+        { id: 'parking-8', kind: 'Traditional parking', title: 'Commercial parking on Honduras', meters: 260, price: '$2,800', reservable: false },
+        { id: 'street-a', kind: 'Street guidance', title: 'Likely street availability near Serrano', meters: 420, price: 'Low', reservable: false }
+      ];
+      let selected = null;
+      const $ = (id) => document.getElementById(id);
+      const show = (name) => document.querySelectorAll('.tab').forEach((tab) => tab.classList.toggle('hidden', tab.id !== name));
+      const render = () => {
+        $('options').innerHTML = options.map((o) => `<article class="option"><div class="row"><span class="badge">${o.kind}</span><span class="price">${o.price}</span></div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.reservable ? 'Reservable with simulated hold and payment.' : 'Guidance only; no in-app transaction.'}</p><button ${o.reservable ? '' : 'class="secondary"'} data-id="${o.id}">${o.reservable ? 'Reserve this space' : 'Navigate only'}</button></article>`).join('');
+        document.querySelectorAll('[data-id]').forEach((button) => button.onclick = () => choose(button.dataset.id));
+      };
+      const choose = (id) => {
+        selected = options.find((o) => o.id === id);
+        $('selected').innerHTML = selected.reservable ? `<strong>${selected.title}</strong><br>${selected.price} · ${selected.meters}m from destination` : 'This option is guidance-only; choose a private space for checkout.';
+        show('checkoutTab'); setActive('checkoutTab');
+      };
+      const setActive = (tab) => document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => { show(b.dataset.tab); setActive(b.dataset.tab); });
+      $('search').onclick = render;
+      $('reserve').onclick = () => {
+        if (!selected?.reservable) return;
+        $('hold').textContent = 'active for 05:00'; $('payment').textContent = 'approved in sandbox'; $('reservation').textContent = 'confirmed';
+        $('sessionState').textContent = `${selected.title} reserved. Session is active and auditable.`; $('remaining').textContent = '1h 58m';
+        show('sessionTab'); setActive('sessionTab');
+      };
+      $('endSession').onclick = () => { $('sessionState').textContent = 'Session ended. Settlement remains a manual operations task.'; $('remaining').textContent = 'ended'; };
+      render();
+    </script>
+  </body>
+</html>
