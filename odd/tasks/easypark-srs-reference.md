@@ -63,7 +63,7 @@ Status: complete in work-unit commit `5be3c40`; default blank PDF remains byte-i
 - [x] Record current prototype evidence separately from future production intent.
 - [x] Leave unsupported owners, approvals, legal standards, SLAs, and country scope as explicit TODOs.
 
-Status: implemented and verified; verified public repository/prototype/help URLs are filled, while unsupported decisions remain explicit TODOs.
+Status: complete in work-unit commit `d8f82df`; verified public repository/prototype/help URLs are filled, while unsupported decisions remain explicit TODOs.
 
 ### T003 — Specify behavior, data, quality, and traceability
 
@@ -100,8 +100,8 @@ Status: implemented and verified; verified public repository/prototype/help URLs
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is implemented and verified; T003 is next.
+Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 sections 4–7 are implemented and verified, while sections 8–12 remain.
 
 ## Next step
 
-Commit T002 as the next work unit, then append behavioral, data, NFR, acceptance, traceability, risk, and appendix sections in T003.
+Commit the verified T003 sections 4–7 work unit, then complete sections 8–12.

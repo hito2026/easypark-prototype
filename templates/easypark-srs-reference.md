@@ -88,7 +88,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 1.3 Fuera de alcance y no objetivos
 
-[FUERA DE ALCANCE ACTUAL] Este borrador no especifica todavía las secciones 4 a 12 de requisitos funcionales detallados, datos, NFR, aceptación, trazabilidad, riesgos y apéndices. Esas secciones se incorporarán en T003.
+[PROTOTIPO IMPLEMENTADO] Este borrador ya cubre la fundación del documento y, en esta versión, incorpora catálogo de casos de uso, requisitos funcionales, reglas de negocio y datos hasta la sección 7. Las secciones 8 a 12 quedan pendientes para el siguiente work unit.
 
 [FUERA DE ALCANCE ACTUAL] El prototipo no incluye backend, pagos reales, integración bancaria, SMS real, mapas reales, GPS, cámaras, lectura de patente, operador real, control municipal, fiscalización, modelo LLM remoto, tickets reales, reembolsos reales, reservas reales, liquidaciones reales ni publicación productiva.
 
@@ -239,10 +239,10 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 [DECISIÓN PENDIENTE]
 
-- TODO-LEGAL-001: jurisdicción, responsabilidad y términos.
-- TODO-PRIV-001: política de privacidad y retención.
+- Depende de TODO-LEGAL-001 para jurisdicción, responsabilidad y términos.
+- Depende de TODO-PRIV-001 para política de privacidad y retención.
 - TODO-SEC-001: modelo de amenazas y controles mínimos.
-- TODO-OPS-001: operación, soporte y escalamiento.
+- Depende de TODO-OPS-001 para operación, soporte y escalamiento.
 - TODO-ACC-001: estándar de accesibilidad objetivo.
 
 ### 2.6 Supuestos y dependencias
@@ -260,19 +260,16 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 2.7 Alcance incluido y excluido
 
-**Incluido en este borrador T002**
+**Incluido en esta versión de referencia**
 
 - Control documental y aviso legal.
 - Propósito, alcance, audiencia, glosario y referencias.
 - Perspectiva del producto, objetivos propuestos, roles, ambiente, restricciones, supuestos y alcance.
 - Contexto del sistema, límites de confianza e interfaces externas actuales y propuestas.
+- Catálogo de casos de uso, requisitos funcionales, reglas de negocio y datos hasta la sección 7.
 
-**Excluido hasta T003**
+**Pendiente para el siguiente work unit**
 
-- Catálogo completo de casos de uso.
-- Requisitos funcionales atomizados.
-- Reglas de negocio detalladas.
-- Modelo conceptual de datos.
 - Requisitos no funcionales completos.
 - Estrategia de aceptación, trazabilidad, riesgos, decisiones y apéndices.
 
@@ -378,6 +375,316 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 [DECISIÓN PENDIENTE] TODO-COMM-001 define protocolos, formatos, reintentos y responsabilidades entre cliente, backend y proveedores.
 
-### 3.8 Nota de cierre de T002
+## 4. Catálogo de características y casos de uso
 
-Este documento termina deliberadamente en la sección 3 para mantener el trabajo revisable. Las secciones 4 a 12 —catálogo de características, requisitos funcionales, reglas de negocio, datos, requisitos no funcionales, aceptación, trazabilidad, riesgos, decisiones abiertas y apéndices— se agregarán en el siguiente work unit T003.
+[PROTOTIPO IMPLEMENTADO] Los casos de uso describen pantallas y resultados observables del prototipo. No equivalen a compromisos productivos. Cuando el caso toca reserva, pago, patente, incidente o soporte, el resultado es local, ficticio y sin autoridad transaccional real.
+
+### 4.1 Catálogo resumido de casos de uso
+
+| ID | Caso | Actor | Prioridad | Estado |
+| --- | --- | --- | --- | --- |
+| UC-ONB-001 | Alta guiada de prueba | Usuario nuevo | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-ACC-001 | Configurar cuenta segura ficticia | Usuario | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-DRV-001 | Buscar cochera privada reservable | Conductor | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-DRV-002 | Consultar orientación sin checkout | Conductor | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-URB-001 | Iniciar sesión urbana simulada | Conductor | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-ACT-001 | Revisar actividad y recibos | Conductor | Media | [PROTOTIPO IMPLEMENTADO] |
+| UC-AI-001 | Usar Copilot asesor | Conductor | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-PROV-001 | Publicar cochera ficticia | Anfitrión | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-OPS-001 | Revisar operación simulada | Operación | Media | [PROTOTIPO IMPLEMENTADO] |
+| UC-EXP-001 | Entrada Express simulada | Conductor | Media | [PROTOTIPO IMPLEMENTADO] |
+| UC-INC-001 | Reportar y recuperar incidente | Conductor y operación | Alta | [PROTOTIPO IMPLEMENTADO] |
+| UC-DOC-001 | Consultar ayuda, SRS y Buzz | Tester o creador | Alta | [PROTOTIPO IMPLEMENTADO] |
+
+### 4.2 Alta guiada de prueba
+
+- Actor: usuario nuevo.
+- Precondiciones: el prototipo está abierto y el usuario elige onboarding.
+- Resultado observable: se guardan preferencias ficticias en `easyparkMockOnboarding` y, si corresponde, cuenta ficticia en `easyparkMockAccount`.
+- Variantes o fallas: código distinto de `2468` bloquea avance; rol anfitrión o proveedor deriva a flujo anfitrión.
+- Prioridad: Alta.
+- Refs: `ONB-WELCOME-01`, `ONB-ROLE-01`, `ONB-VERIFY-01`, `ONB-PROFILE-01`, `ONB-SETUP-01`, `ONB-PREFS-01`, `ONB-DONE-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.3 Configurar cuenta segura ficticia
+
+- Actor: usuario.
+- Precondiciones: el usuario entra a cuenta segura.
+- Resultado observable: perfil, vehículo, pago de prueba, cobro ficticio, datos comerciales de muestra y preferencias quedan visibles y se guardan localmente.
+- Variantes o fallas: no hay campos para PAN, CVV, CBU, CVU, IBAN completo, CUIT real, credenciales ni secretos.
+- Prioridad: Alta.
+- Refs: `ACCOUNT-HOME-01`, `ACCOUNT-PROFILE-01`, `ACCOUNT-VEHICLE-01`, `ACCOUNT-PAYMENT-01`, `ACCOUNT-PAYOUT-01`, `ACCOUNT-BUSINESS-01`, `ACCOUNT-PREFS-01`, `ACCOUNT-SUMMARY-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.4 Reserva privada simulada
+
+- Actor: conductor.
+- Precondiciones: existe una opción `reservable` y publicada; el usuario usa datos ficticios y un medio de pago de prueba.
+- Flujo principal: elegir búsqueda privada, ingresar destino, configurar hora, duración, vehículo y filtros, seleccionar pin o tarjeta, revisar detalle, elegir tarjeta de prueba, confirmar, ver recibo, pase y sesión.
+- Resultado observable: se crea recibo local con `reservationId`, `receiptId`, total, marca de pago y últimos cuatro dígitos ficticios en `easyparkLastMockReceipt`; la sesión privada se visualiza con timeline y pase no escaneable.
+- Variantes o fallas: `DRV-PAY-FAIL-01` bloquea confirmación; `DRV-HOLD-EXP-01` vence la reserva temporal; filtros pueden dejar resultados vacíos; el botón de resultados queda oculto hasta selección explícita.
+- Prioridad: Alta.
+- Refs: `DRV-CHOICE-01`, `DRV-START-01`, `DRV-TIME-01`, `DRV-RESULTS-01`, `DRV-MAP-SHEET-01`, `DRV-DETAIL-01`, `DRV-PAYMENT-01`, `DRV-CONFIRM-01`, `DRV-RECEIPT-01`, `PARKING-PASS-01`, `DRV-SESSION-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.5 Orientación sin checkout
+
+- Actor: conductor.
+- Precondiciones: el usuario selecciona parking tradicional o guía de calle no reservable.
+- Flujo principal: elegir opción de orientación, revisar distancia, precio visible, caveats y servicios, intentar continuar.
+- Resultado observable: el prototipo vuelve a resultados y no muestra pago, recibo, pase ni sesión privada.
+- Variantes o fallas: Copilot también puede derivar a orientación y debe explicar que no permite pagar ni reservar.
+- Prioridad: Alta.
+- Refs: `DRV-RESULTS-01`, `DRV-RESULT-CARD-01`, `DRV-DETAIL-01`, `AI-HANDOFF-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.6 Sesión urbana simulada
+
+- Actor: conductor.
+- Precondiciones: el usuario elige zona urbana o parking común y usa patente ficticia.
+- Flujo principal: elegir zona, confirmar vehículo, seleccionar minutos dentro del máximo, iniciar sesión, extender o terminar.
+- Resultado observable: `easyparkMockSession` guarda zona, tipo, patente ficticia, minutos, máximo, horario, importe ficticio, recibo y `controlId`; `easyparkMockHistory` recibe una entrada al finalizar.
+- Variantes o fallas: extensión se bloquea si excede máximo; terminar dos veces indica que la sesión ya finalizó; no hay comunicación municipal.
+- Prioridad: Alta.
+- Refs: `DRV-ZONE-01`, `DRV-VEHICLE-01`, `DRV-DURATION-01`, `DRV-LIMIT-01`, `SESSION-ACTIVE-01`, `SESSION-EXTEND-01`, `SESSION-END-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.7 Actividad y recibos
+
+- Actor: conductor.
+- Precondiciones: puede existir sesión, historial o recibo local.
+- Resultado observable: se muestran sesión actual, historial local, último recibo y una acción de descarga simulada que no crea archivo real.
+- Variantes o fallas: sin historial se muestra estado vacío; recibo puede mostrar `sin recibo`.
+- Prioridad: Media.
+- Refs: `ACTIVITY-HOME-01`, `ACTIVITY-HISTORY-01`, `ACTIVITY-RECEIPT-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.8 Copilot asesor y handoff
+
+- Actor: conductor.
+- Precondiciones: el usuario abre Copilot y escribe, dicta si el navegador lo soporta o usa chips.
+- Flujo principal: ingresar plan, deducir preferencias editables, ver itinerario y estrategias, elegir handoff a detalle.
+- Resultado observable: Copilot ordena estrategias determinísticas y deriva a detalle solo si la opción es reservable y publicada.
+- Variantes o fallas: si la opción no es reservable, agrega explicación al chat y no cobra ni reserva; si voz no existe, ofrece texto; el audio no se almacena por código del prototipo.
+- Prioridad: Alta.
+- Refs: `AI-ENTRY-01`, `AI-CHAT-01`, `AI-VOICE-01`, `AI-CONTEXT-01`, `AI-REFINE-01`, `AI-ITINERARY-01`, `AI-STRATEGY-01`, `AI-EXPLAIN-01`, `AI-HANDOFF-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.9 Publicar cochera ficticia
+
+- Actor: anfitrión.
+- Precondiciones: el usuario elige ofrecer cochera y usa datos ficticios.
+- Resultado observable: se normaliza la publicación y se agrega a `easyparkProviderSpaces` con estado, servicios, acceso, tarifa, pago, ícono local, distancia simulada y `reservable:true`.
+- Variantes o fallas: estados `Pending review` y `On site` se traducen al español; campos ausentes reciben valores seguros de demo; la normalización allowlistea el ícono visual. Los renderizados escapan texto de usuario o `localStorage` para evitar inyección visual.
+- Prioridad: Alta.
+- Refs: `PROV-LOCATION-01`, `PROV-SPACE-01`, `PROV-AMENITIES-01`, `PROV-ACCESS-01`, `PROV-AVAIL-01`, `PROV-TARIFF-01`, `PROV-PAYMENT-01`, `PROV-REVIEW-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.10 Operación simulada
+
+- Actor: operación.
+- Precondiciones: pueden existir publicaciones o incidentes locales.
+- Resultado observable: se muestran conteos, cocheras pendientes, incidentes y liquidaciones manuales sin backend.
+- Variantes o fallas: sin datos se muestran estados vacíos; triage o resolución actualizan incidente local sin soporte real.
+- Prioridad: Media.
+- Refs: `OPS-HOME-01`, `OPS-PENDING-01`, `OPS-INCIDENTS-01`, `OPS-TRIAGE-01`, `OPS-RESOLUTION-01`, `OPS-SETTLEMENTS-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.11 Entrada Express simulada
+
+- Actor: conductor.
+- Precondiciones: el usuario abre Express y usa patente ficticia.
+- Flujo principal: ver sitio compatible ficticio, aceptar consentimiento o usar fallback manual, registrar entrada, sesión, salida y guardar recibo.
+- Resultado observable: se crea recibo `RC-X...` y una entrada de historial al guardar; guardar dos veces no duplica actividad.
+- Variantes o fallas: si no acepta consentimiento, el fallback manual avanza a entrada simulada; no hay cámara, OCR, barrera ni operador.
+- Prioridad: Media.
+- Refs: `EXPRESS-HOME-01`, `EXPRESS-CONSENT-01`, `EXPRESS-ENTRY-01`, `EXPRESS-SESSION-01`, `EXPRESS-EXIT-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.12 Incidente y recuperación manual
+
+- Actor: conductor y operación.
+- Precondiciones: el usuario abre incidente desde menú, pase o sesión.
+- Flujo principal: elegir tipo, elegir recuperación, guardar incidente local, ver resultado y opcionalmente triage o resolución en operación.
+- Resultado observable: `easyparkIncident` contiene id, tipo, recuperación, severidad, acción y estado; una propuesta de alternativa limpia filtros y selección sin reservar.
+- Variantes o fallas: cargo incorrecto no reembolsa; problema de seguridad solo marca severidad alta; acciones son idempotentes y simuladas.
+- Prioridad: Alta.
+- Refs: `INCIDENT-HOME-01`, `INCIDENT-TYPE-01`, `INCIDENT-RECOVERY-01`, `INCIDENT-RESULT-01`, `OPS-TRIAGE-01`, `OPS-RESOLUTION-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+### 4.13 Ayuda, creador, SRS y Buzz
+
+- Actor: tester o creador.
+- Precondiciones: el usuario abre ayuda o flujo de documentación.
+- Resultado observable: ve propósito, roles, flujos, límites de seguridad, feedback con refs, acceso Buzz y descargas de plantilla SRS.
+- Variantes o fallas: Buzz es coordinación de workspace y feedback; los pedidos de acceso se enrutan por el contacto existente de WhatsApp con Alejandro y solo deben incluir `npub...` o clave pública hexadecimal de 64 caracteres, nunca `nsec`, claves privadas, contraseñas, códigos de recuperación, seeds, tokens ni API keys.
+- Prioridad: Alta.
+- Refs: `HELP-HOME-01`, `HELP-PROJECT-01`, `HELP-ROLES-01`, `HELP-FLOWS-01`, `HELP-SAFETY-01`, `HELP-FEEDBACK-01`, `BUZZ-ACCESS-01`, `CREATOR-SRS-01`, `SRS-DOWNLOAD-MD-01`, `SRS-DOWNLOAD-PDF-01`, `MEDIA-CREDITS-01`.
+- Estado: [PROTOTIPO IMPLEMENTADO].
+
+## 5. Requisitos funcionales
+
+[PROTOTIPO IMPLEMENTADO] Los requisitos marcados como implementados se verifican contra `index.html`, `help.html`, `README.md` o assets locales. [REQUISITO PROPUESTO] Los requisitos propuestos no están implementados y dependen de TODOs explícitos.
+
+### 5.1 HOME
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-HOME-001 | Alta | Implementado en prototipo | El inicio debe permitir elegir flujos principales con refs visibles. | Aceptación: los botones `data-flow` abren el wizard correspondiente. Evidencia: `APP-HOME-01`, `REF-GUIDE-01`. |
+| FR-HOME-002 | Alta | Implementado en prototipo | El campo de destino del inicio debe iniciar búsqueda al hacer clic o presionar Enter. | Aceptación: `homeSearch` y Enter ejecutan `runHomeSearch`. Evidencia: `HOME-DESTINATION-01`. |
+| FR-HOME-003 | Media | Implementado en prototipo | El usuario debe poder ocultar o mostrar etiquetas rojas sin eliminar refs del DOM. | Aceptación: `toggleRefs` alterna `refs-off`. Evidencia: `REF-GUIDE-01`. |
+
+### 5.2 ONB
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-ONB-001 | Alta | Implementado en prototipo | El alta debe mostrar que no crea cuenta real ni envía SMS. | Aceptación: copy visible informa código fijo y ausencia de SMS. Evidencia: `ONB-WELCOME-01`, `ONB-VERIFY-01`. |
+| FR-ONB-002 | Alta | Implementado en prototipo | La verificación simulada debe aceptar solo el código `2468`. | Aceptación: código distinto muestra error y no avanza. Evidencia: `ONB-VERIFY-01`. |
+| FR-ONB-003 | Media | Implementado en prototipo | El alta debe guardar rol, nombre, vehículo y preferencias ficticias localmente. | Aceptación: `saveOnboarding` escribe `easyparkMockOnboarding` y cuenta. Evidencia: `ONB-DONE-01`. |
+
+### 5.3 ACC
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-ACC-001 | Alta | Implementado en prototipo | Cuenta debe advertir que solo acepta datos ficticios. | Aceptación: pantalla inicial enumera datos prohibidos. Evidencia: `ACCOUNT-HOME-01`. |
+| FR-ACC-002 | Alta | Implementado en prototipo | Pago del conductor debe limitarse a tarjetas fijas de prueba. | Aceptación: solo se elige marca y últimos cuatro ficticios. Evidencia: `ACCOUNT-PAYMENT-01`, `easyparkMockPaymentMethod`. |
+| FR-ACC-003 | Alta | Implementado en prototipo | Cobro anfitrión debe usar cuentas ficticias y no pedir CBU, CVU, IBAN ni cuenta completa. | Aceptación: opciones son presets de muestra. Evidencia: `ACCOUNT-PAYOUT-01`. |
+| FR-ACC-004 | Media | Implementado en prototipo | Guardar cuenta debe persistir solo metadatos ficticios en `easyparkMockAccount`. | Aceptación: `saveAccount` escribe objeto local. Evidencia: `ACCOUNT-SUMMARY-01`. |
+
+### 5.4 DRV, PAY y PASS
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-DRV-001 | Alta | Implementado en prototipo | La búsqueda manual debe empezar por destino, no por ubicación actual. | Aceptación: `DRV-START-01` pide destino y no solicita GPS. Evidencia: `DRV-START-01`. |
+| FR-DRV-002 | Alta | Implementado en prototipo | Resultados deben combinar semillas y cocheras del anfitrión normalizadas. | Aceptación: `options` usa `seed` y `easyparkProviderSpaces`. Evidencia: `DRV-RESULTS-01`. |
+| FR-DRV-003 | Alta | Implementado en prototipo | Los filtros deben cubrir ranking, precio, cercanía, cubierto, accesible, EV, compatibilidad y acceso. | Aceptación: al cambiar filtros se altera la lista y puede mostrar estado vacío. Evidencia: `DRV-TIME-01`, `DRV-SERVICES-01`, `DRV-FILTER-STATE-01`. |
+| FR-DRV-004 | Alta | Implementado en prototipo | El mapa debe ser simulado y la selección debe ocurrir solo por botones explícitos. | Aceptación: pines y tarjetas tienen `data-pick`; el detalle usa marcador no interactivo. Evidencia: `DRV-MAP-SHEET-01`. |
+| FR-DRV-005 | Alta | Implementado en prototipo | Parking tradicional y guía de calle no deben acceder a checkout. | Aceptación: `DRV-DETAIL-01` vuelve a resultados si no es reservable y publicado. Evidencia: `DRV-DETAIL-01`. |
+| FR-PAY-001 | Alta | Implementado en prototipo | El pago debe aceptar solo tarjetas ficticias y bloquear confirmación ante pago rechazado o hold vencido. | Aceptación: `paymentBlocked` impide emitir recibo. Evidencia: `DRV-PAYMENT-01`, `DRV-PAY-FAIL-01`, `DRV-HOLD-EXP-01`. |
+| FR-PAY-002 | Alta | Implementado en prototipo | Confirmar reserva privada válida debe emitir recibo ficticio local. | Aceptación: `issueReceipt` genera `reservationId`, `receiptId`, total, marca, last4 y status. Evidencia: `DRV-CONFIRM-01`, `DRV-RECEIPT-01`. |
+| FR-PASS-001 | Alta | Implementado en prototipo | El recibo debe mostrar pase demo, acceso, QR no escaneable y reglas ficticias. | Aceptación: sección de pase incluye `PARKING-PASS-01`, acceso, QR y reglas. Evidencia: `PASS-ACCESS-01`, `PASS-QR-01`, `PASS-RULES-01`. |
+| FR-DRV-006 | Media | Implementado en prototipo | La sesión privada debe mostrar timeline, llegada simulada, extensión y finalización visual. | Aceptación: timeline avanza y botones actualizan texto local. Evidencia: `DRV-STATUS-TIMELINE-01`, `DRV-SESSION-01`. |
+
+### 5.5 URB y ACT
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-URB-001 | Alta | Implementado en prototipo | La zona urbana debe estar separada de la reserva privada y usar zona y patente ficticias. | Aceptación: el flujo urbano no entra a checkout privado. Evidencia: `DRV-ZONE-01`, `DRV-VEHICLE-01`. |
+| FR-URB-002 | Alta | Implementado en prototipo | Duración urbana no debe superar el máximo ficticio de la zona. | Aceptación: rango usa `max` y `extendUrban` bloquea exceso. Evidencia: `DRV-LIMIT-01`, `SESSION-EXTEND-01`. |
+| FR-URB-003 | Alta | Implementado en prototipo | Iniciar sesión urbana debe guardar sesión e historial local cuando finaliza. | Aceptación: `startUrbanSession`, `saveSession` y `endUrban` usan `easyparkMockSession` y `easyparkMockHistory`. Evidencia: `SESSION-ACTIVE-01`, `SESSION-END-01`. |
+| FR-URB-004 | Media | Implementado en prototipo | Terminar o extender sesión debe ser idempotente en estado final. | Aceptación: si no está activa se informa que ya finalizó o no está activa. Evidencia: `SESSION-END-01`. |
+| FR-ACT-001 | Media | Implementado en prototipo | Actividad debe mostrar sesión actual, historial y último recibo. | Aceptación: vistas leen `state.session`, `state.history` y último recibo. Evidencia: `ACTIVITY-HOME-01`, `ACTIVITY-HISTORY-01`, `ACTIVITY-RECEIPT-01`. |
+| FR-ACT-002 | Baja | Implementado en prototipo | Descargar recibo en actividad debe ser simulación sin archivo real. | Aceptación: botón solo cambia mensaje de estado. Evidencia: `ACTIVITY-RECEIPT-01`. |
+
+### 5.6 AI
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-AI-001 | Alta | Implementado en prototipo | Copilot debe ser local, determinístico y asesor, sin reservar ni cobrar. | Aceptación: copy y reglas indican que solo recomienda. Evidencia: `AI-ENTRY-01`, `AI-CHAT-01`. |
+| FR-AI-002 | Alta | Implementado en prototipo | Copilot debe permitir texto, chips, preferencias editables y demo. | Aceptación: `sendAi`, `data-chip` y `data-context` actualizan estrategias. Evidencia: `AI-REFINE-01`, `AI-CONTEXT-01`. |
+| FR-AI-003 | Media | Implementado en prototipo | Voz debe ser opcional y con alternativa textual. | Aceptación: si Speech API falta se muestra mensaje y el input sigue disponible. Evidencia: `AI-VOICE-01`. |
+| FR-AI-004 | Alta | Implementado en prototipo | Handoff a reserva solo debe ocurrir para opción reservable publicada. | Aceptación: `handoff` deriva a `DRV-DETAIL-01` solo si cumple condición. Evidencia: `AI-HANDOFF-01`. |
+| FR-AI-005 | Media | Implementado en prototipo | Explicaciones deben incluir ventajas y límites. | Aceptación: `strategyCard` muestra `why` y `risk`. Evidencia: `AI-EXPLAIN-01`. |
+
+### 5.7 PROV y OPS
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-PROV-001 | Alta | Implementado en prototipo | Anfitrión debe capturar ubicación, espacio, servicios, acceso, disponibilidad, tarifa y pago ficticio. | Aceptación: `capture` recoge campos del flujo. Evidencia: `PROV-LOCATION-01` a `PROV-REVIEW-01`. |
+| FR-PROV-002 | Alta | Implementado en prototipo | Guardar cochera debe normalizar estado, pago, vehículos, defaults y visuales allowlisteados; la salida debe escapar textos derivados de usuario o `localStorage`. | Aceptación: la función de normalización traduce y completa defaults, y las rutas de render usan escape de texto. Evidencia: `PROV-AMENITIES-01`, `PROV-ACCESS-01`. |
+| FR-PROV-003 | Media | Implementado en prototipo | Bloqueos y precios pico deben ser descriptivos y no aplicarse automáticamente. | Aceptación: copy visible lo declara. Evidencia: `PROV-ACCESS-01`, `DRV-PROGRESSIVE-01`. |
+| FR-OPS-001 | Media | Implementado en prototipo | Operación debe mostrar pendientes, incidentes y liquidaciones manuales desde datos locales. | Aceptación: panel usa `spaces`, `state.incident` y no backend. Evidencia: `OPS-HOME-01`, `OPS-PENDING-01`, `OPS-INCIDENTS-01`, `OPS-SETTLEMENTS-01`. |
+| FR-OPS-002 | Media | Implementado en prototipo | Triage y resolución deben actualizar incidente local sin prometer soporte real. | Aceptación: botones modifican `status` en `easyparkIncident`. Evidencia: `OPS-TRIAGE-01`, `OPS-RESOLUTION-01`. |
+
+### 5.8 EXP, INC, DOC y propuestas productivas
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-EXP-001 | Media | Implementado en prototipo | Express debe separar consentimiento ficticio, entrada, sesión, salida y actividad. | Aceptación: flujo tiene cinco pantallas y no usa cámara real. Evidencia: `EXPRESS-HOME-01` a `EXPRESS-EXIT-01`. |
+| FR-EXP-002 | Media | Implementado en prototipo | Express debe ofrecer fallback manual si no hay consentimiento. | Aceptación: `expressFallback` avanza sin consentimiento. Evidencia: `EXPRESS-CONSENT-01`. |
+| FR-EXP-003 | Media | Implementado en prototipo | Guardar recibo Express debe ser idempotente. | Aceptación: `saveExpress` evita duplicar si `saved` es verdadero. Evidencia: `EXPRESS-EXIT-01`. |
+| FR-INC-001 | Alta | Implementado en prototipo | Incidentes deben capturar tipo, recuperación, severidad, acción y estado local. | Aceptación: `prepareIncident` escribe `easyparkIncident`. Evidencia: `INCIDENT-TYPE-01`, `INCIDENT-RECOVERY-01`. |
+| FR-INC-002 | Alta | Implementado en prototipo | Recuperación de incidente no debe completar reembolso, cargo ni nueva reserva. | Aceptación: resultado declara ausencia de efectos reales. Evidencia: `INCIDENT-RESULT-01`. |
+| FR-DOC-001 | Alta | Implementado en prototipo | Ayuda debe documentar roles, flujos, límites, refs y feedback. | Aceptación: secciones de ayuda visibles cubren esos temas. Evidencia: `HELP-HOME-01` a `HELP-FEEDBACK-01`. |
+| FR-DOC-002 | Alta | Implementado en prototipo | Buzz debe tratarse como coordinación humana de workspace y feedback, no como integración ni canal de secretos; el onboarding de acceso debe pedir que la clave pública se envíe a Alejandro por el contacto existente de WhatsApp. | Aceptación: la guía acepta solo `npub...` o clave pública hexadecimal de 64 caracteres y prohíbe `nsec`, claves privadas, contraseñas, códigos de recuperación, seeds, tokens y API keys, sin publicar teléfono. Evidencia: `BUZZ-ACCESS-01`, `HELP-SAFETY-01`. |
+| FR-DOC-003 | Alta | Implementado en prototipo | La plantilla SRS debe descargarse como Markdown y PDF sin alterar la fuente. | Aceptación: refs de descarga existen en ayuda. Evidencia: `CREATOR-SRS-01`, `SRS-DOWNLOAD-MD-01`, `SRS-DOWNLOAD-PDF-01`. |
+| FR-PRD-001 | Alta | Propuesto | Producción debe autenticar usuarios y separar roles reales. | Aceptación: diseño futuro con pruebas de autorización. Evidencia: TODO-AUTH-001, TODO-ARCH-001. |
+| FR-PRD-002 | Alta | Propuesto | Producción debe implementar reserva, pago, soporte, mapas y notificaciones reales solo con proveedores aprobados. | Aceptación: contratos, entornos y pruebas de integración aprobadas. Evidencia: TODO-PAY-001, TODO-MAP-001, TODO-NOTIF-001, TODO-OPS-001. |
+| FR-PRD-003 | Alta | Propuesto | Producción debe reemplazar `localStorage` por persistencia segura con auditoría y controles de privacidad. | Aceptación: modelo de datos, cifrado, acceso y borrado definidos. Evidencia: TODO-DATA-001, TODO-PRIV-001, TODO-SEC-001. |
+
+## 6. Reglas de negocio
+
+| ID | Estado | Regla | Verificación |
+| --- | --- | --- | --- |
+| BR-FLOW-001 | [PROTOTIPO IMPLEMENTADO] | Reserva privada, zona urbana, guía, Copilot, Express e incidente son flujos separados. | Probar navegación y ausencia de checkout cruzado. |
+| BR-CHECKOUT-001 | [PROTOTIPO IMPLEMENTADO] | Solo una cochera privada con `reservable:true` y estado `Publicado` puede pasar a pago. | Seleccionar parking tradicional o guía y confirmar retorno a resultados. |
+| BR-DATA-001 | [PROTOTIPO IMPLEMENTADO] | Todo dato de demo debe ser ficticio y local. | Revisar copys de cuenta, pago, patente, SMS, cámara y soporte. |
+| BR-AI-001 | [PROTOTIPO IMPLEMENTADO] | Copilot es asesor: no reserva, no cobra, no emite recibos y no altera verdad transaccional. | Usar `AI-HANDOFF-01` con opción no reservable. |
+| BR-PRICE-001 | [PROTOTIPO IMPLEMENTADO] | Precio, disponibilidad, distancia, ranking, pico y servicios son caveats de demo, no disponibilidad viva. | Ver `DRV-PROGRESSIVE-01` y copy de detalle. |
+| BR-URB-001 | [PROTOTIPO IMPLEMENTADO] | Zona urbana no puede superar el máximo ficticio de la zona. | Intentar extensión por encima de `max`. |
+| BR-IDEMP-001 | [PROTOTIPO IMPLEMENTADO] | Incidentes, fin de sesión y guardado Express deben evitar efectos económicos duplicados. | Repetir acciones y verificar mensajes idempotentes. |
+| BR-INC-001 | [PROTOTIPO IMPLEMENTADO] | Incidente puede proponer alternativa, solicitar revisión o escalar, pero nunca ejecutar reembolso real. | Ver `INCIDENT-RESULT-01`. |
+| BR-MEDIA-001 | [PROTOTIPO IMPLEMENTADO] | OpenMoji debe permanecer local, atribuido y con licencia documentada. | Revisar `MEDIA-CREDITS-01` y `assets/openmoji/ATTRIBUTION.md`. |
+| BR-BUZZ-001 | [PROTOTIPO IMPLEMENTADO] | Buzz puede usarse para refs y contexto de feedback; las solicitudes de acceso se envían a Alejandro por el WhatsApp ya existente con solo `npub...` o clave pública hexadecimal de 64 caracteres, nunca `nsec`, claves privadas, contraseñas, códigos de recuperación, seeds, tokens ni API keys. | Revisar `BUZZ-ACCESS-01` y ayuda de seguridad, sin agregar número telefónico. |
+| BR-SRS-001 | [PROTOTIPO IMPLEMENTADO] | Markdown es fuente de verdad y el PDF se deriva con el generador. | Ejecutar `scripts/generate-srs-pdf.py` con fuente explícita. |
+| BR-PROD-001 | [REQUISITO PROPUESTO] | Producción no debe activar pagos, mapas, soporte, cámaras, SMS, municipios ni LLM sin aprobación de proveedor y controles. | Depende de TODO-PAY-001, TODO-MAP-001, TODO-OPS-001, TODO-NOTIF-001, TODO-GOV-003. |
+
+## 7. Datos, retención y migración
+
+[PROTOTIPO IMPLEMENTADO] El prototipo usa `localStorage` como comodidad de demo. `localStorage` no es seguro ni productivo: no cifra, no autentica usuarios, no aísla roles y puede persistir más de lo esperado según navegador. No ingresar datos reales.
+
+### 7.1 Entidades conceptuales y claves actuales
+
+| Entidad | Clave o fuente actual | Campos actuales | Sensibilidad y retención actual |
+| --- | --- | --- | --- |
+| ParkingSpace y Listing | `seed`, `easyparkProviderSpaces` | id, kind, title, location, comment, schedule, price, payment, meters, covered, rating, status, reservable, services, access, blocked, peak, visual | Ficticia. Persiste hasta limpieza del navegador o sobrescritura local. |
+| Zone | constante `zones` | id, type, area, max, price, note | Ficticia. No persiste salvo sesión. |
+| Account | `easyparkMockAccount` | name, contact, phone, vehicle, plate, payout, business, fiscal, notify, privacy | Ficticia pero sensible si el usuario ingresa datos reales. Persiste localmente. |
+| PaymentMethod | `easyparkMockPaymentMethod` | id, brand, last4 | Ficticia. Persiste localmente. No hay PAN ni CVV. |
+| Onboarding | `easyparkMockOnboarding` | role, code, verified, name, vehicle, provider, prefs | Ficticia. Persiste localmente. |
+| Session e History | `easyparkMockSession`, `easyparkMockHistory` | mode, status, zone, plate, minutes, max, times, amount, receipt, controlId, history rows | Ficticia. Persiste localmente. |
+| Receipt | `easyparkLastMockReceipt`, history | reservationId, receiptId, issuedAt, total, paymentBrand, last4, status | Ficticia. Persiste localmente. No es fiscal. |
+| Incident | `easyparkIncident` | id, type, recovery, severity, action, status | Ficticia. Persiste localmente. |
+| Copilot context | estado JS en memoria | urgency, stops, parkOnce, walk, covered, vehicle, budget, transcript, strategies | Ficticia. No se guarda como clave dedicada. Voz no almacena audio por código del prototipo. |
+
+### 7.2 Validación actual por entidad
+
+| ID | Entidad | Validación actual | Límite |
+| --- | --- | --- | --- |
+| DATA-CUR-001 | ParkingSpace | La función de normalización completa defaults, traduce estados y allowlistea visuales; las rutas de render escapan texto derivado de usuario o `localStorage`. | No verifica propiedad, disponibilidad ni dirección real. |
+| DATA-CUR-002 | Account | Formularios piden datos ficticios y máscaras. | No impide que usuario escriba datos reales. |
+| DATA-CUR-003 | PaymentMethod | Selección restringida a tarjetas mock. | No hay tokenización real ni procesador. |
+| DATA-CUR-004 | Session | Duración urbana se limita por `max`. | No hay reloj confiable ni servidor. |
+| DATA-CUR-005 | Incident | Reusa id existente si ya hay incidente local. | No hay cola real ni SLA. |
+| DATA-CUR-006 | Copilot | Parseo por reglas locales y contexto editable. | No entiende lenguaje libre completo ni garantías. |
+
+### 7.3 Requisitos propuestos de datos de producción
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| DR-DATA-001 | Alta | Propuesto | Definir modelo canónico para usuarios, roles, cocheras, reservas, sesiones, pagos, recibos, incidentes y auditoría. | Aceptación: esquema versionado y revisado. Evidencia: TODO-DATA-001. |
+| DR-DATA-002 | Alta | Propuesto | Validar y minimizar datos por finalidad antes de persistir. | Aceptación: matriz campo finalidad obligatoriedad retención. Evidencia: TODO-PRIV-002. |
+| DR-DATA-003 | Alta | Propuesto | Clasificar datos personales, financieros, ubicación, vehículo, soporte y telemetría. | Aceptación: clasificación aprobada por privacidad y seguridad. Evidencia: TODO-PRIV-003, TODO-SEC-002. |
+| DR-DATA-004 | Alta | Propuesto | Definir retención y borrado sin inventar duración hasta decisión legal. | Aceptación: política con duración aprobada por jurisdicción. Evidencia: TODO-LEGAL-003, TODO-RET-001. |
+| DR-DATA-005 | Alta | Propuesto | Cifrar datos sensibles en tránsito y reposo según arquitectura aprobada. | Aceptación: pruebas de configuración y revisión de claves. Evidencia: TODO-SEC-003. |
+| DR-DATA-006 | Alta | Propuesto | Implementar control de acceso por rol y auditoría de cambios transaccionales. | Aceptación: pruebas de autorización y logs inmutables definidos. Evidencia: TODO-AUTH-002, TODO-AUDIT-001. |
+| DR-DATA-007 | Media | Propuesto | Migrar datos desde versiones con scripts reversibles y pruebas de rollback. | Aceptación: plan de migración con fixtures ficticios y rollback probado. Evidencia: TODO-MIG-001. |
+| DR-DATA-008 | Alta | Propuesto | Separar datos de demo, staging y producción. | Aceptación: entornos y secretos separados, sin datos reales en demos públicas. Evidencia: TODO-ENV-001. |
+| DR-DATA-009 | Alta | Propuesto | Reemplazar recibos ficticios por documentos fiscales solo tras decisión legal y proveedor aprobado. | Aceptación: diseño fiscal validado. Evidencia: TODO-LEGAL-004, TODO-PAY-002. |
+| DR-DATA-010 | Media | Propuesto | Definir exportación y eliminación de cuenta cuando aplique. | Aceptación: pruebas de solicitud, ejecución y evidencia de borrado. Evidencia: TODO-PRIV-004. |
+
+### 7.4 Migración desde el prototipo
+
+[REQUISITO PROPUESTO] La migración productiva no debe importar `localStorage` de testers como dato real. Los datos locales sirven solo como fixtures de diseño y ejemplos de pantalla.
+
+| Paso | Acción propuesta | Dependencia |
+| --- | --- | --- |
+| MIG-STEP-001 | Congelar schema conceptual y mapear campos actuales a entidades productivas. | TODO-DATA-001 |
+| MIG-STEP-002 | Crear fixtures ficticios equivalentes para QA y demos. | TODO-ENV-001 |
+| MIG-STEP-003 | Diseñar importación productiva solo desde fuentes autorizadas. | TODO-LEGAL-003 |
+| MIG-STEP-004 | Probar migraciones con rollback y auditoría. | TODO-MIG-001 |
+| MIG-STEP-005 | Documentar exclusión explícita de datos de navegador público. | TODO-PRIV-002 |
+
+### 7.5 Transición a próximas secciones
+
+Las secciones 8 a 12 se completarán en el siguiente work unit con requisitos no funcionales, aceptación, trazabilidad, riesgos, decisiones abiertas y apéndices. Esta sección 7 deja explícito que los datos locales del prototipo no son una base productiva segura ni migrable sin rediseño.
