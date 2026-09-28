@@ -29,6 +29,8 @@
       .steps { display:grid; gap:8px; } .step { padding:10px 12px; border-radius:14px; background:#eff6ff; font-size:14px; }
       .photo { height:82px; border-radius:14px; background: linear-gradient(135deg,#cbd5e1,#f8fafc); display:grid; place-items:center; color:#64748b; font-size:12px; }
       .role-only { display:none; } .driver .driver-only, .provider .provider-only, .operator .operator-only { display:block; }
+      .ref { display:inline-flex; width:max-content; margin-bottom:8px; padding:4px 7px; border:1px dashed #93c5fd; border-radius:8px; background:#eff6ff; color:#1d4ed8; font-size:10px; font-weight:900; letter-spacing:.02em; }
+      .ref.inline { margin:0 0 0 6px; vertical-align:middle; }
     </style>
   </head>
   <body>
@@ -39,7 +41,8 @@
         <p id="roleSubtitle">Driver flow: compare, reserve, pay, park.</p>
       </header>
       <main>
-        <section class="card grid">
+        <section class="card grid" data-ref="APP-ROLE-01">
+          <span class="ref">APP-ROLE-01</span>
           <div class="grid roles">
             <button class="active" data-role="driver">Driver</button>
             <button class="secondary" data-role="provider">Provider</button>
@@ -48,54 +51,67 @@
           <button class="ghost" id="demo">Run guided demo</button>
         </section>
 
-        <nav class="tabs grid" aria-label="Prototype sections">
+        <nav class="tabs grid" aria-label="Prototype sections" data-ref="APP-NAV-01">
           <button class="active" data-tab="searchTab">Search</button><button data-tab="hostTab">Host</button><button data-tab="checkoutTab">Pay</button><button data-tab="sessionTab">Session</button><button data-tab="opsTab">Ops</button>
         </nav>
 
-        <section id="searchTab" class="card tab driver-only">
+        <section id="searchTab" class="card tab driver-only" data-ref="DRV-SEARCH-01">
+          <span class="ref">DRV-SEARCH-01</span>
           <h2>Find a space</h2>
-          <div class="grid" style="margin-top:10px">
+          <div class="grid" style="margin-top:10px" data-ref="DRV-FILTER-01">
+            <span class="ref">DRV-FILTER-01</span>
             <input id="destination" value="Palermo Soho" aria-label="Destination" />
             <div class="row"><input id="startTime" value="Today 19:00" aria-label="Start time" /><select id="duration"><option>2 hours</option><option>4 hours</option><option>Full day</option></select></div>
             <select id="vehicle"><option>Car</option><option>SUV</option><option>Motorbike</option></select>
             <select id="filter"><option value="smart">Smart ranking</option><option value="cheap">Cheapest first</option><option value="near">Nearest first</option><option value="covered">Covered only</option></select>
             <button id="search">Update results</button>
           </div>
-          <div class="map" aria-label="Mock map"><span class="pin dest">You</span><span class="pin p1">P1</span><span class="pin p2">P2</span><span class="pin p3">P3</span></div>
+          <div class="map" aria-label="Mock map" data-ref="DRV-MAP-01"><span class="ref inline">DRV-MAP-01</span><span class="pin dest">You</span><span class="pin p1">P1</span><span class="pin p2">P2</span><span class="pin p3">P3</span></div>
           <div id="options"></div>
         </section>
 
-        <section id="hostTab" class="card tab hidden provider-only">
+        <section id="hostTab" class="card tab hidden provider-only" data-ref="PROV-ONBOARD-01">
+          <span class="ref">PROV-ONBOARD-01</span>
           <h2>Offer your parking</h2>
           <p class="muted">Wizard mock: draft → pending review → published. Browser-only data.</p>
           <div class="grid" style="margin-top:12px">
             <h3>1. Space</h3><input id="hostLocation" placeholder="Address or location reference" /><textarea id="hostComment" placeholder="Driver instructions, gate access, size limits"></textarea><select id="hostType"><option>Covered private garage</option><option>Open private space</option><option>Building garage</option></select>
-            <h3>2. Availability</h3><input id="hostSchedule" value="Mon-Fri 08:00-20:00" /><select id="hostStatus"><option>Pending review</option><option>Published</option><option>Paused</option></select>
-            <h3>3. Tariff and collection</h3><select id="hostTariff"><option value="$1,800 fixed 2h">Fixed: $1,800 / 2h</option><option value="$2,500 fixed 4h">Fixed: $2,500 / 4h</option><option value="$7,000 full day">Full day: $7,000</option><option value="custom">Custom tariff</option></select><input id="hostCustomTariff" placeholder="Custom tariff, e.g. $900/hour" /><select id="hostPayment"><option>Mercado Pago</option><option>Cash at arrival</option><option>Bank transfer</option><option>Mercado Pago + cash</option></select>
+            <h3 data-ref="PROV-AVAIL-01">2. Availability <span class="ref inline">PROV-AVAIL-01</span></h3><input id="hostSchedule" value="Mon-Fri 08:00-20:00" /><select id="hostStatus"><option>Pending review</option><option>Published</option><option>Paused</option></select>
+            <h3 data-ref="PROV-TARIFF-01">3. Tariff and collection <span class="ref inline">PROV-TARIFF-01</span></h3><select id="hostTariff"><option value="$1,800 fixed 2h">Fixed: $1,800 / 2h</option><option value="$2,500 fixed 4h">Fixed: $2,500 / 4h</option><option value="$7,000 full day">Full day: $7,000</option><option value="custom">Custom tariff</option></select><input id="hostCustomTariff" placeholder="Custom tariff, e.g. $900/hour" /><select id="hostPayment" data-ref="PROV-PAYMENT-01"><option>Mercado Pago</option><option>Cash at arrival</option><option>Bank transfer</option><option>Mercado Pago + cash</option></select>
             <div class="photo">Photo upload placeholder</div><button id="addSpace">Save provider space</button><button class="secondary" id="clearSpaces">Clear mock spaces</button>
           </div>
           <div id="hostList" style="margin-top:12px"></div>
         </section>
 
-        <section id="checkoutTab" class="card tab hidden driver-only">
+        <section id="checkoutTab" class="card tab hidden driver-only" data-ref="DRV-CHECKOUT-01">
+          <span class="ref">DRV-CHECKOUT-01</span>
           <h2>Reservation summary</h2><div id="selected" class="muted">Choose a private provider space to continue.</div>
           <div class="steps" style="margin-top:12px"><div class="step">Hold: <strong id="hold">not started</strong></div><div class="step">Price + EasyPark fee: <strong id="fee">--</strong></div><div class="step">Payment: <strong id="payment">not started</strong></div><div class="step">Reservation: <strong id="reservation">not confirmed</strong></div></div>
-          <div class="grid" style="margin-top:12px"><button id="reserve">Approve simulated payment</button><button class="secondary" id="rejectPay">Simulate payment rejected</button><button class="ghost" id="expireHold">Expire hold</button></div>
+          <div class="grid" style="margin-top:12px"><button id="reserve">Approve simulated payment</button><button class="secondary" id="rejectPay" data-ref="DRV-PAY-FAIL-01">Simulate payment rejected <span class="ref inline">DRV-PAY-FAIL-01</span></button><button class="ghost" id="expireHold" data-ref="DRV-HOLD-EXP-01">Expire hold <span class="ref inline">DRV-HOLD-EXP-01</span></button></div>
         </section>
 
-        <section id="sessionTab" class="card tab hidden driver-only">
+        <section id="sessionTab" class="card tab hidden driver-only" data-ref="DRV-SESSION-01">
+          <span class="ref">DRV-SESSION-01</span>
           <h2>Active session</h2><p id="sessionState" class="muted">No active reservation yet.</p>
           <div class="steps" style="margin-top:12px"><div class="step">Reservation code: <strong id="code">--</strong></div><div class="step">Navigation: <strong id="nav">--</strong></div><div class="step">Remaining time: <strong id="remaining">--</strong></div><div class="step">Problem report: vehicle does not fit / space occupied / arrival delay</div></div>
           <div class="grid" style="margin-top:12px"><button class="secondary" id="extend">Extend 30 min</button><button class="ghost" id="endSession">End session</button></div>
         </section>
 
-        <section id="opsTab" class="card tab hidden operator-only">
+        <section id="opsTab" class="card tab hidden operator-only" data-ref="OPS-DASH-01">
+          <span class="ref">OPS-DASH-01</span>
           <h2>EasyPark operations</h2>
           <p class="muted">Operator mock for approving providers and monitoring reservations, incidents, and manual settlements.</p>
           <div class="steps" id="opsList" style="margin-top:12px"></div>
         </section>
 
-        <section class="card">
+        <section class="card" data-ref="REF-GUIDE-01">
+          <span class="ref">REF-GUIDE-01</span>
+          <h2>Reference labels</h2>
+          <p class="muted">Use these codes in Buzz when requesting changes, for example: “Change DRV-RESULT-01 to show distance first”. Labels are prototype references, not final product copy.</p>
+        </section>
+
+        <section class="card" data-ref="AI-COPILOT-01">
+          <span class="ref">AI-COPILOT-01</span>
           <div class="row"><h2>Copilot</h2><span class="badge warn">advisory only</span></div>
           <p class="muted" id="copilotText">I can recommend and explain, but I cannot create reservations, payment truth, or settlements.</p>
         </section>
@@ -111,10 +127,10 @@
       const options=()=>[...seed,...spaces()].filter(o=>$('filter').value==='covered'?o.covered:o).sort((a,b)=>$('filter').value==='cheap'?price(a)-price(b):$('filter').value==='near'?a.meters-b.meters:Number(b.reservable)-Number(a.reservable)||a.meters-b.meters);
       function show(tab){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('hidden',t.id!==tab));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));}
       function role(role){$('appShell').className=`phone ${role}`; document.querySelectorAll('.roles button').forEach(b=>{b.className=b.dataset.role===role?'active':'secondary'}); $('roleSubtitle').textContent=role==='driver'?'Driver flow: compare, reserve, pay, park.':role==='provider'?'Provider flow: publish and manage spaces.':'Operator flow: approve, monitor, settle.'; show(role==='provider'?'hostTab':role==='operator'?'opsTab':'searchTab'); render();}
-      function card(o){return `<article class="option"><div class="row wrap"><span class="badge ${o.status==='Published'?'ok':o.status==='Pending review'?'warn':''}">${o.kind}</span><span class="price">${o.price}</span></div><div class="photo">${o.covered?'Covered':'Open'} · ${o.rating}★ · ${o.status}</div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.schedule}. ${o.comment}</p><p class="muted"><strong>Payment:</strong> ${o.payment}<br><strong>Source:</strong> ${o.source}</p><button ${o.reservable&&o.status==='Published'?'':'class="secondary"'} data-id="${o.id}">${o.reservable&&o.status==='Published'?'Reserve this space':'View guidance'}</button></article>`}
+      function card(o){return `<article class="option" data-ref="DRV-RESULT-01"><span class="ref">DRV-RESULT-01</span><div class="row wrap"><span class="badge ${o.status==='Published'?'ok':o.status==='Pending review'?'warn':''}">${o.kind}</span><span class="price">${o.price}</span></div><div class="photo">${o.covered?'Covered':'Open'} · ${o.rating}★ · ${o.status}</div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.schedule}. ${o.comment}</p><p class="muted"><strong>Payment:</strong> ${o.payment}<br><strong>Source:</strong> ${o.source}</p><button ${o.reservable&&o.status==='Published'?'':'class="secondary"'} data-id="${o.id}">${o.reservable&&o.status==='Published'?'Reserve this space':'View guidance'}</button></article>`}
       function render(){ $('options').innerHTML=options().map(card).join(''); document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>choose(b.dataset.id)); renderHosts(); renderOps(); $('copilotText').textContent=`For ${$('vehicle').value}, I rank published private spaces higher when they are close, reservable, covered, and have clear tariffs.`; }
-      function renderHosts(){ const s=spaces(); $('hostList').innerHTML=s.length?s.map(x=>`<div class="option"><div class="row"><strong>${x.title}</strong><span class="badge ${x.status==='Published'?'ok':'warn'}">${x.status}</span></div><p class="muted">${x.location}<br>${x.schedule}<br>${x.price} · ${x.payment}</p><p class="muted">Estimated weekly earning: $${Math.round(price(x)*4.5).toLocaleString('en-US')}</p></div>`).join(''):'<p class="muted">No provider spaces added in this browser yet.</p>'; }
-      function renderOps(){ const pending=spaces().filter(s=>s.status==='Pending review').length, active=selected?1:0; $('opsList').innerHTML=`<div class="step">Provider spaces pending review: <strong>${pending}</strong></div><div class="step">Active reservations: <strong>${active}</strong></div><div class="step">Payment exceptions: <strong>1 rejected simulation available</strong></div><div class="step">Manual settlements: <strong>${spaces().filter(s=>s.status==='Published').length} provider accounts</strong></div><div class="step">Incidents queue: <strong>space occupied / vehicle too large / late arrival</strong></div>`; }
+      function renderHosts(){ const s=spaces(); $('hostList').innerHTML=s.length?s.map(x=>`<div class="option" data-ref="PROV-SPACE-01"><span class="ref">PROV-SPACE-01</span><div class="row"><strong>${x.title}</strong><span class="badge ${x.status==='Published'?'ok':'warn'}">${x.status}</span></div><p class="muted">${x.location}<br>${x.schedule}<br>${x.price} · ${x.payment}</p><p class="muted">Estimated weekly earning: $${Math.round(price(x)*4.5).toLocaleString('en-US')}</p></div>`).join(''):'<p class="muted">No provider spaces added in this browser yet.</p>'; }
+      function renderOps(){ const pending=spaces().filter(s=>s.status==='Pending review').length, active=selected?1:0; $('opsList').innerHTML=`<div class="step" data-ref="OPS-REVIEW-01"><span class="ref inline">OPS-REVIEW-01</span> Provider spaces pending review: <strong>${pending}</strong></div><div class="step">Active reservations: <strong>${active}</strong></div><div class="step">Payment exceptions: <strong>1 rejected simulation available</strong></div><div class="step" data-ref="OPS-SETTLE-01"><span class="ref inline">OPS-SETTLE-01</span> Manual settlements: <strong>${spaces().filter(s=>s.status==='Published').length} provider accounts</strong></div><div class="step">Incidents queue: <strong>space occupied / vehicle too large / late arrival</strong></div>`; }
       function choose(id){ selected=options().find(o=>o.id===id); $('selected').innerHTML=selected?.reservable&&selected.status==='Published'?`<strong>${selected.title}</strong><br>${selected.price} + 12% EasyPark fee · ${selected.payment}<br>${selected.comment}`:'This option is guidance-only or not published. Choose a published private space.'; $('fee').textContent=selected?`$${Math.round(price(selected)*1.12).toLocaleString('en-US')}`:'--'; show('checkoutTab'); }
       $('addSpace').onclick=()=>{ const location=$('hostLocation').value.trim(), tariff=$('hostTariff').value==='custom'?$('hostCustomTariff').value.trim():$('hostTariff').value; if(!location||!tariff) return alert('Add at least location and tariff.'); const item={id:`provider-${Date.now()}`, source:'Provider signup', kind:'Private space', title:`Provider space near ${location}`, location, comment:$('hostComment').value.trim()||'No extra instructions yet.', schedule:$('hostSchedule').value.trim()||'Schedule pending', price:tariff, payment:$('hostPayment').value, meters:80+(price({price:tariff})%260), covered:$('hostType').value.includes('Covered')||$('hostType').value.includes('Building'), rating:4.6, status:$('hostStatus').value, reservable:true}; save([item,...spaces()]); ['hostLocation','hostComment','hostCustomTariff'].forEach(id=>$(id).value=''); role('driver'); };
       $('clearSpaces').onclick=()=>{save([]);render();}; $('search').onclick=render; $('filter').onchange=render; $('vehicle').onchange=render;
