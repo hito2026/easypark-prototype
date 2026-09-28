@@ -89,7 +89,7 @@ Status: complete in work-unit commit `7192b8b`; filled PDF SHA-256 is `595aa42ed
 - [x] Verify filled Markdown contains no accidental unresolved template braces; deliberate TODOs remain explicit.
 - [x] Verify generated PDF metadata, page count, text extraction, hashes, links, refs, and public safety language.
 - [x] Obtain independent read-only verification.
-- [ ] Request final approval before push/publication and verify GitHub Pages only if approved.
+- [x] Request final approval before push/publication and verify GitHub Pages only if approved.
 
 Verification evidence:
 
@@ -99,7 +99,13 @@ Verification evidence:
 - Filled Markdown: sections 0–12, zero template braces, 140 scanned unique SRS-style IDs, and all 46 FR, 10 DR, and 17 NFR rows include acceptance/evidence.
 - Help/README paths, refs, byte labels, local links, embedded JavaScript, generator validation, metadata, and text extraction passed.
 - Native RDD review preflight stopped with `lens_context_budget_exceeded`; no lineage or review authority was created. Independent verification remains the available review evidence.
+- Publication approval: granted explicitly by the user.
+- Published main commit: `122069294cccdeab9fc94a6670302d2681a8f1ff`.
+- GitHub Pages workflow `36469316735`, job `109087256701`, and deployment `6718151817`: success.
+- Public Help and all four SRS artifacts returned HTTP 200 with expected MIME, bytes, and SHA-256 hashes.
 - Deferred checks: browser/mobile, keyboard, screen reader, computed contrast, real voice behavior, bottom-sheet scrolling, and actual reduced-motion behavior.
+
+Status: complete and published.
 
 ## Acceptance criteria
 
@@ -114,8 +120,8 @@ Verification evidence:
 
 ## Progress
 
-Exploration and repository mapping complete. T001–T004 are committed. T005 independent verification passed after the PDF binary-attribute fix in `13f3398`. Native RDD review could not start because the accumulated candidate exceeded its context budget; no authority was created. Final push/publication approval is pending.
+All T001–T005 work is complete. The filled SRS reference, preserved blank template, Help downloads, README guidance, generator changes, and verification evidence are published on `main`. Native RDD review could not start because the accumulated candidate exceeded its context budget; no authority was created. Independent verification and public Pages verification passed.
 
 ## Next step
 
-Record verification evidence, then request the user's explicit decision on integration, push, and Pages publication.
+No implementation work remains. Future collaborators can use the published filled reference and preserve the documented TODO/status discipline.
