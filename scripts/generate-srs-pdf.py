@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generate the static SRS template PDF from the Markdown source.
+"""Generate deterministic SRS PDFs from Markdown sources.
 
 Requires local reportlab. No network, timestamps, local paths, or hidden build metadata.
 """
 from __future__ import annotations
 
+import argparse
 import re
 from pathlib import Path
 
@@ -202,40 +203,93 @@ def parse_markdown(text: str):
     return story, styles
 
 
-def header_footer(canvas, doc):
-    canvas.saveState()
-    canvas.setTitle(TITLE)
-    canvas.setAuthor(AUTHOR)
-    canvas.setSubject(SUBJECT)
-    canvas.setCreator("scripts/generate-srs-pdf.py")
-    width, height = A4
-    canvas.setFont("Helvetica", 7)
-    canvas.setFillColor(colors.HexColor("#5d6b82"))
-    canvas.drawString(1.6 * cm, height - 1.1 * cm, "Plantilla SRS · guía original · Markdown es fuente de verdad")
-    canvas.drawRightString(width - 1.6 * cm, 0.9 * cm, f"Página {doc.page}")
-    canvas.restoreState()
+def resolve_under_root(value: str | Path, *, expected_suffix: str, label: str, must_exist: bool) -> Path:
+    raw = Path(value)
+    candidate = raw if raw.is_absolute() else ROOT / raw
+    try:
+        resolved = candidate.resolve(strict=must_exist)
+    except FileNotFoundError as exc:
+        raise ValueError(f"{label} does not exist: {raw}") from exc
+    if not must_exist:
+        resolved = candidate.resolve(strict=False)
+    try:
+        resolved.relative_to(ROOT)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be inside repository root: {raw}") from exc
+    if resolved.suffix.lower() != expected_suffix:
+        raise ValueError(f"{label} must be a {expected_suffix} file: {raw}")
+    return resolved
 
 
-def build_pdf():
-    source_text = SOURCE.read_text(encoding="utf-8")
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate a deterministic SRS PDF from Markdown.")
+    parser.add_argument("--source", default=str(SOURCE.relative_to(ROOT)), help="Markdown source path inside the repository root.")
+    parser.add_argument("--output", default=str(OUTPUT.relative_to(ROOT)), help="PDF output path inside the repository root.")
+    parser.add_argument("--title", default=TITLE, help="PDF title metadata.")
+    parser.add_argument("--subject", default=SUBJECT, help="PDF subject metadata.")
+    args = parser.parse_args(argv)
+    try:
+        args.source = resolve_under_root(args.source, expected_suffix=".md", label="source", must_exist=True)
+        args.output = resolve_under_root(args.output, expected_suffix=".pdf", label="output", must_exist=False)
+    except ValueError as exc:
+        parser.error(str(exc))
+    return args
+
+
+def header_label(title: str) -> str:
+    if title == TITLE:
+        return "Plantilla SRS · guía original · Markdown es fuente de verdad"
+    normalized = " ".join(title.split()) or "Documento SRS"
+    if len(normalized) > 72:
+        normalized = normalized[:69].rstrip() + "..."
+    return f"{normalized} · Markdown es fuente de verdad"
+
+
+def make_header_footer(title: str, subject: str):
+    visible_header = header_label(title)
+
+    def header_footer(canvas, doc):
+        canvas.saveState()
+        canvas.setTitle(title)
+        canvas.setAuthor(AUTHOR)
+        canvas.setSubject(subject)
+        canvas.setCreator("scripts/generate-srs-pdf.py")
+        width, height = A4
+        canvas.setFont("Helvetica", 7)
+        canvas.setFillColor(colors.HexColor("#5d6b82"))
+        canvas.drawString(1.6 * cm, height - 1.1 * cm, visible_header)
+        canvas.drawRightString(width - 1.6 * cm, 0.9 * cm, f"Página {doc.page}")
+        canvas.restoreState()
+
+    return header_footer
+
+
+def build_pdf(source: Path = SOURCE, output: Path = OUTPUT, title: str = TITLE, subject: str = SUBJECT):
+    source_text = source.read_text(encoding="utf-8")
     story, _styles = parse_markdown(source_text)
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    output.parent.mkdir(parents=True, exist_ok=True)
     doc = BaseDocTemplate(
-        str(OUTPUT),
+        str(output),
         pagesize=A4,
         leftMargin=1.6 * cm,
         rightMargin=1.6 * cm,
         topMargin=1.8 * cm,
         bottomMargin=1.4 * cm,
-        title=TITLE,
+        title=title,
         author=AUTHOR,
-        subject=SUBJECT,
+        subject=subject,
     )
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="normal")
-    doc.addPageTemplates([PageTemplate(id="main", frames=[frame], onPage=header_footer)])
+    doc.addPageTemplates([PageTemplate(id="main", frames=[frame], onPage=make_header_footer(title, subject))])
     doc.build(story)
 
 
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    build_pdf(args.source, args.output, args.title, args.subject)
+    print(f"Generated {args.output.relative_to(ROOT)} from {args.source.relative_to(ROOT)}")
+    return 0
+
+
 if __name__ == "__main__":
-    build_pdf()
-    print(f"Generated {OUTPUT.relative_to(ROOT)} from {SOURCE.relative_to(ROOT)}")
+    raise SystemExit(main())
