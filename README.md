@@ -7,7 +7,7 @@ Prototipo móvil en HTML/CSS/JavaScript para validar flujos de EasyPark antes de
 Este prototipo simula:
 
 - una pantalla inicial guiada con casos de uso para conductores, anfitriones de cocheras, operación EasyPark, ayuda, cuenta y onboarding;
-- un centro de ayuda del proyecto con propósito, roles, tipos de oferta, límites del Copilot, pagos ficticios y cómo enviar feedback en Buzz;
+- un portal dedicado `help.html` con documentación en español, búsqueda local, navegación lateral, accesibilidad básica, propósito, roles, tipos de oferta, límites del Copilot, pagos ficticios y cómo enviar feedback en Buzz;
 - configuración segura de cuenta con perfil, vehículo, preferencias, tarjeta ficticia de conductor, cuenta de cobro ficticia de anfitrión y datos comerciales de muestra;
 - onboarding guiado con rol, verificación simulada mediante código fijo visible, perfil, configuración condicional y derivación al flujo de conductor o anfitrión;
 - búsqueda manual del conductor, flujo urbano ordinario con zona ficticia, o asistencia con EasyPark Copilot;
@@ -25,7 +25,7 @@ Este prototipo simula:
 - selección segura de medio de pago con tarjetas fijas de prueba, persistiendo solo marca y últimos cuatro dígitos ficticios;
 - recibo automático ficticio y sesión activa después de una confirmación simulada;
 - cocheras creadas por anfitriones en el algoritmo local de selección/ranking;
-- etiquetas visibles como `HELP-HOME-01`, `ACCOUNT-PAYMENT-01`, `ONB-VERIFY-01`, `DRV-ZONE-01`, `SESSION-ACTIVE-01`, `ACTIVITY-HISTORY-01`, `EXPRESS-CONSENT-01`, `AI-CHAT-01`, `DRV-RESULTS-01`, `PROV-TARIFF-01` y `OPS-PENDING-01` para pedir cambios precisos en Buzz.
+- etiquetas visibles como `HELP-PORTAL-01`, `ACCOUNT-PAYMENT-01`, `ONB-VERIFY-01`, `DRV-ZONE-01`, `SESSION-ACTIVE-01`, `ACTIVITY-HISTORY-01`, `EXPRESS-CONSENT-01`, `AI-CHAT-01`, `DRV-RESULTS-01`, `PROV-TARIFF-01` y `OPS-PENDING-01` para pedir cambios precisos en Buzz.
 
 ## Seguridad y límites
 
@@ -43,10 +43,14 @@ Referencias consultadas:
 - https://www.easypark.com/es-es/ayuda/empieza-a-aparcar-con-easypark/configuracion-de-la-cuenta-como-crear-tu-cuenta--26776175036572
 - https://www.easypark.com/es-es/como-funciona
 
+## Portal de ayuda
+
+Abrí `help.html` para una documentación dedicada con arquitectura tipo documentación cloud: encabezado fijo, breadcrumb, enlace de vuelta al prototipo, menú lateral con grupos anidados, tabla de contenido, búsqueda/filtro local sin red, estado vacío, foco visible, landmarks semánticos, menú móvil y soporte de movimiento reducido. Cubre proyecto, cómo probar, todos los casos de uso actuales y guía para creadores.
+
 ## Etiquetas de referencia
 
-Las etiquetas rojas son parte intencional del prototipo. Usalas en Buzz, por ejemplo: `Cambiar HELP-FEEDBACK-01 para explicar mejor cómo reportar bugs`. Son referencias estables del prototipo, no texto final para clientes. El prototipo incluye un botón para mostrarlas u ocultarlas.
+Las etiquetas rojas son parte intencional del prototipo. Usalas en Buzz, por ejemplo: `Cambiar EXPRESS-CONSENT-01 para aclarar que no usa cámara real`. Son referencias estables del prototipo, no texto final para clientes. El prototipo incluye un botón para mostrarlas u ocultarlas y el portal documenta el catálogo de prefijos.
 
 ## Ejecutar localmente
 
-Abrí `index.html` en un navegador.
+Abrí `index.html` en un navegador. Para la documentación completa, abrí `help.html` o el enlace “Ayuda” del prototipo.

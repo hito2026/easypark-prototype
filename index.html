@@ -15,7 +15,8 @@
       .muted { color:var(--muted); font-size:13px; line-height:1.4; } .hidden { display:none; }
       input,select,textarea { width:100%; border:1px solid #cbd5e1; border-radius:14px; padding:11px; background:white; } textarea { min-height:72px; }
       button { width:100%; border:0; border-radius:14px; padding:12px; color:white; background:var(--brand); font-weight:750; cursor:pointer; }
-      button.secondary { background:#e0ecff; color:#174ea6; } button.ghost { background:white; color:#334155; border:1px solid #cbd5e1; }
+      button.secondary, a.secondary { background:#e0ecff; color:#174ea6; } button.ghost, a.ghost { background:white; color:#334155; border:1px solid #cbd5e1; }
+      a.choice { min-height:44px; border-radius:14px; padding:12px; text-decoration:none; color:#174ea6; font-weight:750; }
       .choice { text-align:left; display:grid; gap:4px; } .choice strong { font-size:16px; } .choice span { font-size:12px; opacity:.9; }
       .progress { height:8px; border-radius:999px; background:#dbe7f7; overflow:hidden; } .progress > span { display:block; height:100%; background:var(--brand); width:var(--pct); }
       .badge { display:inline-flex; padding:5px 9px; border-radius:999px; background:#e0f2fe; color:#0369a1; font-size:12px; font-weight:800; }
@@ -37,6 +38,7 @@
         <p class="muted" style="color:#dbeafe">Prototipo móvil guiado</p>
         <h1>EasyPark</h1>
         <p id="subtitle">Elegí un caso de uso y avanzá paso a paso.</p>
+        <a href="help.html" style="color:#fff;font-weight:800;display:inline-block;margin-top:10px">Ayuda</a>
       </header>
       <main>
         <section class="card" data-ref="REF-GUIDE-01">
@@ -52,7 +54,7 @@
           <button class="choice secondary" data-flow="operator"><strong>Administrar EasyPark</strong><span>Flujo operación: aprobaciones, incidentes y liquidaciones</span></button>
           <button class="choice secondary" data-flow="activity"><strong>Actividad y recibos</strong><span>Sesiones actuales, historial y recibos ficticios.</span></button>
           <button class="choice secondary" data-flow="express"><strong>Entrada automática simulada</strong><span>Parking con barrera compatible y consentimiento ficticio.</span></button>
-          <button class="choice secondary" data-flow="help"><strong>Ayuda del proyecto</strong><span>Qué valida este prototipo y cómo dar feedback.</span></button>
+          <a class="choice secondary" id="helpPortal" data-ref="HELP-PORTAL-01" href="help.html"><span class="ref">HELP-PORTAL-01</span><strong>Ayuda del proyecto</strong><span>Documentación completa, búsqueda local y refs.</span></a>
           <button class="choice secondary" data-flow="account"><strong>Configurar cuenta segura</strong><span>Perfil, vehículo, preferencias y medios ficticios.</span></button>
           <button class="choice secondary" data-flow="onboarding"><strong>Crear cuenta de prueba</strong><span>Alta guiada con código fijo y datos ficticios.</span></button>
           <button class="choice ghost" id="demo"><strong>Ejecutar demo guiada</strong><span>Completa una reserva ficticia de conductor.</span></button>

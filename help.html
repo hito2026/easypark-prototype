@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ayuda del prototipo EasyPark</title>
+    <style>
+      :root { --ink:#172033; --muted:#5d6b82; --line:#d8e2f0; --bg:#f7faff; --panel:#ffffff; --brand:#1d4ed8; --soft:#eaf1ff; --warn:#fff7ed; --ok:#ecfdf5; --focus:#f59e0b; font-family: Inter, system-ui, sans-serif; color:var(--ink); background:var(--bg); }
+      * { box-sizing:border-box; } html { scroll-behavior:smooth; } body { margin:0; } a { color:var(--brand); } a:focus-visible, button:focus-visible, input:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+      .skip { position:absolute; left:12px; top:-60px; z-index:20; background:#111827; color:white; padding:12px; border-radius:10px; } .skip:focus { top:12px; }
+      header { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); backdrop-filter:blur(10px); }
+      .top { min-height:64px; display:flex; gap:12px; align-items:center; justify-content:space-between; padding:10px 18px; } .brand { display:flex; flex-direction:column; gap:2px; font-weight:850; } .brand small { color:var(--muted); font-weight:650; }
+      button, .button { min-height:44px; border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:white; color:var(--ink); font-weight:750; text-decoration:none; cursor:pointer; } .primary { background:var(--brand); color:white; border-color:var(--brand); }
+      .searchbar { display:flex; gap:8px; align-items:center; max-width:560px; flex:1; } .searchbar input { min-height:44px; width:100%; border:1px solid var(--line); border-radius:12px; padding:10px 12px; }
+      .layout { display:grid; grid-template-columns:280px minmax(0,1fr) 220px; gap:24px; max-width:1280px; margin:auto; padding:20px; }
+      aside { align-self:start; position:sticky; top:84px; max-height:calc(100vh - 100px); overflow:auto; } nav[aria-label="Secciones"] { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:12px; }
+      details { border-bottom:1px solid #edf2f7; padding:6px 0; } details:last-child { border-bottom:0; } summary { min-height:44px; display:flex; align-items:center; cursor:pointer; font-weight:850; }
+      nav a { display:block; min-height:36px; padding:8px 10px; border-radius:10px; text-decoration:none; color:var(--ink); } nav a[aria-current="true"], nav a:hover { background:var(--soft); color:#174ea6; }
+      main { min-width:0; } .breadcrumb { color:var(--muted); font-size:14px; margin-bottom:12px; } .hero, section.doc { background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:22px; margin-bottom:18px; box-shadow:0 8px 24px #d7e1f04d; }
+      h1 { margin:0 0 8px; font-size:34px; } h2 { margin:0 0 12px; font-size:26px; } h3 { margin:18px 0 8px; font-size:18px; } p, li { line-height:1.55; } .muted { color:var(--muted); }
+      .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .card { border:1px solid var(--line); border-radius:16px; padding:14px; background:#fbfdff; }
+      .callout { border-radius:16px; padding:14px; margin:12px 0; border:1px solid var(--line); background:var(--soft); } .callout.warn { background:var(--warn); border-color:#fed7aa; } .callout.ok { background:var(--ok); border-color:#bbf7d0; }
+      .ref { display:inline-flex; padding:2px 6px; border:1px dashed #fca5a5; border-radius:6px; background:#fff5f5; color:#dc2626; font-size:11px; font-weight:850; }
+      .topic { border-top:1px solid var(--line); padding-top:14px; margin-top:14px; } .topic dl { display:grid; gap:8px; } dt { font-weight:850; } dd { margin:0 0 8px; color:var(--muted); }
+      .toc { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:12px; } .toc h2 { font-size:16px; } .toc a { display:block; padding:6px 0; font-size:14px; }
+      .hidden-by-search { display:none !important; } #emptyState { display:none; } #emptyState.show { display:block; }
+      footer { border-top:1px solid var(--line); padding:24px 20px; color:var(--muted); text-align:center; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; animation:none !important; } }
+      @media (max-width: 980px) { .layout { grid-template-columns:1fr; padding:14px; } aside { position:static; max-height:none; display:none; } aside.open { display:block; } .toc { display:none; } .top { flex-wrap:wrap; } .searchbar { order:3; min-width:100%; } .cards { grid-template-columns:1fr; } }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header>
+      <div class="top">
+        <div class="brand"><span>EasyPark Docs</span><small>Portal de ayuda del prototipo</small></div>
+        <button id="menuBtn" type="button" aria-controls="sideNav" aria-expanded="false">Menú</button>
+        <form class="searchbar" role="search" aria-label="Buscar en la ayuda">
+          <label class="muted" for="searchInput">Buscar</label>
+          <input id="searchInput" type="search" placeholder="Filtrar temas, refs o flujos" autocomplete="off" />
+          <button id="clearSearch" type="button">Limpiar</button>
+        </form>
+        <a class="button primary" href="index.html">Volver al prototipo</a>
+      </div>
+    </header>
+    <div class="layout">
+      <aside id="sideNav">
+        <nav aria-label="Secciones">
+          <details open><summary>Proyecto</summary><a href="#vision">Visión y audiencias</a><a href="#roles">Roles y oferta</a><a href="#arquitectura">Límites de simulación</a></details>
+          <details open><summary>Cómo probar</summary><a href="#preparacion">Preparación</a><a href="#home-help">Inicio y ayuda visible</a><a href="#orden-pruebas">Orden sugerido</a><a href="#feedback">Plantilla de feedback</a></details>
+          <details open><summary>Casos de uso</summary><a href="#onboarding">Onboarding</a><a href="#cuenta">Cuenta</a><a href="#privado">Conductor privado</a><a href="#urbano">Zona urbana</a><a href="#actividad">Actividad</a><a href="#copilot">Copilot</a><a href="#proveedor">Anfitrión</a><a href="#operacion">Operación</a><a href="#express">Express</a></details>
+          <details open><summary>Para creadores</summary><a href="#refs">Refs estables</a><a href="#workflow">Workflow</a><a href="#checklist">Checklist</a></details>
+        </nav>
+      </aside>
+      <main id="contenido" tabindex="-1">
+        <div class="breadcrumb">EasyPark / Prototipo / Ayuda</div>
+        <section class="hero" id="inicio" data-search="documentacion ayuda prototipo easypark">
+          <h1>Documentación del prototipo EasyPark</h1>
+          <p class="muted">Guía para testers, stakeholders y creadores. Es una página estática: búsqueda local, sin dependencias, sin servidor y sin llamadas externas.</p>
+          <p id="resultCount" aria-live="polite">Mostrando todos los temas.</p>
+          <div id="emptyState" class="callout warn">No hay resultados. Probá buscar por flujo, etiqueta o palabra clave.</div>
+          <div class="cards" aria-label="Resumen">
+            <a class="card" href="#preparacion"><strong>Empezar pruebas</strong><br><span class="muted">Datos ficticios, orden sugerido y evidencias.</span></a>
+            <a class="card" href="#privado"><strong>Flujos de conductor</strong><br><span class="muted">Privado, urbano, actividad y Express.</span></a>
+            <a class="card" href="#copilot"><strong>Copilot</strong><br><span class="muted">Texto, voz, deducciones, estrategias y límites.</span></a>
+            <a class="card" href="#refs"><strong>Refs rojas</strong><br><span class="muted">Cómo pedir cambios exactos en Buzz.</span></a>
+          </div>
+        </section>
+
+        <section class="doc" id="vision" data-search="proyecto vision goal audiencias testers stakeholders creadores">
+          <h2>Proyecto</h2>
+          <p>EasyPark valida una experiencia móvil para encontrar estacionamiento por destino, comparar alternativas y distinguir claramente entre reserva privada, estacionamiento urbano, orientación de parking tradicional/calle y Express simulado.</p>
+          <div class="callout ok"><strong>Resultado esperado:</strong> cualquier tester debe entender qué puede probar, qué es ficticio y qué etiqueta usar para reportar feedback.</div>
+          <h3>Audiencias</h3><ul><li><strong>Testers:</strong> recorren flujos y capturan evidencia.</li><li><strong>Stakeholders:</strong> revisan alcance y riesgos.</li><li><strong>Creadores:</strong> implementan cambios guiados por refs estables.</li></ul>
+        </section>
+        <section class="doc" id="roles" data-search="roles conductor anfitrion operador tipos oferta privado urbano tradicional calle express">
+          <h2>Roles y tipos de oferta</h2>
+          <p><strong>Conductor:</strong> busca, usa Copilot, paga con tarjeta ficticia y controla sesiones. <strong>Anfitrión:</strong> carga cocheras privadas para revisión. <strong>Operación:</strong> revisa publicaciones, incidentes y liquidaciones manuales.</p>
+          <ul><li>Privada reservable: entra a checkout privado.</li><li>Urbana: zona/código/duración y sesión ordinaria.</li><li>Tradicional/calle: orientación sin checkout privado.</li><li>Express: barrera compatible ficticia separada de la reserva privada.</li></ul>
+        </section>
+        <section class="doc" id="arquitectura" data-search="arquitectura limites simulacion deterministico local investigacion no copiar">
+          <h2>Arquitectura y límites</h2>
+          <p>Todo corre localmente en HTML/CSS/JavaScript. No hay backend, LLM, pagos reales, SMS, cámara, operador, fiscalización ni integración municipal.</p>
+          <div class="callout warn"><strong>Prototipo público:</strong> usá solo datos ficticios. No ingreses tarjeta real, CVV, CBU/CVU, identificación fiscal, patente real, ubicación real, cámara ni credenciales.</div>
+          <p>La referencia pública de EasyPark España se usa solo como inspiración de patrones. No se copian textos, activos, marca visual ni trade dress.</p>
+        </section>
+
+        <section class="doc" id="preparacion" data-search="como probar preparacion navegadores movil ficticios reset localstorage">
+          <h2>Cómo probar</h2>
+          <h3>Preparación</h3><ol><li>Abrí <a href="index.html">index.html</a> en navegador moderno móvil o desktop responsive.</li><li>Activá etiquetas si necesitás refs.</li><li>Usá datos ficticios: <code>TEST-123</code>, alias demo y tarjetas de prueba predefinidas.</li></ol>
+          <h3>Reset local</h3><p>Para empezar limpio, abrí la consola del navegador y ejecutá <code>localStorage.clear()</code>; luego recargá.</p>
+          <h3>Evidencia útil</h3><p>Capturá pantalla, ref visible, pasos, resultado esperado vs observado, navegador y tamaño de pantalla.</p>
+        </section>
+        <section class="doc" id="home-help" data-search="home inicio ayuda visible help portal HELP-PORTAL-01 APP-HOME-01 REF-GUIDE-01">
+          <h2>Inicio del prototipo y ayuda visible</h2><dl><dt>Prerequisitos</dt><dd>Abrir <a href="index.html">index.html</a> con etiquetas visibles si se necesita reportar feedback.</dd><dt>Pasos</dt><dd>Verificar <span class="ref">APP-HOME-01</span>, la guía <span class="ref">REF-GUIDE-01</span>, el enlace superior “Ayuda” y la tarjeta <span class="ref">HELP-PORTAL-01</span>.</dd><dt>Resultado esperado</dt><dd>El enlace de Ayuda abre este portal en <code>help.html</code> sin depender de JavaScript ni del wizard compacto heredado.</dd><dt>Refs relevantes</dt><dd><span class="ref">APP-HOME-01</span>, <span class="ref">REF-GUIDE-01</span>, <span class="ref">HELP-PORTAL-01</span>.</dd><dt>Casos límite</dt><dd>Si se ocultan etiquetas, la navegación debe seguir funcionando y el enlace debe conservar destino local.</dd></dl>
+        </section>
+        <section class="doc" id="orden-pruebas" data-search="orden sugerido pruebas accesibilidad responsive produccion supuesto">
+          <h2>Orden sugerido</h2>
+          <ol><li>Onboarding y cuenta.</li><li>Conductor privado completo.</li><li>Urbano ordinario y actividad.</li><li>Copilot con refinamientos.</li><li>Proveedor y operación.</li><li>Express con consentimiento y fallback.</li><li>Revisión responsive, teclado, foco visible y lectura de labels.</li></ol>
+          <div class="callout"><strong>Supuesto de producción:</strong> lo que acá es local/ficticio necesitaría backend, validaciones, permisos y auditoría reales.</div>
+        </section>
+        <section class="doc" id="feedback" data-search="feedback buzz plantilla referencias">
+          <h2>Plantilla exacta de feedback</h2>
+          <pre>Ref: DRV-ZONE-01
+Contexto: iPhone ancho 390px, flujo urbano.
+Esperado: ver límite regulatorio antes de iniciar.
+Observado: ...
+Cambio pedido: ...
+Evidencia: captura o pasos.</pre>
+        </section>
+
+        <section class="doc" id="onboarding" data-search="onboarding ONB bienvenida rol verificacion perfil setup preferencias done">
+          <h2>Onboarding</h2>
+          <div class="topic"><h3>Alta guiada</h3><dl><dt>Prerequisitos</dt><dd>Datos ficticios y código visible 2468.</dd><dt>Pasos</dt><dd><span class="ref">ONB-WELCOME-01</span> → <span class="ref">ONB-ROLE-01</span> → <span class="ref">ONB-VERIFY-01</span> → <span class="ref">ONB-PROFILE-01</span> → <span class="ref">ONB-SETUP-01</span> → <span class="ref">ONB-PREFS-01</span> → <span class="ref">ONB-DONE-01</span>.</dd><dt>Resultado esperado</dt><dd>Guarda estado ficticio y deriva a conductor o anfitrión.</dd><dt>Casos límite</dt><dd>Código incorrecto bloquea avance.</dd></dl></div>
+        </section>
+        <section class="doc" id="cuenta" data-search="account cuenta perfil vehiculo pago payout business prefs summary">
+          <h2>Cuenta segura</h2><dl><dt>Prerequisitos</dt><dd>Usar solo perfil, contacto, patente y comercio ficticios.</dd><dt>Pasos</dt><dd><span class="ref">ACCOUNT-HOME-01</span> → <span class="ref">ACCOUNT-PROFILE-01</span> → <span class="ref">ACCOUNT-VEHICLE-01</span> → <span class="ref">ACCOUNT-PAYMENT-01</span> → <span class="ref">ACCOUNT-PAYOUT-01</span> → <span class="ref">ACCOUNT-BUSINESS-01</span> → <span class="ref">ACCOUNT-PREFS-01</span> → <span class="ref">ACCOUNT-SUMMARY-01</span>.</dd><dt>Resultado esperado</dt><dd>Persiste solo perfil, preferencias y metadatos ficticios en localStorage.</dd><dt>Refs relevantes</dt><dd><span class="ref">ACCOUNT-PAYMENT-01</span>, <span class="ref">ACCOUNT-PAYOUT-01</span>, <span class="ref">ACCOUNT-SUMMARY-01</span>.</dd><dt>Casos límite</dt><dd>No existen campos de PAN, CVV, vencimiento, CBU/CVU completo, identificación fiscal real, clave o secreto.</dd></dl></section>
+        <section class="doc" id="privado" data-search="driver privado manual resultados detalle pago confirmacion recibo sesion">
+          <h2>Conductor: cochera privada</h2><dl><dt>Prerequisitos</dt><dd>Elegir “Cochera privada reservable”.</dd><dt>Pasos</dt><dd><span class="ref">DRV-START-01</span>, <span class="ref">DRV-TIME-01</span>, <span class="ref">DRV-RESULTS-01</span>, <span class="ref">DRV-DETAIL-01</span>, <span class="ref">DRV-PAYMENT-01</span>, <span class="ref">DRV-CONFIRM-01</span>, <span class="ref">DRV-RECEIPT-01</span>, <span class="ref">DRV-SESSION-01</span>.</dd><dt>Resultado esperado</dt><dd>Solo una opción privada publicada entra a checkout; rechazo de pago o hold vencido bloquea recibo.</dd><dt>Edge cases</dt><dd>Parking tradicional/calle muestran orientación y vuelven a resultados.</dd></dl></section>
+        <section class="doc" id="urbano" data-search="urbano zona vehiculo duracion limite sesion operador alertas extension fin">
+          <h2>Conductor: zona urbana</h2><dl><dt>Prerequisitos</dt><dd>Elegir “Zona urbana o parking común”.</dd><dt>Pasos</dt><dd><span class="ref">DRV-ZONE-01</span>, <span class="ref">DRV-VEHICLE-01</span>, <span class="ref">DRV-DURATION-01</span>, <span class="ref">DRV-LIMIT-01</span>, <span class="ref">SESSION-ACTIVE-01</span>.</dd><dt>Resultado esperado</dt><dd>Duración se clampa al máximo; sesión muestra operador/control ficticio <span class="ref">SESSION-OPERATOR-01</span>, alerta <span class="ref">SESSION-ALERT-01</span>, extensión <span class="ref">SESSION-EXTEND-01</span> y fin temprano <span class="ref">SESSION-END-01</span>.</dd><dt>Edge cases</dt><dd>Extensión más allá del máximo queda bloqueada.</dd></dl></section>
+        <section class="doc" id="actividad" data-search="actividad historial recibos payment status download empty repeated receipt">
+          <h2>Actividad y recibos</h2><dl><dt>Prerequisitos</dt><dd>Puede probarse sin sesiones o después de finalizar una sesión urbana/Express.</dd><dt>Pasos</dt><dd><span class="ref">ACTIVITY-HOME-01</span> → <span class="ref">ACTIVITY-HISTORY-01</span> → <span class="ref">ACTIVITY-RECEIPT-01</span>.</dd><dt>Resultado esperado</dt><dd>Muestra sesión actual, historial local, estado de pago simulado y descarga de PDF simulada sin crear archivo real.</dd><dt>Refs relevantes</dt><dd><span class="ref">ACTIVITY-HOME-01</span>, <span class="ref">ACTIVITY-HISTORY-01</span>, <span class="ref">ACTIVITY-RECEIPT-01</span>.</dd><dt>Casos límite</dt><dd>Con historial vacío muestra estado vacío útil; el guardado repetido de recibo Express debe ser idempotente y no duplicar movimientos.</dd></dl></section>
+        <section class="doc" id="copilot" data-search="copilot texto chips voz fallback deducciones estrategias handoff advisory limites guidance checkout">
+          <h2>Copilot</h2><dl><dt>Prerequisitos</dt><dd>Entrar desde “Usar EasyPark Copilot”; voz depende del navegador.</dd><dt>Pasos</dt><dd>Usar texto/chips en <span class="ref">AI-CHAT-01</span>, probar voz en <span class="ref">AI-VOICE-01</span>, revisar <span class="ref">AI-CONTEXT-01</span>, itinerario, estrategias y handoff.</dd><dt>Resultado esperado</dt><dd>Deduce preferencias por reglas locales, permite editar contexto y deriva a detalle solo si la opción es reservable publicada.</dd><dt>Refs relevantes</dt><dd><span class="ref">AI-ENTRY-01</span>, <span class="ref">AI-CHAT-01</span>, <span class="ref">AI-VOICE-01</span>, <span class="ref">AI-CONTEXT-01</span>, <span class="ref">AI-STRATEGY-01</span>, <span class="ref">AI-HANDOFF-01</span>.</dd><dt>Casos límite</dt><dd>Si SpeechRecognition no existe, debe explicar fallback a texto; opciones de orientación no entran a checkout; Copilot no reserva, no cobra y no emite recibos.</dd></dl></section>
+        <section class="doc" id="proveedor" data-search="provider anfitrion listing location space availability tariff payout review pending escaping">
+          <h2>Anfitrión</h2><dl><dt>Prerequisitos</dt><dd>Usar dirección, instrucciones y tarifa ficticias.</dd><dt>Pasos</dt><dd><span class="ref">PROV-LOCATION-01</span> → <span class="ref">PROV-SPACE-01</span> → <span class="ref">PROV-AVAIL-01</span> → <span class="ref">PROV-TARIFF-01</span> → <span class="ref">PROV-PAYMENT-01</span> → <span class="ref">PROV-REVIEW-01</span>.</dd><dt>Resultado esperado</dt><dd>Crea una cochera local para el ranking; queda publicada o pendiente según estado elegido; cobro y revisión son simulados.</dd><dt>Refs relevantes</dt><dd><span class="ref">PROV-LOCATION-01</span>, <span class="ref">PROV-TARIFF-01</span>, <span class="ref">PROV-REVIEW-01</span>.</dd><dt>Casos límite</dt><dd>Estado pendiente debe aparecer en operación; textos de usuario se escapan antes de mostrarse para evitar HTML inyectado.</dd></dl></section>
+        <section class="doc" id="operacion" data-search="operator ops pending incidents settlements empty manual only">
+          <h2>Operación</h2><dl><dt>Prerequisitos</dt><dd>Puede probarse con o sin cocheras creadas por anfitrión.</dd><dt>Pasos</dt><dd><span class="ref">OPS-HOME-01</span> → <span class="ref">OPS-PENDING-01</span> → <span class="ref">OPS-INCIDENTS-01</span> → <span class="ref">OPS-SETTLEMENTS-01</span>.</dd><dt>Resultado esperado</dt><dd>Permite revisar colas, incidentes y liquidaciones ficticias en modo lectura/simulación.</dd><dt>Refs relevantes</dt><dd><span class="ref">OPS-PENDING-01</span>, <span class="ref">OPS-INCIDENTS-01</span>, <span class="ref">OPS-SETTLEMENTS-01</span>.</dd><dt>Casos límite</dt><dd>Colas vacías deben explicar que no hay envíos; acciones son manuales/simuladas y no aprueban, liquidan ni notifican sistemas reales.</dd></dl></section>
+        <section class="doc" id="express" data-search="express consentimiento fallback entrada sesion salida camara repeated save idempotence">
+          <h2>Express</h2><dl><dt>Prerequisitos</dt><dd>Usar patente ficticia y sitio compatible ficticio.</dd><dt>Pasos</dt><dd><span class="ref">EXPRESS-HOME-01</span> → <span class="ref">EXPRESS-CONSENT-01</span> → <span class="ref">EXPRESS-ENTRY-01</span> → <span class="ref">EXPRESS-SESSION-01</span> → <span class="ref">EXPRESS-EXIT-01</span>.</dd><dt>Resultado esperado</dt><dd>Simula entrada/salida, termina sesión y guarda recibo ficticio en actividad.</dd><dt>Refs relevantes</dt><dd><span class="ref">EXPRESS-CONSENT-01</span>, <span class="ref">EXPRESS-ENTRY-01</span>, <span class="ref">EXPRESS-SESSION-01</span>, <span class="ref">EXPRESS-EXIT-01</span>.</dd><dt>Casos límite</dt><dd>Consentimiento sin marcar usa fallback manual; guardado repetido de recibo debe ser idempotente; no hay cámara, operador ni lectura real.</dd></dl></section>
+
+        <section class="doc" id="refs" data-search="creadores refs catalogo home help onb account drv session activity ai prov ops express">
+          <h2>Para creadores: refs estables</h2><p>Las etiquetas rojas tienen forma <code>PREFIJO-AREA-01</code>. Catálogo actual: APP/HOME, REF/HELP, ONB, ACCOUNT, DRV, SESSION, ACTIVITY, AI, PROV, OPS, EXPRESS.</p><p>Refs de entrada global: <span class="ref">APP-HOME-01</span>, <span class="ref">REF-GUIDE-01</span>, <span class="ref">HELP-PORTAL-01</span>.</p><div class="callout">Ejemplo: “Cambiar <span class="ref">EXPRESS-CONSENT-01</span> para hacer más claro que no usa cámara real”.</div></section>
+        <section class="doc" id="workflow" data-search="workflow proponer implementar verificar documentar git buzz">
+          <h2>Workflow de cambio</h2><ol><li>Proponer con ref, problema y resultado esperado.</li><li>Implementar en el archivo permitido.</li><li>Verificar sintaxis, refs, límites de seguridad y flujos existentes.</li><li>Actualizar README o ayuda si cambia comportamiento.</li><li>Usar Git como fuente de verdad y Buzz para coordinación/ejecución.</li></ol></section>
+        <section class="doc" id="checklist" data-search="checklist nueva pantalla ref seguridad transaccion">
+          <h2>Checklist para nueva pantalla</h2><ul><li>Agregar ref única y documentarla.</li><li>Mantener un CTA contextual por pantalla.</li><li>Escapar salida de usuario antes de insertarla.</li><li>No crear campos sensibles ni integraciones reales.</li><li>No permitir que Copilot/guía urbana/Express escriban verdad de reserva privada.</li><li>Ejecutar verificación y registrar riesgos.</li></ul></section>
+      </main>
+      <aside class="toc" aria-label="Tabla de contenido"><h2>En esta página</h2><a href="#vision">Proyecto</a><a href="#preparacion">Cómo probar</a><a href="#onboarding">Casos de uso</a><a href="#refs">Creadores</a></aside>
+    </div>
+    <footer>EasyPark prototype docs · Página estática local · <a href="index.html">Volver al prototipo</a></footer>
+    <script>
+      const sideNav = document.getElementById('sideNav');
+      const menuBtn = document.getElementById('menuBtn');
+      const searchInput = document.getElementById('searchInput');
+      const clearSearch = document.getElementById('clearSearch');
+      const resultCount = document.getElementById('resultCount');
+      const emptyState = document.getElementById('emptyState');
+      const sections = Array.from(document.querySelectorAll('main section.doc[id]'));
+      const allSections = Array.from(document.querySelectorAll('main section[id]'));
+      const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+      menuBtn.addEventListener('click', () => {
+        const open = sideNav.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+      function normalize(value) { return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+      function applySearch() {
+        const query = normalize(searchInput.value.trim());
+        let visible = 0;
+        sections.forEach(section => {
+          const haystack = normalize(section.textContent + ' ' + (section.dataset.search || ''));
+          const match = !query || haystack.includes(query);
+          section.classList.toggle('hidden-by-search', !match);
+          if (match) visible += 1;
+        });
+        navLinks.forEach(link => {
+          const target = document.querySelector(link.getAttribute('href'));
+          link.hidden = Boolean(query && target && target.classList.contains('hidden-by-search'));
+        });
+        resultCount.textContent = query ? `${visible} tema(s) encontrados.` : 'Mostrando todos los temas.';
+        emptyState.classList.toggle('show', visible === 0);
+      }
+      searchInput.addEventListener('input', applySearch);
+      clearSearch.addEventListener('click', () => { searchInput.value = ''; applySearch(); searchInput.focus(); });
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach(link => link.setAttribute('aria-current', String(link.getAttribute('href') === `#${entry.target.id}`)));
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      allSections.forEach(section => observer.observe(section));
+      navLinks.forEach(link => link.addEventListener('click', () => { sideNav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }));
+    </script>
+  </body>
+</html>
