@@ -41,7 +41,7 @@ Route: delegated writer; multi-file implementation trigger.
 - [x] Add an unavailable-space recovery flow with simulated relocation, refund, or operator escalation.
 - [x] Keep recovery idempotent and record a single local incident/result.
 
-Status: implementation and static verification passed; work-unit commit awaits explicit publication approval.
+Status: complete in work-unit commit `8c8cec0`; implementation and static verification passed.
 
 ### T002 — Enrich supply, filters, and host controls
 
@@ -52,7 +52,7 @@ Route: delegated writer; multi-file implementation trigger.
 - [x] Use safe presets or escaped fictitious text; no real uploads or locations.
 - [x] Surface the added metadata in ranking/results/detail without making unsupported guarantees.
 
-Status: implementation and static verification passed; work-unit commit awaits explicit publication approval.
+Status: complete in work-unit commit `8c8cec0`; implementation and static verification passed.
 
 ### T003 — Add structured incidents and operator recovery
 
@@ -62,7 +62,7 @@ Route: delegated writer; multi-file implementation trigger.
 - [x] Show severity, recommended next action, deterministic recovery status, and local reference ID.
 - [x] Extend operator view with incident triage and resolution state while keeping actions simulated/manual.
 
-Status: implementation and static verification passed; work-unit commit awaits explicit publication approval.
+Status: complete in work-unit commit `8c8cec0`; implementation and static verification passed.
 
 ### T004 — Add open-license animated visuals
 
@@ -73,7 +73,7 @@ Route: delegated writer; multi-file implementation trigger.
 - [x] Ensure responsive sizing, alt treatment, no layout shift, reduced-motion fallback, and no remote requests.
 - [x] Update help and README with asset provenance, animation accessibility, and new use cases/refs.
 
-Status: implementation and static verification passed; work-unit commit awaits explicit publication approval.
+Status: complete in work-unit commit `8c8cec0`; implementation and static verification passed.
 
 ### T005 — Verify and publish
 
@@ -81,7 +81,7 @@ Route: delegated read-only verification; publication remains a human decision.
 
 - [ ] Run HTML/script/link/ref/license/checksum/accessibility/reduced-motion/security/transaction-boundary/regression checks. Static checks passed; browser, keyboard, screen-reader, computed-contrast, and actual reduced-motion behavior remain pending and were explicitly accepted as publication risk by the user.
 - [x] Obtain independent read-only verification.
-- [ ] Commit, publish, and verify Pages plus local asset delivery. Publication was explicitly authorized by the user.
+- [ ] Publish and verify Pages plus local asset delivery. Work-unit commit `8c8cec0` was created after explicit user authorization.
 
 ## Verification evidence
 
@@ -93,8 +93,10 @@ Route: delegated read-only verification; publication remains a human decision.
 - Independent result: `PARTIAL` only because manual browser/accessibility checks are unavailable; no blocking static defect found.
 - Pending manual checks: mobile/browser click-through, keyboard traversal, screen reader, computed contrast, and browser reduced-motion behavior.
 - Manual-test risk: explicitly accepted by the user for this publication.
-- Commit/push/Pages deployment: authorized, not yet run.
+- Native RDD review: attempted for committed range `main..8c8cec0`, tier `medium`; unavailable because no model is configured for `review-reliability`. The independent read-only verification remains the fallback evidence.
+- Work-unit commit: `8c8cec0` (`feat: add trusted parking pass and visual flows`).
+- Push/Pages deployment: authorized, not yet run.
 
 ## Next step
 
-Create the work-unit commit, run the native review path if available, push the authorized branch, and verify Pages plus local asset delivery.
+Commit this verification record, push the authorized branch, and verify Pages plus local asset delivery.
