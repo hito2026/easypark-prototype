@@ -44,6 +44,6 @@ Adapt public parking-product patterns into EasyPark's Spanish prototype so teste
 
 - [x] Run whitespace, embedded-script syntax, structural-flow, Spanish UI, secret/sensitive-input, and transaction-boundary checks.
 - [x] Obtain independent read-only verification.
-- [ ] Request publication approval, commit, publish, and verify GitHub Pages.
+- [x] Request publication approval, commit, publish, and verify GitHub Pages.
 
-Evidence: `git diff --check`, embedded `node --check`, 17-reference structural checks, sensitive-input scan, secret scan, and transaction-boundary assertions passed. Independent read-only verification returned PASS with no blocking defects. Focused parent corrections made operator/control and Express receipt IDs stable and prevented duplicate history entries or extensions after session end. Residual risk: static verification only; browser click-through is not automated.
+Evidence: user approved publication; `git diff --check`, embedded `node --check`, 17-reference structural checks, sensitive-input scan, secret scan, and transaction-boundary assertions passed. Independent read-only verification returned PASS with no blocking defects. Focused parent corrections made operator/control and Express receipt IDs stable and prevented duplicate history entries or extensions after session end. Native RDD review was unavailable because no model is configured for `review-reliability`. Work-unit commit: `141b6beecc160cf48490e0f7adb8b13c4cc0250f` (`feat: add expanded parking session flows`). Residual risk: static verification only; browser click-through is not automated.
