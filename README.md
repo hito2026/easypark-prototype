@@ -12,12 +12,14 @@ This prototype simulates:
 - step-by-step operator workflows for dashboard, pending listings, incidents, and manual settlements;
 - destination-first search with date/time, duration, vehicle, and ranking filters;
 - a mock map, result cards, details, ratings, coverage, instructions, and payment labels;
-- private-space reservation with hold, fee, payment approval/rejection, expiration, and active session states;
+- safe mock payment-method selection using preset test cards while persisting only fictitious brand/last-four metadata;
+- explicit service confirmation with hold, fee, total, automatic mock charge, reservation issuance, and payment rejection/expiration states;
+- automatic mock payment receipt followed by the active parking session;
 - provider spaces entering the mock selection/ranking algorithm;
 - a guided demo and contextual AI copilot explanation with no transactional authority;
 - visible reference labels such as `DRV-RESULTS-01`, `PROV-TARIFF-01`, and `OPS-PENDING-01` so Buzz users and agents can request precise changes.
 
-It intentionally has no backend, no production credentials, no real payment integration, and no persistent server data. Provider spaces are stored only in the current browser with `localStorage`.
+It intentionally has no backend, no production credentials, no real payment integration, and no persistent server data. Never enter real card information: payment cards are fixed test options and only fictitious brand/last-four display metadata is stored locally. Provider spaces are stored only in the current browser with `localStorage`.
 
 ## Reference labels
 
