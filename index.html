@@ -16,17 +16,19 @@
       .card { background: white; border: 1px solid #dde7f7; border-radius: 22px; padding: 16px; box-shadow: 0 10px 30px #d7e1f033; }
       .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
       .muted { color: var(--muted); font-size: 13px; line-height: 1.4; }
-      input, select, button { width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px; font: inherit; }
+      input, select, textarea, button { width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px; font: inherit; }
+      textarea { min-height: 74px; resize: vertical; }
       button { background: var(--brand); color: white; border: 0; font-weight: 700; cursor: pointer; }
       button.secondary { background: #e0ecff; color: #174ea6; }
-      .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-      .tabs button { padding: 10px 4px; font-size: 12px; background: white; color: var(--muted); border: 1px solid #dde7f7; }
+      .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+      .tabs button { padding: 10px 4px; font-size: 11px; background: white; color: var(--muted); border: 1px solid #dde7f7; }
       .tabs button.active { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
       .option { display: grid; gap: 8px; border: 1px solid #e2e8f0; border-radius: 18px; padding: 14px; margin-top: 10px; }
       .badge { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 700; }
       .price { font-size: 20px; font-weight: 800; }
       .steps { display: grid; gap: 8px; }
       .step { padding: 10px 12px; border-radius: 14px; background: #eff6ff; font-size: 14px; }
+      .grid { display: grid; gap: 10px; }
       .hidden { display: none; }
     </style>
   </head>
@@ -47,15 +49,32 @@
 
         <nav class="tabs" aria-label="Prototype sections">
           <button class="active" data-tab="searchTab">Search</button>
-          <button data-tab="checkoutTab">Checkout</button>
+          <button data-tab="hostTab">Host</button>
+          <button data-tab="checkoutTab">Pay</button>
           <button data-tab="sessionTab">Session</button>
-          <button data-tab="copilotTab">Copilot</button>
+          <button data-tab="copilotTab">AI</button>
         </nav>
 
         <section id="searchTab" class="card tab">
           <h2>Best options</h2>
-          <p class="muted">Private spaces can be reserved in-app. Parkings and street spots are guidance-only in this prototype.</p>
+          <p class="muted">Private provider spaces enter the mock ranking immediately after signup. Parkings and street spots remain guidance-only.</p>
           <div id="options"></div>
+        </section>
+
+        <section id="hostTab" class="card tab hidden">
+          <h2>Offer your space</h2>
+          <p class="muted">Prototype-only form. It saves mock provider spaces in this browser and adds them to the selection algorithm.</p>
+          <div class="grid" style="margin-top:12px">
+            <label class="muted">Parking location<input id="hostLocation" placeholder="Street, neighborhood, reference" /></label>
+            <label class="muted">Comment for drivers<textarea id="hostComment" placeholder="Access instructions, size limits, security notes"></textarea></label>
+            <label class="muted">Available days and hours<input id="hostSchedule" value="Mon-Fri 08:00-20:00" /></label>
+            <label class="muted">Tariff<select id="hostTariff"><option value="$1,800 fixed 2h">Fixed: $1,800 / 2h</option><option value="$2,500 fixed 4h">Fixed: $2,500 / 4h</option><option value="$7,000 full day">Full day: $7,000</option><option value="custom">Custom tariff</option></select></label>
+            <label class="muted">Custom tariff<input id="hostCustomTariff" placeholder="Example: $900/hour" /></label>
+            <label class="muted">Payment methods<select id="hostPayment"><option>Mercado Pago</option><option>Cash at arrival</option><option>Bank transfer</option><option>Mercado Pago + cash</option></select></label>
+            <button id="addSpace">Add provider space</button>
+            <button class="secondary" id="clearSpaces">Clear mock provider spaces</button>
+          </div>
+          <div id="hostList" style="margin-top:12px"></div>
         </section>
 
         <section id="checkoutTab" class="card tab hidden">
@@ -85,42 +104,59 @@
         <section id="copilotTab" class="card tab hidden">
           <h2>AI copilot mock</h2>
           <p class="muted">The copilot explains options only. It cannot create reservations, payment truth, or settlement records.</p>
-          <div class="option">
-            <strong>Recommendation</strong>
-            <p id="copilotText">Private garage is fastest and reservable. Street option is cheapest but uncertain.</p>
-          </div>
+          <div class="option"><strong>Recommendation</strong><p id="copilotText">Private spaces rank higher when they are close, available, reservable, and priced clearly.</p></div>
         </section>
       </main>
     </div>
     <script>
-      const options = [
-        { id: 'garage-12', kind: 'Private space', title: 'Covered garage near Armenia', meters: 120, price: '$2,100', reservable: true },
-        { id: 'parking-8', kind: 'Traditional parking', title: 'Commercial parking on Honduras', meters: 260, price: '$2,800', reservable: false },
-        { id: 'street-a', kind: 'Street guidance', title: 'Likely street availability near Serrano', meters: 420, price: 'Low', reservable: false }
+      const catalog = [
+        { id: 'garage-12', source: 'EasyPark seed', kind: 'Private space', title: 'Covered garage near Armenia', location: 'Armenia 1500', comment: 'Covered garage with remote gate.', schedule: 'Every day 08:00-22:00', price: '$2,100', payment: 'Mercado Pago', meters: 120, reservable: true },
+        { id: 'parking-8', source: 'Partner info', kind: 'Traditional parking', title: 'Commercial parking on Honduras', location: 'Honduras 4700', comment: 'External payment at parking desk.', schedule: '24h', price: '$2,800', payment: 'On site', meters: 260, reservable: false },
+        { id: 'street-a', source: 'Street guidance', kind: 'Street guidance', title: 'Likely street availability near Serrano', location: 'Serrano area', comment: 'Uncertain public availability.', schedule: 'Now', price: 'Low', payment: 'Street rules', meters: 420, reservable: false }
       ];
       let selected = null;
       const $ = (id) => document.getElementById(id);
+      const storedSpaces = () => JSON.parse(localStorage.getItem('easyparkProviderSpaces') || '[]');
+      const saveSpaces = (spaces) => localStorage.setItem('easyparkProviderSpaces', JSON.stringify(spaces));
+      const rankedOptions = () => [...catalog, ...storedSpaces()].sort((a, b) => Number(b.reservable) - Number(a.reservable) || a.meters - b.meters);
       const show = (name) => document.querySelectorAll('.tab').forEach((tab) => tab.classList.toggle('hidden', tab.id !== name));
-      const render = () => {
-        $('options').innerHTML = options.map((o) => `<article class="option"><div class="row"><span class="badge">${o.kind}</span><span class="price">${o.price}</span></div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.reservable ? 'Reservable with simulated hold and payment.' : 'Guidance only; no in-app transaction.'}</p><button ${o.reservable ? '' : 'class="secondary"'} data-id="${o.id}">${o.reservable ? 'Reserve this space' : 'Navigate only'}</button></article>`).join('');
+      const setActive = (tab) => document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
+      const money = (text) => Number((text || '').replace(/[^0-9]/g, '')) || 2200;
+      const renderOptions = () => {
+        $('options').innerHTML = rankedOptions().map((o) => `<article class="option"><div class="row"><span class="badge">${o.kind}</span><span class="price">${o.price}</span></div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.reservable ? 'Reservable with simulated hold and payment.' : 'Guidance only; no in-app transaction.'}</p><p class="muted"><strong>Where:</strong> ${o.location}<br><strong>When:</strong> ${o.schedule}<br><strong>Payment:</strong> ${o.payment}<br><strong>Note:</strong> ${o.comment}</p><button ${o.reservable ? '' : 'class="secondary"'} data-id="${o.id}">${o.reservable ? 'Reserve this space' : 'Navigate only'}</button></article>`).join('');
         document.querySelectorAll('[data-id]').forEach((button) => button.onclick = () => choose(button.dataset.id));
+        renderHosts();
+      };
+      const renderHosts = () => {
+        const spaces = storedSpaces();
+        $('hostList').innerHTML = spaces.length ? spaces.map((s) => `<div class="option"><strong>${s.title}</strong><p class="muted">${s.location}<br>${s.schedule}<br>${s.price} · ${s.payment}</p></div>`).join('') : '<p class="muted">No provider spaces added in this browser yet.</p>';
       };
       const choose = (id) => {
-        selected = options.find((o) => o.id === id);
-        $('selected').innerHTML = selected.reservable ? `<strong>${selected.title}</strong><br>${selected.price} · ${selected.meters}m from destination` : 'This option is guidance-only; choose a private space for checkout.';
+        selected = rankedOptions().find((o) => o.id === id);
+        $('selected').innerHTML = selected?.reservable ? `<strong>${selected.title}</strong><br>${selected.price} · ${selected.meters}m from destination<br>${selected.payment}` : 'This option is guidance-only; choose a private provider space for checkout.';
         show('checkoutTab'); setActive('checkoutTab');
       };
-      const setActive = (tab) => document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
       document.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => { show(b.dataset.tab); setActive(b.dataset.tab); });
-      $('search').onclick = render;
+      $('search').onclick = renderOptions;
+      $('addSpace').onclick = () => {
+        const tariff = $('hostTariff').value === 'custom' ? $('hostCustomTariff').value.trim() : $('hostTariff').value;
+        const location = $('hostLocation').value.trim();
+        if (!location || !tariff) return alert('Add at least location and tariff.');
+        const distance = 80 + (money(tariff) % 260);
+        const space = { id: `provider-${Date.now()}`, source: 'Provider signup', kind: 'Private space', title: `Provider space near ${location}`, location, comment: $('hostComment').value.trim() || 'No extra instructions yet.', schedule: $('hostSchedule').value.trim() || 'Schedule pending', price: tariff, payment: $('hostPayment').value, meters: distance, reservable: true };
+        saveSpaces([space, ...storedSpaces()]);
+        $('hostLocation').value = ''; $('hostComment').value = ''; $('hostCustomTariff').value = '';
+        renderOptions(); show('searchTab'); setActive('searchTab');
+      };
+      $('clearSpaces').onclick = () => { saveSpaces([]); renderOptions(); };
       $('reserve').onclick = () => {
         if (!selected?.reservable) return;
-        $('hold').textContent = 'active for 05:00'; $('payment').textContent = 'approved in sandbox'; $('reservation').textContent = 'confirmed';
+        $('hold').textContent = 'active for 05:00'; $('payment').textContent = `approved via ${selected.payment}`; $('reservation').textContent = 'confirmed';
         $('sessionState').textContent = `${selected.title} reserved. Session is active and auditable.`; $('remaining').textContent = '1h 58m';
         show('sessionTab'); setActive('sessionTab');
       };
       $('endSession').onclick = () => { $('sessionState').textContent = 'Session ended. Settlement remains a manual operations task.'; $('remaining').textContent = 'ended'; };
-      render();
+      renderOptions();
     </script>
   </body>
 </html>
