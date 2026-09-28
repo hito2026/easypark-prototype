@@ -85,11 +85,21 @@ Status: complete in work-unit commit `7192b8b`; filled PDF SHA-256 is `595aa42ed
 
 ### T005 — Verify and publish
 
-- [ ] Verify blank-template output remains deterministic and unchanged when the generator runs with no arguments.
-- [ ] Verify filled Markdown contains no accidental unresolved template braces; deliberate TODOs remain explicit.
-- [ ] Verify generated PDF metadata, page count, text extraction, hashes, links, refs, and public safety language.
-- [ ] Obtain independent read-only verification.
+- [x] Verify blank-template output remains deterministic and unchanged when the generator runs with no arguments.
+- [x] Verify filled Markdown contains no accidental unresolved template braces; deliberate TODOs remain explicit.
+- [x] Verify generated PDF metadata, page count, text extraction, hashes, links, refs, and public safety language.
+- [x] Obtain independent read-only verification.
 - [ ] Request final approval before push/publication and verify GitHub Pages only if approved.
+
+Verification evidence:
+
+- Independent read-only result: PASS after commit `13f3398` marked PDFs binary and made `git diff --check main...HEAD` pass.
+- Blank PDF SHA-256: `f95973027adf3e3ebf21be883d6e09de03b10ff45ea232a5c77095658983e630`.
+- Filled PDF SHA-256: `595aa42ed2d1c9e1a10393d6e75a1ffadcbbb6c580868b1c8bdbc9a4a86e25f0`; 101,634 bytes; 35 pages.
+- Filled Markdown: sections 0–12, zero template braces, 140 scanned unique SRS-style IDs, and all 46 FR, 10 DR, and 17 NFR rows include acceptance/evidence.
+- Help/README paths, refs, byte labels, local links, embedded JavaScript, generator validation, metadata, and text extraction passed.
+- Native RDD review preflight stopped with `lens_context_budget_exceeded`; no lineage or review authority was created. Independent verification remains the available review evidence.
+- Deferred checks: browser/mobile, keyboard, screen reader, computed contrast, real voice behavior, bottom-sheet scrolling, and actual reduced-motion behavior.
 
 ## Acceptance criteria
 
@@ -104,8 +114,8 @@ Status: complete in work-unit commit `7192b8b`; filled PDF SHA-256 is `595aa42ed
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 is complete across `eb704f6` and `6aca6dd`; T004 is complete in `7192b8b`. Independent T005 verification found Git treating generated PDFs as text during `diff --check`; `.gitattributes` now marks PDFs binary and awaits verification.
+Exploration and repository mapping complete. T001–T004 are committed. T005 independent verification passed after the PDF binary-attribute fix in `13f3398`. Native RDD review could not start because the accumulated candidate exceeded its context budget; no authority was created. Final push/publication approval is pending.
 
 ## Next step
 
-Commit the PDF binary-attribute fix, rerun independent verification, then run the native review preflight before requesting final publication approval.
+Record verification evidence, then request the user's explicit decision on integration, push, and Pages publication.
