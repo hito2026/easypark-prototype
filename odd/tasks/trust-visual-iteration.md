@@ -81,7 +81,7 @@ Route: delegated read-only verification; publication remains a human decision.
 
 - [ ] Run HTML/script/link/ref/license/checksum/accessibility/reduced-motion/security/transaction-boundary/regression checks. Static checks passed; browser, keyboard, screen-reader, computed-contrast, and actual reduced-motion behavior remain pending and were explicitly accepted as publication risk by the user.
 - [x] Obtain independent read-only verification.
-- [ ] Publish and verify Pages plus local asset delivery. Work-unit commit `8c8cec0` was created after explicit user authorization.
+- [x] Publish and verify Pages plus local asset delivery. Work-unit commit `8c8cec0` and verification commit `b5731b0` were published after explicit user authorization.
 
 ## Verification evidence
 
@@ -95,8 +95,12 @@ Route: delegated read-only verification; publication remains a human decision.
 - Manual-test risk: explicitly accepted by the user for this publication.
 - Native RDD review: attempted for committed range `main..8c8cec0`, tier `medium`; unavailable because no model is configured for `review-reliability`. The independent read-only verification remains the fallback evidence.
 - Work-unit commit: `8c8cec0` (`feat: add trusted parking pass and visual flows`).
-- Push/Pages deployment: authorized, not yet run.
+- Verification commit: `b5731b0` (`chore: record trust iteration verification`).
+- GitHub Pages run `36449720045`: completed successfully for `b5731b0`; deployment `6714824326` succeeded.
+- Public HTTP/MIME checks: `/`, `/help.html`, `parking.svg`, `LICENSE.txt`, and `ATTRIBUTION.md` returned HTTP 200 with expected content types.
+- Public refs: `PARKING-PASS-01`, `INCIDENT-HOME-01`, `DRV-SERVICES-01`, `PROV-AMENITIES-01`, and `MEDIA-CREDITS-01` are present.
+- Public/local SHA-256: `parking.svg`, `LICENSE.txt`, and `ATTRIBUTION.md` match byte-for-byte.
 
 ## Next step
 
-Commit this verification record, push the authorized branch, and verify Pages plus local asset delivery.
+Run the explicitly deferred manual browser/accessibility checks in a future testing pass; no implementation or publication step remains pending.
