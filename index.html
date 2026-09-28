@@ -5,158 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EasyPark Prototype</title>
     <style>
-      :root { color-scheme: light; font-family: Inter, system-ui, sans-serif; --brand: #2563eb; --ink: #172033; --muted: #667085; --bg: #eef4ff; }
-      * { box-sizing: border-box; }
-      body { margin: 0; background: var(--bg); color: var(--ink); }
-      .phone { max-width: 430px; min-height: 100vh; margin: 0 auto; background: #f8fbff; box-shadow: 0 0 50px #b7c5e0; }
-      header { padding: 22px 20px 12px; background: linear-gradient(135deg, #1d4ed8, #38bdf8); color: white; border-radius: 0 0 28px 28px; }
-      h1, h2, h3, p { margin: 0; }
-      h1 { font-size: 28px; } h2 { font-size: 22px; margin-bottom: 12px; } h3 { font-size: 16px; }
-      main { padding: 18px; display: grid; gap: 16px; }
-      .card { background: white; border: 1px solid #dde7f7; border-radius: 22px; padding: 16px; box-shadow: 0 10px 30px #d7e1f033; }
-      .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
-      .muted { color: var(--muted); font-size: 13px; line-height: 1.4; }
-      input, select, textarea, button { width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px; font: inherit; }
-      textarea { min-height: 74px; resize: vertical; }
-      button { background: var(--brand); color: white; border: 0; font-weight: 700; cursor: pointer; }
-      button.secondary { background: #e0ecff; color: #174ea6; }
-      .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-      .tabs button { padding: 10px 4px; font-size: 11px; background: white; color: var(--muted); border: 1px solid #dde7f7; }
-      .tabs button.active { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
-      .option { display: grid; gap: 8px; border: 1px solid #e2e8f0; border-radius: 18px; padding: 14px; margin-top: 10px; }
-      .badge { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 700; }
-      .price { font-size: 20px; font-weight: 800; }
-      .steps { display: grid; gap: 8px; }
-      .step { padding: 10px 12px; border-radius: 14px; background: #eff6ff; font-size: 14px; }
-      .grid { display: grid; gap: 10px; }
-      .hidden { display: none; }
+      :root { font-family: Inter, system-ui, sans-serif; color: #172033; background: #eaf1ff; --brand:#2563eb; --soft:#e0ecff; --muted:#667085; --ok:#059669; --warn:#d97706; --bad:#dc2626; }
+      * { box-sizing: border-box; } body { margin: 0; background: var(--soft); } button, input, select, textarea { font: inherit; }
+      .phone { max-width: 430px; min-height: 100vh; margin: auto; background: #f8fbff; box-shadow: 0 0 60px #b6c5df; }
+      header { padding: 22px 18px 14px; color: white; background: linear-gradient(135deg,#1d4ed8,#38bdf8); border-radius: 0 0 28px 28px; }
+      main { padding: 16px; display: grid; gap: 14px; } h1,h2,h3,p { margin: 0; } h1 { font-size: 28px; } h2 { font-size: 21px; } h3 { font-size: 16px; }
+      .card { background: white; border: 1px solid #dbe7f7; border-radius: 22px; padding: 15px; box-shadow: 0 10px 24px #d7e1f055; }
+      .grid { display: grid; gap: 10px; } .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; } .wrap { flex-wrap: wrap; }
+      .muted { color: var(--muted); font-size: 13px; line-height: 1.4; } .tiny { font-size: 12px; }
+      input, select, textarea { width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 11px; background: white; }
+      textarea { min-height: 70px; resize: vertical; } button { width: 100%; border: 0; border-radius: 14px; padding: 11px; color: white; background: var(--brand); font-weight: 750; cursor: pointer; }
+      button.secondary { background: #e0ecff; color: #174ea6; } button.ghost { background: white; color: #334155; border: 1px solid #cbd5e1; }
+      .roles { grid-template-columns: repeat(3,1fr); } .roles button { padding: 12px 6px; font-size: 12px; }
+      .roles button.active, .tabs button.active { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+      .tabs { grid-template-columns: repeat(5,1fr); } .tabs button { padding: 9px 3px; font-size: 11px; background: white; color: var(--muted); border: 1px solid #dbe7f7; }
+      .option { display: grid; gap: 8px; border: 1px solid #e2e8f0; border-radius: 18px; padding: 13px; margin-top: 10px; }
+      .badge { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 800; }
+      .badge.ok { background:#dcfce7;color:#047857; } .badge.warn { background:#fef3c7;color:#b45309; } .badge.bad { background:#fee2e2;color:#b91c1c; }
+      .price { font-size: 20px; font-weight: 850; } .hidden { display: none; }
+      .map { height: 170px; position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(90deg,#dbeafe 1px,transparent 1px),linear-gradient(#dbeafe 1px,transparent 1px),#f8fafc; background-size: 44px 44px; }
+      .pin { position:absolute; transform:translate(-50%,-50%); padding:5px 8px; border-radius:999px; background:white; border:2px solid var(--brand); font-size:12px; font-weight:800; box-shadow:0 6px 18px #94a3b8; }
+      .pin.dest { left:50%; top:50%; background:#1d4ed8; color:white; } .pin.p1 { left:35%; top:32%; } .pin.p2 { left:68%; top:38%; } .pin.p3 { left:58%; top:72%; }
+      .steps { display:grid; gap:8px; } .step { padding:10px 12px; border-radius:14px; background:#eff6ff; font-size:14px; }
+      .photo { height:82px; border-radius:14px; background: linear-gradient(135deg,#cbd5e1,#f8fafc); display:grid; place-items:center; color:#64748b; font-size:12px; }
+      .role-only { display:none; } .driver .driver-only, .provider .provider-only, .operator .operator-only { display:block; }
     </style>
   </head>
   <body>
-    <div class="phone">
+    <div class="phone driver" id="appShell">
       <header>
-        <p class="muted" style="color:#dbeafe">Mobile-first clickable prototype</p>
+        <p class="muted" style="color:#dbeafe">Role-based mobile prototype</p>
         <h1>EasyPark</h1>
-        <p>Find reliable parking near your destination.</p>
+        <p id="roleSubtitle">Driver flow: compare, reserve, pay, park.</p>
       </header>
       <main>
-        <section class="card">
-          <label class="muted" for="destination">Destination</label>
-          <input id="destination" value="Palermo Soho" />
-          <div style="height:10px"></div>
-          <button id="search">Search parking</button>
+        <section class="card grid">
+          <div class="grid roles">
+            <button class="active" data-role="driver">Driver</button>
+            <button class="secondary" data-role="provider">Provider</button>
+            <button class="secondary" data-role="operator">Operator</button>
+          </div>
+          <button class="ghost" id="demo">Run guided demo</button>
         </section>
 
-        <nav class="tabs" aria-label="Prototype sections">
-          <button class="active" data-tab="searchTab">Search</button>
-          <button data-tab="hostTab">Host</button>
-          <button data-tab="checkoutTab">Pay</button>
-          <button data-tab="sessionTab">Session</button>
-          <button data-tab="copilotTab">AI</button>
+        <nav class="tabs grid" aria-label="Prototype sections">
+          <button class="active" data-tab="searchTab">Search</button><button data-tab="hostTab">Host</button><button data-tab="checkoutTab">Pay</button><button data-tab="sessionTab">Session</button><button data-tab="opsTab">Ops</button>
         </nav>
 
-        <section id="searchTab" class="card tab">
-          <h2>Best options</h2>
-          <p class="muted">Private provider spaces enter the mock ranking immediately after signup. Parkings and street spots remain guidance-only.</p>
+        <section id="searchTab" class="card tab driver-only">
+          <h2>Find a space</h2>
+          <div class="grid" style="margin-top:10px">
+            <input id="destination" value="Palermo Soho" aria-label="Destination" />
+            <div class="row"><input id="startTime" value="Today 19:00" aria-label="Start time" /><select id="duration"><option>2 hours</option><option>4 hours</option><option>Full day</option></select></div>
+            <select id="vehicle"><option>Car</option><option>SUV</option><option>Motorbike</option></select>
+            <select id="filter"><option value="smart">Smart ranking</option><option value="cheap">Cheapest first</option><option value="near">Nearest first</option><option value="covered">Covered only</option></select>
+            <button id="search">Update results</button>
+          </div>
+          <div class="map" aria-label="Mock map"><span class="pin dest">You</span><span class="pin p1">P1</span><span class="pin p2">P2</span><span class="pin p3">P3</span></div>
           <div id="options"></div>
         </section>
 
-        <section id="hostTab" class="card tab hidden">
-          <h2>Offer your space</h2>
-          <p class="muted">Prototype-only form. It saves mock provider spaces in this browser and adds them to the selection algorithm.</p>
+        <section id="hostTab" class="card tab hidden provider-only">
+          <h2>Offer your parking</h2>
+          <p class="muted">Wizard mock: draft → pending review → published. Browser-only data.</p>
           <div class="grid" style="margin-top:12px">
-            <label class="muted">Parking location<input id="hostLocation" placeholder="Street, neighborhood, reference" /></label>
-            <label class="muted">Comment for drivers<textarea id="hostComment" placeholder="Access instructions, size limits, security notes"></textarea></label>
-            <label class="muted">Available days and hours<input id="hostSchedule" value="Mon-Fri 08:00-20:00" /></label>
-            <label class="muted">Tariff<select id="hostTariff"><option value="$1,800 fixed 2h">Fixed: $1,800 / 2h</option><option value="$2,500 fixed 4h">Fixed: $2,500 / 4h</option><option value="$7,000 full day">Full day: $7,000</option><option value="custom">Custom tariff</option></select></label>
-            <label class="muted">Custom tariff<input id="hostCustomTariff" placeholder="Example: $900/hour" /></label>
-            <label class="muted">Payment methods<select id="hostPayment"><option>Mercado Pago</option><option>Cash at arrival</option><option>Bank transfer</option><option>Mercado Pago + cash</option></select></label>
-            <button id="addSpace">Add provider space</button>
-            <button class="secondary" id="clearSpaces">Clear mock provider spaces</button>
+            <h3>1. Space</h3><input id="hostLocation" placeholder="Address or location reference" /><textarea id="hostComment" placeholder="Driver instructions, gate access, size limits"></textarea><select id="hostType"><option>Covered private garage</option><option>Open private space</option><option>Building garage</option></select>
+            <h3>2. Availability</h3><input id="hostSchedule" value="Mon-Fri 08:00-20:00" /><select id="hostStatus"><option>Pending review</option><option>Published</option><option>Paused</option></select>
+            <h3>3. Tariff and collection</h3><select id="hostTariff"><option value="$1,800 fixed 2h">Fixed: $1,800 / 2h</option><option value="$2,500 fixed 4h">Fixed: $2,500 / 4h</option><option value="$7,000 full day">Full day: $7,000</option><option value="custom">Custom tariff</option></select><input id="hostCustomTariff" placeholder="Custom tariff, e.g. $900/hour" /><select id="hostPayment"><option>Mercado Pago</option><option>Cash at arrival</option><option>Bank transfer</option><option>Mercado Pago + cash</option></select>
+            <div class="photo">Photo upload placeholder</div><button id="addSpace">Save provider space</button><button class="secondary" id="clearSpaces">Clear mock spaces</button>
           </div>
           <div id="hostList" style="margin-top:12px"></div>
         </section>
 
-        <section id="checkoutTab" class="card tab hidden">
-          <h2>Simulated checkout</h2>
-          <div id="selected" class="muted">Choose a private space to continue.</div>
-          <div class="steps" style="margin-top:12px">
-            <div class="step">1. Temporary hold: <strong id="hold">not started</strong></div>
-            <div class="step">2. Payment: <strong id="payment">not started</strong></div>
-            <div class="step">3. Reservation: <strong id="reservation">not confirmed</strong></div>
-          </div>
-          <div style="height:12px"></div>
-          <button id="reserve">Simulate reserve + pay</button>
+        <section id="checkoutTab" class="card tab hidden driver-only">
+          <h2>Reservation summary</h2><div id="selected" class="muted">Choose a private provider space to continue.</div>
+          <div class="steps" style="margin-top:12px"><div class="step">Hold: <strong id="hold">not started</strong></div><div class="step">Price + EasyPark fee: <strong id="fee">--</strong></div><div class="step">Payment: <strong id="payment">not started</strong></div><div class="step">Reservation: <strong id="reservation">not confirmed</strong></div></div>
+          <div class="grid" style="margin-top:12px"><button id="reserve">Approve simulated payment</button><button class="secondary" id="rejectPay">Simulate payment rejected</button><button class="ghost" id="expireHold">Expire hold</button></div>
         </section>
 
-        <section id="sessionTab" class="card tab hidden">
-          <h2>Active session</h2>
-          <p id="sessionState" class="muted">No active reservation yet.</p>
-          <div class="steps" style="margin-top:12px">
-            <div class="step">Navigation: 4 min walk from destination</div>
-            <div class="step">Remaining time: <strong id="remaining">--</strong></div>
-            <div class="step">Owner settlement: manual operations queue</div>
-          </div>
-          <div style="height:12px"></div>
-          <button class="secondary" id="endSession">End session</button>
+        <section id="sessionTab" class="card tab hidden driver-only">
+          <h2>Active session</h2><p id="sessionState" class="muted">No active reservation yet.</p>
+          <div class="steps" style="margin-top:12px"><div class="step">Reservation code: <strong id="code">--</strong></div><div class="step">Navigation: <strong id="nav">--</strong></div><div class="step">Remaining time: <strong id="remaining">--</strong></div><div class="step">Problem report: vehicle does not fit / space occupied / arrival delay</div></div>
+          <div class="grid" style="margin-top:12px"><button class="secondary" id="extend">Extend 30 min</button><button class="ghost" id="endSession">End session</button></div>
         </section>
 
-        <section id="copilotTab" class="card tab hidden">
-          <h2>AI copilot mock</h2>
-          <p class="muted">The copilot explains options only. It cannot create reservations, payment truth, or settlement records.</p>
-          <div class="option"><strong>Recommendation</strong><p id="copilotText">Private spaces rank higher when they are close, available, reservable, and priced clearly.</p></div>
+        <section id="opsTab" class="card tab hidden operator-only">
+          <h2>EasyPark operations</h2>
+          <p class="muted">Operator mock for approving providers and monitoring reservations, incidents, and manual settlements.</p>
+          <div class="steps" id="opsList" style="margin-top:12px"></div>
+        </section>
+
+        <section class="card">
+          <div class="row"><h2>Copilot</h2><span class="badge warn">advisory only</span></div>
+          <p class="muted" id="copilotText">I can recommend and explain, but I cannot create reservations, payment truth, or settlements.</p>
         </section>
       </main>
     </div>
     <script>
-      const catalog = [
-        { id: 'garage-12', source: 'EasyPark seed', kind: 'Private space', title: 'Covered garage near Armenia', location: 'Armenia 1500', comment: 'Covered garage with remote gate.', schedule: 'Every day 08:00-22:00', price: '$2,100', payment: 'Mercado Pago', meters: 120, reservable: true },
-        { id: 'parking-8', source: 'Partner info', kind: 'Traditional parking', title: 'Commercial parking on Honduras', location: 'Honduras 4700', comment: 'External payment at parking desk.', schedule: '24h', price: '$2,800', payment: 'On site', meters: 260, reservable: false },
-        { id: 'street-a', source: 'Street guidance', kind: 'Street guidance', title: 'Likely street availability near Serrano', location: 'Serrano area', comment: 'Uncertain public availability.', schedule: 'Now', price: 'Low', payment: 'Street rules', meters: 420, reservable: false }
+      const seed = [
+        { id:'garage-12', source:'Seed', kind:'Private space', title:'Covered garage near Armenia', location:'Armenia 1500', comment:'Remote gate, fits car/SUV, security camera.', schedule:'Every day 08:00-22:00', price:'$2,100', payment:'Mercado Pago', meters:120, covered:true, rating:4.8, status:'Published', reservable:true },
+        { id:'parking-8', source:'Partner', kind:'Traditional parking', title:'Commercial parking on Honduras', location:'Honduras 4700', comment:'External payment at desk.', schedule:'24h', price:'$2,800', payment:'On site', meters:260, covered:true, rating:4.2, status:'Published', reservable:false },
+        { id:'street-a', source:'Street', kind:'Street guidance', title:'Likely street availability near Serrano', location:'Serrano area', comment:'Uncertain public availability.', schedule:'Now', price:'Low', payment:'Street rules', meters:420, covered:false, rating:3.1, status:'Guidance', reservable:false }
       ];
-      let selected = null;
-      const $ = (id) => document.getElementById(id);
-      const storedSpaces = () => JSON.parse(localStorage.getItem('easyparkProviderSpaces') || '[]');
-      const saveSpaces = (spaces) => localStorage.setItem('easyparkProviderSpaces', JSON.stringify(spaces));
-      const rankedOptions = () => [...catalog, ...storedSpaces()].sort((a, b) => Number(b.reservable) - Number(a.reservable) || a.meters - b.meters);
-      const show = (name) => document.querySelectorAll('.tab').forEach((tab) => tab.classList.toggle('hidden', tab.id !== name));
-      const setActive = (tab) => document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
-      const money = (text) => Number((text || '').replace(/[^0-9]/g, '')) || 2200;
-      const renderOptions = () => {
-        $('options').innerHTML = rankedOptions().map((o) => `<article class="option"><div class="row"><span class="badge">${o.kind}</span><span class="price">${o.price}</span></div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.reservable ? 'Reservable with simulated hold and payment.' : 'Guidance only; no in-app transaction.'}</p><p class="muted"><strong>Where:</strong> ${o.location}<br><strong>When:</strong> ${o.schedule}<br><strong>Payment:</strong> ${o.payment}<br><strong>Note:</strong> ${o.comment}</p><button ${o.reservable ? '' : 'class="secondary"'} data-id="${o.id}">${o.reservable ? 'Reserve this space' : 'Navigate only'}</button></article>`).join('');
-        document.querySelectorAll('[data-id]').forEach((button) => button.onclick = () => choose(button.dataset.id));
-        renderHosts();
-      };
-      const renderHosts = () => {
-        const spaces = storedSpaces();
-        $('hostList').innerHTML = spaces.length ? spaces.map((s) => `<div class="option"><strong>${s.title}</strong><p class="muted">${s.location}<br>${s.schedule}<br>${s.price} · ${s.payment}</p></div>`).join('') : '<p class="muted">No provider spaces added in this browser yet.</p>';
-      };
-      const choose = (id) => {
-        selected = rankedOptions().find((o) => o.id === id);
-        $('selected').innerHTML = selected?.reservable ? `<strong>${selected.title}</strong><br>${selected.price} · ${selected.meters}m from destination<br>${selected.payment}` : 'This option is guidance-only; choose a private provider space for checkout.';
-        show('checkoutTab'); setActive('checkoutTab');
-      };
-      document.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => { show(b.dataset.tab); setActive(b.dataset.tab); });
-      $('search').onclick = renderOptions;
-      $('addSpace').onclick = () => {
-        const tariff = $('hostTariff').value === 'custom' ? $('hostCustomTariff').value.trim() : $('hostTariff').value;
-        const location = $('hostLocation').value.trim();
-        if (!location || !tariff) return alert('Add at least location and tariff.');
-        const distance = 80 + (money(tariff) % 260);
-        const space = { id: `provider-${Date.now()}`, source: 'Provider signup', kind: 'Private space', title: `Provider space near ${location}`, location, comment: $('hostComment').value.trim() || 'No extra instructions yet.', schedule: $('hostSchedule').value.trim() || 'Schedule pending', price: tariff, payment: $('hostPayment').value, meters: distance, reservable: true };
-        saveSpaces([space, ...storedSpaces()]);
-        $('hostLocation').value = ''; $('hostComment').value = ''; $('hostCustomTariff').value = '';
-        renderOptions(); show('searchTab'); setActive('searchTab');
-      };
-      $('clearSpaces').onclick = () => { saveSpaces([]); renderOptions(); };
-      $('reserve').onclick = () => {
-        if (!selected?.reservable) return;
-        $('hold').textContent = 'active for 05:00'; $('payment').textContent = `approved via ${selected.payment}`; $('reservation').textContent = 'confirmed';
-        $('sessionState').textContent = `${selected.title} reserved. Session is active and auditable.`; $('remaining').textContent = '1h 58m';
-        show('sessionTab'); setActive('sessionTab');
-      };
-      $('endSession').onclick = () => { $('sessionState').textContent = 'Session ended. Settlement remains a manual operations task.'; $('remaining').textContent = 'ended'; };
-      renderOptions();
+      let selected=null, minutes=118; const $=id=>document.getElementById(id); const spaces=()=>JSON.parse(localStorage.getItem('easyparkProviderSpaces')||'[]'); const save=s=>localStorage.setItem('easyparkProviderSpaces',JSON.stringify(s)); const price=o=>Number(String(o.price).replace(/[^0-9]/g,''))||9999;
+      const options=()=>[...seed,...spaces()].filter(o=>$('filter').value==='covered'?o.covered:o).sort((a,b)=>$('filter').value==='cheap'?price(a)-price(b):$('filter').value==='near'?a.meters-b.meters:Number(b.reservable)-Number(a.reservable)||a.meters-b.meters);
+      function show(tab){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('hidden',t.id!==tab));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));}
+      function role(role){$('appShell').className=`phone ${role}`; document.querySelectorAll('.roles button').forEach(b=>{b.className=b.dataset.role===role?'active':'secondary'}); $('roleSubtitle').textContent=role==='driver'?'Driver flow: compare, reserve, pay, park.':role==='provider'?'Provider flow: publish and manage spaces.':'Operator flow: approve, monitor, settle.'; show(role==='provider'?'hostTab':role==='operator'?'opsTab':'searchTab'); render();}
+      function card(o){return `<article class="option"><div class="row wrap"><span class="badge ${o.status==='Published'?'ok':o.status==='Pending review'?'warn':''}">${o.kind}</span><span class="price">${o.price}</span></div><div class="photo">${o.covered?'Covered':'Open'} · ${o.rating}★ · ${o.status}</div><h3>${o.title}</h3><p class="muted">${o.meters}m from ${$('destination').value}. ${o.schedule}. ${o.comment}</p><p class="muted"><strong>Payment:</strong> ${o.payment}<br><strong>Source:</strong> ${o.source}</p><button ${o.reservable&&o.status==='Published'?'':'class="secondary"'} data-id="${o.id}">${o.reservable&&o.status==='Published'?'Reserve this space':'View guidance'}</button></article>`}
+      function render(){ $('options').innerHTML=options().map(card).join(''); document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>choose(b.dataset.id)); renderHosts(); renderOps(); $('copilotText').textContent=`For ${$('vehicle').value}, I rank published private spaces higher when they are close, reservable, covered, and have clear tariffs.`; }
+      function renderHosts(){ const s=spaces(); $('hostList').innerHTML=s.length?s.map(x=>`<div class="option"><div class="row"><strong>${x.title}</strong><span class="badge ${x.status==='Published'?'ok':'warn'}">${x.status}</span></div><p class="muted">${x.location}<br>${x.schedule}<br>${x.price} · ${x.payment}</p><p class="muted">Estimated weekly earning: $${Math.round(price(x)*4.5).toLocaleString('en-US')}</p></div>`).join(''):'<p class="muted">No provider spaces added in this browser yet.</p>'; }
+      function renderOps(){ const pending=spaces().filter(s=>s.status==='Pending review').length, active=selected?1:0; $('opsList').innerHTML=`<div class="step">Provider spaces pending review: <strong>${pending}</strong></div><div class="step">Active reservations: <strong>${active}</strong></div><div class="step">Payment exceptions: <strong>1 rejected simulation available</strong></div><div class="step">Manual settlements: <strong>${spaces().filter(s=>s.status==='Published').length} provider accounts</strong></div><div class="step">Incidents queue: <strong>space occupied / vehicle too large / late arrival</strong></div>`; }
+      function choose(id){ selected=options().find(o=>o.id===id); $('selected').innerHTML=selected?.reservable&&selected.status==='Published'?`<strong>${selected.title}</strong><br>${selected.price} + 12% EasyPark fee · ${selected.payment}<br>${selected.comment}`:'This option is guidance-only or not published. Choose a published private space.'; $('fee').textContent=selected?`$${Math.round(price(selected)*1.12).toLocaleString('en-US')}`:'--'; show('checkoutTab'); }
+      $('addSpace').onclick=()=>{ const location=$('hostLocation').value.trim(), tariff=$('hostTariff').value==='custom'?$('hostCustomTariff').value.trim():$('hostTariff').value; if(!location||!tariff) return alert('Add at least location and tariff.'); const item={id:`provider-${Date.now()}`, source:'Provider signup', kind:'Private space', title:`Provider space near ${location}`, location, comment:$('hostComment').value.trim()||'No extra instructions yet.', schedule:$('hostSchedule').value.trim()||'Schedule pending', price:tariff, payment:$('hostPayment').value, meters:80+(price({price:tariff})%260), covered:$('hostType').value.includes('Covered')||$('hostType').value.includes('Building'), rating:4.6, status:$('hostStatus').value, reservable:true}; save([item,...spaces()]); ['hostLocation','hostComment','hostCustomTariff'].forEach(id=>$(id).value=''); role('driver'); };
+      $('clearSpaces').onclick=()=>{save([]);render();}; $('search').onclick=render; $('filter').onchange=render; $('vehicle').onchange=render;
+      $('reserve').onclick=()=>{ if(!selected?.reservable||selected.status!=='Published') return; $('hold').textContent='active for 05:00'; $('payment').textContent=`approved via ${selected.payment}`; $('reservation').textContent='confirmed'; $('code').textContent='EP-'+String(Date.now()).slice(-5); $('nav').textContent=`${selected.meters}m walk to ${selected.location}`; $('remaining').textContent='1h 58m'; $('sessionState').textContent=`${selected.title} reserved and active.`; show('sessionTab'); renderOps(); };
+      $('rejectPay').onclick=()=>{$('payment').textContent='rejected, choose another method'; $('reservation').textContent='not confirmed';}; $('expireHold').onclick=()=>{$('hold').textContent='expired'; $('reservation').textContent='not confirmed';}; $('extend').onclick=()=>{minutes+=30; $('remaining').textContent=`${Math.floor(minutes/60)}h ${minutes%60}m`;}; $('endSession').onclick=()=>{$('sessionState').textContent='Session ended. Settlement remains manual.'; $('remaining').textContent='ended'; renderOps();};
+      $('demo').onclick=()=>{role('driver'); $('destination').value='Movistar Arena'; $('filter').value='smart'; render(); choose('garage-12'); $('reserve').click();}; document.querySelectorAll('.roles button').forEach(b=>b.onclick=()=>role(b.dataset.role)); document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.tab)); render();
     </script>
   </body>
 </html>
