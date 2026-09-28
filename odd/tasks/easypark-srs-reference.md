@@ -45,7 +45,7 @@ A filled working reference gives product, engineering, QA, security, operations,
 - Route: delegated writer because five non-trivial/generated files are expected to change.
 - Forecast: approximately 650–900 authored Markdown/Python/HTML lines, excluding the generated PDF.
 - Delivery strategy: `ask-on-risk`; the user selected `feature-branch-chain`: several reviewable commits remain on `feat/easypark-srs-reference` and publish together only after final approval.
-- Commit and publication require explicit user approval.
+- Verified work-unit commits on the feature branch are authorized by the selected chain; push, merge, and publication require explicit final user approval.
 
 ## Tasks
 
@@ -67,11 +67,13 @@ Status: complete in work-unit commit `d8f82df`; verified public repository/proto
 
 ### T003 — Specify behavior, data, quality, and traceability
 
-- [ ] Catalog all current use cases and boundaries: onboarding, account, private driver, urban, activity, Copilot, host, operations, Express, incidents, Help/creator/Buzz.
-- [ ] Add stable functional requirement and business-rule IDs with objective acceptance criteria.
-- [ ] Add conceptual entities/localStorage facts plus proposed production data controls.
-- [ ] Add current and proposed NFRs for security, privacy, accessibility, portability, availability, observability, performance, and maintainability.
-- [ ] Add acceptance strategy, traceability matrix, risks, decisions, assumptions, and open questions.
+- [x] Catalog all current use cases and boundaries: onboarding, account, private driver, urban, activity, Copilot, host, operations, Express, incidents, Help/creator/Buzz.
+- [x] Add stable functional requirement and business-rule IDs with objective acceptance criteria.
+- [x] Add conceptual entities/localStorage facts plus proposed production data controls.
+- [x] Add current and proposed NFRs for security, privacy, accessibility, portability, availability, observability, performance, and maintainability.
+- [x] Add acceptance strategy, traceability matrix, risks, decisions, assumptions, and open questions.
+
+Status: complete across work-unit commit `eb704f6` for sections 4–7 and the following sections 8–12 commit.
 
 ### T004 — Publish the reference alongside the blank template
 
@@ -85,7 +87,7 @@ Status: complete in work-unit commit `d8f82df`; verified public repository/proto
 - [ ] Verify filled Markdown contains no accidental unresolved template braces; deliberate TODOs remain explicit.
 - [ ] Verify generated PDF metadata, page count, text extraction, hashes, links, refs, and public safety language.
 - [ ] Obtain independent read-only verification.
-- [ ] Request approval before commits/push and verify GitHub Pages only if approved.
+- [ ] Request final approval before push/publication and verify GitHub Pages only if approved.
 
 ## Acceptance criteria
 
@@ -100,8 +102,8 @@ Status: complete in work-unit commit `d8f82df`; verified public repository/proto
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 sections 4–7 are implemented and verified, while sections 8–12 remain.
+Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 sections 4–7 are complete in `eb704f6`; sections 8–12 are implemented and verified.
 
 ## Next step
 
-Commit the verified T003 sections 4–7 work unit, then complete sections 8–12.
+Commit T003 sections 8–12, then generate the canonical filled PDF and expose both filled and blank resources in Help/README.

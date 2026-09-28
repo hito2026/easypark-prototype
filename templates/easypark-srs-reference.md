@@ -1,6 +1,6 @@
 # SRS EasyPark — borrador completado de referencia
 
-> **Estado legal y de uso**: este documento es un borrador completado de referencia para el prototipo EasyPark. No es una plantilla oficial de IEEE, no reproduce el texto de ningún estándar, no implica conformidad, certificación, aprobación regulatoria ni autorización productiva. La referencia histórica IEEE 830-1998 se cita solo como contexto y la página oficial indicada la identifica como reemplazada por ISO/IEC/IEEE 29148:2011. Mantener este aviso visible en toda copia, PDF derivado o versión publicada.
+> **Estado legal y de uso**: este documento es un borrador completado de referencia para el prototipo EasyPark. No es una plantilla oficial de IEEE, no reproduce el texto de ningún estándar, no implica cumplimiento formal, aval, aprobación regulatoria ni autorización productiva. La referencia histórica IEEE 830-1998 se cita solo como contexto y la página oficial indicada la identifica como reemplazada por ISO/IEC/IEEE 29148:2011. Mantener este aviso visible en toda copia, PDF derivado o versión publicada.
 
 > **Instrucción de mantenimiento**: este Markdown es la fuente de verdad. Todo PDF debe generarse desde este archivo con `scripts/generate-srs-pdf.py`. No reemplazar etiquetas de estado por afirmaciones definitivas sin evidencia revisada. No inventar propietarios, aprobaciones, SLAs, jurisdicciones, integraciones, obligaciones legales ni métricas productivas.
 
@@ -49,7 +49,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 | Versión | Fecha | Autoría | Cambio | Evidencia |
 | --- | --- | --- | --- | --- |
-| 0.1.0 | 2026-09-28 | Borrador asistido | Fundación hasta sección 3 | `odd/tasks/easypark-srs-reference.md` |
+| 0.1.0 | 2026-09-28 | Borrador asistido | Borrador completo de referencia hasta sección 12 | `odd/tasks/easypark-srs-reference.md` |
 
 ### 0.4 Inventario inicial de TODOs de gobierno
 
@@ -88,7 +88,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 1.3 Fuera de alcance y no objetivos
 
-[PROTOTIPO IMPLEMENTADO] Este borrador ya cubre la fundación del documento y, en esta versión, incorpora catálogo de casos de uso, requisitos funcionales, reglas de negocio y datos hasta la sección 7. Las secciones 8 a 12 quedan pendientes para el siguiente work unit.
+[PROTOTIPO IMPLEMENTADO] Este borrador cubre la fundación del documento, el catálogo de casos de uso, requisitos funcionales, reglas de negocio, datos, requisitos no funcionales, aceptación, trazabilidad, riesgos, decisiones abiertas y apéndices hasta la sección 12.
 
 [FUERA DE ALCANCE ACTUAL] El prototipo no incluye backend, pagos reales, integración bancaria, SMS real, mapas reales, GPS, cámaras, lectura de patente, operador real, control municipal, fiscalización, modelo LLM remoto, tickets reales, reembolsos reales, reservas reales, liquidaciones reales ni publicación productiva.
 
@@ -270,8 +270,8 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 **Pendiente para el siguiente work unit**
 
-- Requisitos no funcionales completos.
-- Estrategia de aceptación, trazabilidad, riesgos, decisiones y apéndices.
+- Publicación de PDF canónico y enlaces de Help o README.
+- Revisión independiente, commits de work unit en la rama de feature, push autorizado y publicación pública aprobada.
 
 ## 3. Contexto del sistema e interfaces externas
 
@@ -685,6 +685,247 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 | MIG-STEP-004 | Probar migraciones con rollback y auditoría. | TODO-MIG-001 |
 | MIG-STEP-005 | Documentar exclusión explícita de datos de navegador público. | TODO-PRIV-002 |
 
-### 7.5 Transición a próximas secciones
+## 8. Requisitos no funcionales
 
-Las secciones 8 a 12 se completarán en el siguiente work unit con requisitos no funcionales, aceptación, trazabilidad, riesgos, decisiones abiertas y apéndices. Esta sección 7 deja explícito que los datos locales del prototipo no son una base productiva segura ni migrable sin rediseño.
+[PROTOTIPO IMPLEMENTADO] Los NFR actuales describen evidencia estática y local. No declaran cumplimiento de accesibilidad formal, controles productivos, preparación productiva, presupuesto medido, uptime, SLA ni pruebas manuales cerradas.
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| NFR-SEC-001 | Alta | Actual | El prototipo debe advertir que no se ingresen tarjetas, claves, documentos, patentes, ubicaciones ni secretos reales. | Aceptación: copy visible en cuenta, pago y ayuda. Evidencia: `HELP-SAFETY-01`, `ACCOUNT-HOME-01`, `DRV-PAYMENT-01`. |
+| NFR-SEC-002 | Alta | Propuesto | Producción debe tener modelo de amenazas, autenticación, autorización y gestión de secretos aprobados. | Aceptación: revisión documentada y pruebas de controles. Evidencia: TODO-SEC-001, TODO-AUTH-001. |
+| NFR-PRIV-001 | Alta | Actual | El prototipo debe limitar persistencia a metadatos ficticios locales y declarar que `localStorage` no es productivo. | Aceptación: sección 7 documenta claves y límites. Evidencia: `easyparkMockAccount`, `easyparkMockHistory`. |
+| NFR-PRIV-002 | Alta | Propuesto | Producción debe definir base legal, minimización, retención, exportación y borrado. | Aceptación: matriz aprobada por privacidad y legal. Evidencia: TODO-PRIV-001, TODO-RET-001. |
+| NFR-ACC-001 | Alta | Actual | El prototipo debe conservar landmarks, foco visible, textos alternativos y movimiento reducido donde existe evidencia. | Aceptación: revisión estática de HTML y CSS. Evidencia: `help.html`, `index.html`, `prefers-reduced-motion`. |
+| NFR-ACC-002 | Alta | Propuesto | Antes de producción deben ejecutarse pruebas manuales móvil, teclado, lector de pantalla, contraste, voz, bottom-sheet y movimiento reducido. | Aceptación: evidencia de pruebas con hallazgos cerrados. Evidencia: TODO-ACC-002. |
+| NFR-USE-001 | Media | Actual | La experiencia debe priorizar destino primero, mapa simulado, acción dominante y divulgación progresiva. | Aceptación: pantallas reflejan patrón. Evidencia: `HOME-DESTINATION-01`, `DRV-MAP-SHEET-01`, `DRV-PROGRESSIVE-01`. |
+| NFR-PERF-001 | Media | Actual | La demo estática debe evitar dependencias remotas propias para flujos principales. | Aceptación: revisión de código sin mapas, pagos, LLM, SMS, cámaras ni municipio en runtime. Evidencia: `index.html`, `help.html`. |
+| NFR-PERF-002 | Media | Propuesto | Producción debe definir presupuestos medidos de carga, interacción y consumo. | Aceptación: mediciones reproducibles contra entornos definidos. Evidencia: TODO-PERF-001. |
+| NFR-REL-001 | Alta | Actual | Acciones económicas o de recuperación simuladas deben ser idempotentes o bloqueadas si corresponde. | Aceptación: Express no duplica guardado, incidente reusa id y pagos bloqueados no emiten recibo. Evidencia: `EXPRESS-EXIT-01`, `INCIDENT-RESULT-01`, `DRV-PAY-FAIL-01`. |
+| NFR-COMPAT-001 | Media | Actual | Voz debe ser opcional y contar con alternativa textual. | Aceptación: si Speech API falta se muestra fallback textual. Evidencia: `AI-VOICE-01`. |
+| NFR-MAINT-001 | Alta | Actual | Refs visibles, IDs de requisitos y Markdown fuente deben mantenerse estables. | Aceptación: no renumerar IDs y conservar refs usadas por feedback. Evidencia: `REF-GUIDE-01`, este SRS. |
+| NFR-OBS-001 | Media | Actual | La observabilidad del prototipo se limita a estado local visible y refs. | Aceptación: no se declara logging remoto ni auditoría real. Evidencia: `OPS-HOME-01`, `HELP-FEEDBACK-01`. |
+| NFR-OBS-002 | Alta | Propuesto | Producción debe definir auditoría, trazas, métricas y retención de eventos. | Aceptación: plan revisado con campos y acceso. Evidencia: TODO-AUDIT-001, TODO-OBS-001. |
+| NFR-LOC-001 | Media | Actual | El contenido visible debe estar en español profesional y mantener límites de simulación. | Aceptación: revisión textual de README, Help y SRS. Evidencia: `README.md`, `help.html`. |
+| NFR-DOC-001 | Alta | Actual | Licencias y fuentes de assets locales deben documentarse. | Aceptación: atribución OpenMoji con hashes disponible. Evidencia: `assets/openmoji/ATTRIBUTION.md`, `MEDIA-CREDITS-01`. |
+| NFR-DOC-002 | Alta | Actual | El PDF de SRS debe derivarse desde Markdown con generador determinístico. | Aceptación: comando local genera PDF con metadatos esperados. Evidencia: `scripts/generate-srs-pdf.py`. |
+
+## 9. Estrategia de aceptación y verificación
+
+### 9.1 Evidencia actual disponible
+
+[PROTOTIPO IMPLEMENTADO] No se encontró `.github/workflows/ci.yml` en esta revisión, por lo que no se declara CI automatizado. La verificación actual es local y estática: scans de Markdown, `git diff --check`, generación PDF temporal, `pdfinfo`, `pdftotext` y comparación del hash invariante de la plantilla en blanco cuando se regenere.
+
+| Nivel | Alcance actual | Evidencia aceptada |
+| --- | --- | --- |
+| Markdown | Encabezados, etiquetas, TODOs, IDs, tablas y ausencia de placeholders | Scripts locales de scan y revisión de diff |
+| PDF | Metadatos, texto extraído, páginas y limpieza de temporal | `generate-srs-pdf.py`, `pdfinfo`, `pdftotext` |
+| Código estático | Refs, localStorage, ausencia de integraciones remotas propias | Lectura de `index.html`, `help.html`, `README.md` |
+| Datos seguros de demo | Solo fixtures y metadatos ficticios | Revisión de copys y claves locales |
+| Publicación | Pendiente de aprobación separada | TODO-PUB-004 |
+
+### 9.2 Comandos locales de verificación
+
+```bash
+python3 -m py_compile scripts/generate-srs-pdf.py
+python3 scripts/generate-srs-pdf.py
+shasum -a 256 templates/srs-ieee-830-template.pdf
+python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.verify.pdf --title 'SRS EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos EasyPark en elaboración'
+pdfinfo templates/easypark-srs-reference.verify.pdf
+pdftotext templates/easypark-srs-reference.verify.pdf -
+rm -f templates/easypark-srs-reference.verify.pdf
+git diff --check
+```
+
+### 9.3 Criterios de salida del prototipo
+
+- Todos los requisitos implementados deben tener evidencia de ref, archivo o comportamiento observable.
+- Todo requisito propuesto debe depender de TODO explícito y no presentarse como implementado.
+- No debe existir marcador de plantilla con doble llave, reclamo de cumplimiento oficial ni aprobación inventada.
+- No deben existir datos reales en fixtures, ejemplos, recibos o documentación.
+- La plantilla en blanco debe conservar SHA-256 `f95973027adf3e3ebf21be883d6e09de03b10ff45ea232a5c77095658983e630` cuando se regenere sin argumentos.
+- El PDF lleno puede generarse, pero su publicación requiere aprobación separada.
+
+### 9.4 Aceptación diferida para producto real
+
+[DECISIÓN PENDIENTE] Un producto real requiere owners, entornos, seguridad, privacidad, legal, pagos, soporte, mapas, observabilidad, accesibilidad y operación aprobados antes de aceptar producción.
+
+| Gate | Estado | TODO |
+| --- | --- | --- |
+| Owner de producto y operación | Pendiente | TODO-GOV-001, TODO-OPS-001 |
+| Entorno productivo | Pendiente | TODO-ENV-002 |
+| Seguridad y secretos | Pendiente | TODO-SEC-001 |
+| Privacidad y retención | Pendiente | TODO-PRIV-001, TODO-RET-001 |
+| Legal y país | Pendiente | TODO-LEGAL-001 |
+| Pagos y reembolsos | Pendiente | TODO-PAY-001 |
+| Mapas y disponibilidad | Pendiente | TODO-MAP-001 |
+| Pruebas manuales de accesibilidad | Pendiente | TODO-ACC-002 |
+| Uptime o SLA | Pendiente | TODO-SLA-001 |
+
+## 10. Trazabilidad
+
+### 10.1 Matriz por dominio
+
+| Dominio | Objetivo | Caso | Requisitos enlazados | Refs o artefactos | Verificación |
+| --- | --- | --- | --- | --- | --- |
+| HOME | Entrada destino primero | Búsqueda privada | Requisitos HOME y usabilidad | `APP-HOME-01`, `HOME-DESTINATION-01` | Enter y botón abren búsqueda |
+| ONB | Alta ficticia | Alta guiada | Requisitos ONB | `ONB-VERIFY-01`, `easyparkMockOnboarding` | Código 2468 y guardado local |
+| ACC | Cuenta con datos ficticios | Cuenta segura | Requisitos ACC y datos mínimos | `ACCOUNT-HOME-01`, `easyparkMockAccount` | Revisión de campos prohibidos |
+| DRV | Búsqueda y selección | Reserva y orientación | Requisitos DRV y regla de checkout | `DRV-RESULTS-01`, `DRV-DETAIL-01` | Selección explícita y guard checkout |
+| PAY | Pago ficticio | Reserva privada | Requisitos PAY y regla de datos ficticios | `DRV-PAYMENT-01`, `DRV-CONFIRM-01` | Bloqueo rechazo y recibo mock |
+| PASS | Pase demo | Reserva privada | Requisito PASS y caveat de precio | `PARKING-PASS-01`, `PASS-QR-01` | QR no escaneable y reglas demo |
+| URB | Zona urbana | Sesión urbana | Requisitos URB y regla de máximo | `DRV-LIMIT-01`, `SESSION-ACTIVE-01` | Máximo y fin idempotente |
+| ACT | Historial local | Actividad | Requisitos ACT y datos de sesión | `ACTIVITY-HISTORY-01`, `easyparkMockHistory` | Estado vacío y descarga simulada |
+| AI | Copilot asesor | Copilot y handoff | Requisitos AI y compatibilidad de voz | `AI-CHAT-01`, `AI-HANDOFF-01` | Handoff solo reservable |
+| PROV | Anfitrión | Publicar cochera | Requisitos PROV y validación de ParkingSpace | `PROV-REVIEW-01`, `easyparkProviderSpaces` | Defaults y render escapado |
+| OPS | Operación demo | Panel operativo | Requisitos OPS y observabilidad local | `OPS-INCIDENTS-01`, `OPS-SETTLEMENTS-01` | Triage local sin backend |
+| EXP | Express simulado | Entrada automática | Requisitos EXP e idempotencia | `EXPRESS-CONSENT-01`, `EXPRESS-EXIT-01` | Fallback y guardado único |
+| INC | Incidentes | Recuperación manual | Requisitos INC y regla de no reembolso real | `INCIDENT-RESULT-01`, `easyparkIncident` | Sin reembolso real |
+| DOC | Ayuda y SRS | Ayuda y creador | Requisitos DOC y generación PDF | `HELP-FEEDBACK-01`, `SRS-DOWNLOAD-PDF-01` | Scans y PDF generado |
+| BUZZ | Coordinación segura | Acceso y feedback | Requisito Buzz y regla de clave pública | `BUZZ-ACCESS-01` | Clave pública por WhatsApp existente |
+
+### 10.2 Procedimiento de revisión de huérfanos
+
+- Todo UC debe enlazar al menos un FR, BR, DR o NFR.
+- Todo FR implementado debe tener una ref visible o archivo local como evidencia.
+- Todo TODO debe tener consecuencia clara o dependencia explícita.
+- Si una ref desaparece, se abre revisión antes de renombrar requisitos.
+- Los IDs estables no se renumeran; se agregan nuevos IDs y los retirados quedan marcados como obsoletos con motivo.
+
+## 11. Riesgos, decisiones y preguntas abiertas
+
+### 11.1 Riesgos
+
+| ID | Riesgo | Prob | Impacto | Mitigación | Trigger | Dueño |
+| --- | --- | --- | --- | --- | --- | --- |
+| RISK-REALITY-001 | Tester confunde simulación con servicio real | Media | Alto | Avisos visibles y labels de estado | Uso de datos reales | Producto |
+| RISK-DATA-001 | Usuario ingresa datos reales en localStorage | Media | Alto | Copys de prohibición y limpieza manual | Hallazgo en demo | Privacidad |
+| RISK-XSS-001 | Texto local mal renderizado causa inyección visual | Baja | Alto | Escape en render y revisión de rutas nuevas | Nuevo campo anfitrión | Ingeniería |
+| RISK-ACC-001 | Accesibilidad no verificada manualmente | Media | Medio | Plan de pruebas diferido | Antes de declarar aceptación accesible o preparar producción | TODO-ACC-002 |
+| RISK-VOICE-001 | Speech API depende de navegador o proveedor | Media | Medio | Alternativa textual y aviso | Dictado falla | Ingeniería |
+| RISK-TXN-001 | Confusión entre guía, urbano, Express y reserva privada | Media | Alto | Reglas de flujo y guards | Bug de navegación | Producto |
+| RISK-DOC-001 | Documentación pública filtra secretos o instrucciones inseguras | Baja | Alto | Revisión de seguridad y Buzz sin secretos | Cambio en ayuda | Seguridad |
+| RISK-LIC-001 | Atribución OpenMoji se pierde | Baja | Medio | Mantener licencia, hashes y créditos | Cambio de assets | Ingeniería |
+| RISK-REQ-001 | Requisitos derivan sin evidencia y generan drift | Media | Medio | Etiquetas de estado y revisión de huérfanos | Nuevo FR sin ref | Producto |
+| RISK-INT-001 | Integraciones no soportadas se interpretan como activas | Media | Alto | Interfaces propuestas separadas | Mención de proveedor | Ingeniería |
+| RISK-LEGAL-001 | País, impuestos o permisos se asumen aprobados | Media | Alto | TODO legal obligatorio | Preparar producción | Legal |
+| RISK-HOST-001 | Anfitrión fraudulento o cochera inexistente en producto real | Media | Alto | Verificación propuesta | Diseño host real | TODO-OPS-004 |
+| RISK-PAY-001 | Disputa de pago o reembolso real sin proceso | Media | Alto | No activar pagos sin proveedor | Pago real solicitado | TODO-PAY-003 |
+| RISK-URB-001 | Zona urbana no coincide con fiscalización real | Media | Alto | Convenio municipal pendiente | País definido | TODO-GOV-003 |
+| RISK-CAM-001 | Cámara o patente crea riesgo de privacidad | Media | Alto | Mantener fuera de alcance hasta DPIA | Express real | TODO-PRIV-005 |
+| RISK-AVAIL-001 | Disponibilidad o precio queda obsoleto | Alta | Medio | Caveats y fuente productiva futura | Cambios de tarifa | TODO-MAP-002 |
+
+### 11.2 Decisiones verificadas para prototipo
+
+| ID | Decisión | Estado | Evidencia |
+| --- | --- | --- | --- |
+| DEC-PROT-001 | Validar primero con prototipo estático | Aprobada para prototipo | `README.md` |
+| DEC-REPO-001 | Mantener referencia en repo separado `easypark-prototype` | Aprobada para prototipo | URL pública del repo |
+| DEC-STATIC-001 | Usar HTML, CSS, JS y `localStorage` ficticio | Aprobada para prototipo | `index.html` |
+| DEC-COORD-001 | Git es fuente canónica y Buzz coordina feedback | Aprobada para prototipo | `REF-GUIDE-01`, `BUZZ-ACCESS-01` |
+| DEC-AI-001 | Copilot es determinístico y asesor | Aprobada para prototipo | `AI-ENTRY-01` |
+| DEC-FLOW-001 | Separar reserva privada, urbano, guía, Express e incidentes | Aprobada para prototipo | Sección 3.3 |
+| DEC-REF-001 | Refs rojas son contrato de feedback | Aprobada para prototipo | `HELP-FEEDBACK-01` |
+| DEC-MEDIA-001 | Usar OpenMoji local atribuido | Aprobada para prototipo | `MEDIA-CREDITS-01` |
+| DEC-SRS-001 | Markdown canónico y PDF determinístico | Aprobada para prototipo | `scripts/generate-srs-pdf.py` |
+| DEC-UX-001 | Patrón destino primero y mapa simulado con hoja inferior | Aprobada para prototipo | `HOME-DESTINATION-01`, `DRV-MAP-SHEET-01` |
+| DEC-ARCH-001 | No hay stack productivo elegido | Aprobada solo como no decisión | TODO-ARCH-001 |
+
+### 11.3 Preguntas abiertas
+
+| TODO | Dueño | Evidencia necesaria | Consecuencia si sigue abierto |
+| --- | --- | --- | --- |
+| TODO-GOV-001 | Por asignar | Dueño formal del documento | No hay aprobación final |
+| TODO-LEGAL-001 | Por asignar | País, términos y obligaciones | No se puede operar producto real |
+| TODO-PRIV-001 | Por asignar | Base legal y política | No se puede tratar datos reales |
+| TODO-SEC-001 | Por asignar | Modelo de amenazas | No se puede activar backend real |
+| TODO-PAY-001 | Por asignar | Proveedor y cumplimiento | No hay pagos reales |
+| TODO-MAP-001 | Por asignar | Proveedor y términos | No hay mapas reales ni disponibilidad |
+| TODO-OPS-001 | Por asignar | Soporte y escalamiento | No hay atención real |
+| TODO-ACC-002 | Por asignar | Pruebas manuales documentadas | Accesibilidad no aceptada |
+| TODO-CI-001 | Por asignar | Workflow o runner definido | No hay CI evidenciado |
+| TODO-PUB-004 | Por asignar | Aprobación de publicación | PDF lleno no debe publicarse |
+| TODO-SLA-001 | Por asignar | Objetivos operativos aprobados | No hay SLA ni uptime |
+
+## 12. Apéndices y guía de completitud
+
+### 12.1 Inventario de rutas clave
+
+| Ruta | Uso |
+| --- | --- |
+| `index.html` | Prototipo principal |
+| `help.html` | Portal de ayuda |
+| `README.md` | Alcance y ejecución local |
+| `templates/srs-ieee-830-template.md` | Plantilla en blanco fuente |
+| `templates/srs-ieee-830-template.pdf` | Plantilla en blanco derivada |
+| `templates/easypark-srs-reference.md` | SRS lleno fuente |
+| `scripts/generate-srs-pdf.py` | Generador ReportLab |
+| `assets/openmoji/ATTRIBUTION.md` | Créditos, licencia y hashes |
+| `.github/workflows/ci.yml` | No encontrado en esta revisión |
+
+### 12.2 Inventario de dominios de refs visibles
+
+| Prefijo | Dominio |
+| --- | --- |
+| APP, HOME, REF | Inicio y feedback |
+| ONB | Onboarding |
+| ACCOUNT | Cuenta segura de prueba |
+| DRV, SESSION, PARKING, PASS | Conductor, zona, sesión y pase |
+| ACTIVITY | Actividad y recibos |
+| AI | Copilot |
+| PROV | Anfitrión |
+| OPS | Operación |
+| EXPRESS | Entrada automática simulada |
+| INCIDENT | Incidentes |
+| HELP, BUZZ, CREATOR, SRS, MEDIA | Ayuda, coordinación y documentación |
+
+### 12.3 Comandos de generación de artefactos
+
+```bash
+python3 scripts/generate-srs-pdf.py
+shasum -a 256 templates/srs-ieee-830-template.pdf
+python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos EasyPark en elaboración'
+```
+
+El SHA-256 esperado de la plantilla PDF en blanco sin argumentos es:
+
+```text
+f95973027adf3e3ebf21be883d6e09de03b10ff45ea232a5c77095658983e630
+```
+
+### 12.4 Diagrama de contexto en texto plano
+
+```text
+Tester
+  -> index.html y help.html
+  -> localStorage con datos ficticios
+  -> assets OpenMoji locales
+  -> scripts/generate-srs-pdf.py para PDF
+  -> Buzz para feedback con refs
+  -> WhatsApp existente con Alejandro para enviar solo clave pública de acceso
+
+Fuera del runtime actual:
+  pagos reales, mapas reales, GPS, SMS, cámaras, operador, municipio, LLM remoto, backend productivo
+```
+
+### 12.5 Checklist para colaboradores
+
+- Mantener español profesional y etiquetas de estado.
+- No agregar reclamos de cumplimiento oficial, aval, aprobación, país, SLA, proveedor u owner sin evidencia.
+- No ingresar datos reales ni ejemplos sensibles.
+- Agregar requisitos con IDs nuevos y estables. No renumerar.
+- Cada FR, DR o NFR debe tener aceptación y evidencia o TODO.
+- Cada cambio de comportamiento debe mapear a refs visibles o archivo fuente.
+- Revisar que tablas tengan columnas consistentes y no contengan pipes accidentales en celdas.
+- Generar PDF temporal y borrarlo antes de reportar, salvo aprobación explícita de publicación.
+- Seguir el workflow dueño del cambio: los commits locales verificados de work unit en la rama de feature están permitidos y esperados; push, merge, release, publicación externa y links públicos en Help o README requieren autorización explícita.
+
+### 12.6 Reglas de control de cambios
+
+1. Leer la tarea ODD vigente y este SRS antes de editar.
+2. Limitar cambios a la superficie autorizada.
+3. Marcar nuevas afirmaciones como implementadas, propuestas, pendientes o fuera de alcance.
+4. Usar TODO estable cuando falte evidencia.
+5. Ejecutar verificaciones locales aplicables.
+6. Reportar PASS, PARTIAL o BLOCKED con comandos y resultados.
+7. Crear commits locales de work unit cuando el workflow dueño lo indique y la verificación pase.
+8. Solicitar autorización explícita antes de push, merge, release, publicación externa o links públicos en Help o README.
