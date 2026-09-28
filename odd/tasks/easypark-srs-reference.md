@@ -55,13 +55,15 @@ A filled working reference gives product, engineering, QA, security, operations,
 - [x] Constrain paths to the repository and reject invalid/missing Markdown inputs.
 - [x] Keep invariant PDF generation and existing checklist/table rendering.
 
-Status: implemented and verified; work-unit commit pending.
+Status: complete in work-unit commit `5be3c40`; default blank PDF remains byte-identical at SHA-256 `f95973027adf3e3ebf21be883d6e09de03b10ff45ea232a5c77095658983e630`.
 
 ### T002 — Write filled EasyPark SRS foundation
 
-- [ ] Add document control, status/legend, purpose, scope, audiences, glossary, references, product perspective, roles, environment, constraints, assumptions, and included/excluded scope.
-- [ ] Record current prototype evidence separately from future production intent.
-- [ ] Leave unsupported owners, dates, approvals, legal standards, SLAs, and country scope as explicit TODOs.
+- [x] Add document control, status/legend, purpose, scope, audiences, glossary, references, product perspective, roles, environment, constraints, assumptions, and included/excluded scope.
+- [x] Record current prototype evidence separately from future production intent.
+- [x] Leave unsupported owners, approvals, legal standards, SLAs, and country scope as explicit TODOs.
+
+Status: implemented and verified; verified public repository/prototype/help URLs are filled, while unsupported decisions remain explicit TODOs.
 
 ### T003 — Specify behavior, data, quality, and traceability
 
@@ -98,8 +100,8 @@ Status: implemented and verified; work-unit commit pending.
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is implemented and verified; T002 is next.
+Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is implemented and verified; T003 is next.
 
 ## Next step
 
-Commit T001 as the first work unit, then implement the filled SRS foundation in T002.
+Commit T002 as the next work unit, then append behavioral, data, NFR, acceptance, traceability, risk, and appendix sections in T003.
