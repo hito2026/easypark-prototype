@@ -79,7 +79,7 @@ Status: complete in work-unit commit `0997975`; static and independent verificat
 - [x] Update Help and README with the new driver interaction model and its simulation limits.
 - [ ] Run static, syntax, link/ref, security, reduced-motion, responsive-structure, and transaction-boundary checks. Static checks passed; manual browser/accessibility checks remain pending and were explicitly accepted as publication risk by the user.
 - [x] Obtain independent read-only verification.
-- [ ] Push and verify Pages. Work-unit commit `0997975` was created after explicit user authorization.
+- [x] Push and verify Pages. Work-unit commit `0997975` and verification commit `375be6b` were published after explicit user authorization.
 
 ## Acceptance criteria
 
@@ -109,7 +109,11 @@ T001-T003 and T004 documentation are implemented. Writer static checks passed. N
 - Manual browser, mobile layout, keyboard, screen-reader, computed-contrast, and actual reduced-motion checks remain pending; the user explicitly accepted this publication risk.
 - Work-unit commit: `0997975` (`feat: add destination-first driver experience`).
 - Native RDD review: attempted for the committed range at tier `medium`; unavailable because no model is configured for `review-reliability`. Independent read-only verification remains the fallback evidence.
+- Verification commit: `375be6b` (`chore: record driver experience verification`).
+- GitHub Pages workflow `36454740191` and deployment `6715676027` completed successfully.
+- Public `/` and `/help.html` returned HTTP 200 with `text/html; charset=utf-8`.
+- Public refs and destination-first copy are present; the published index has no remote runtime resource references.
 
 ## Next step
 
-Commit this verification record, push the authorized change, and verify Pages.
+Run the explicitly deferred manual browser/accessibility checks in a future testing pass; no implementation or publication step remains pending.
