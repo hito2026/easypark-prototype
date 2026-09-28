@@ -1,0 +1,2 @@
+# Generated PDFs are deterministic binary artifacts; do not run text diff/merge rules.
+*.pdf binary

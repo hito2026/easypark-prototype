@@ -81,7 +81,7 @@ Status: complete across work-unit commits `eb704f6` for sections 4–7 and `6aca
 - [x] Add separate Help downloads/refs for filled Markdown and PDF without changing blank-template URLs.
 - [x] Update README with both artifact families and regeneration commands.
 
-Status: implemented and verified locally; filled PDF SHA-256 is `595aa42ed2d1c9e1a10393d6e75a1ffadcbbb6c580868b1c8bdbc9a4a86e25f0`, 101,634 bytes, 35 pages. Public availability remains pending final approval, push, and Pages deployment.
+Status: complete in work-unit commit `7192b8b`; filled PDF SHA-256 is `595aa42ed2d1c9e1a10393d6e75a1ffadcbbb6c580868b1c8bdbc9a4a86e25f0`, 101,634 bytes, 35 pages. Public availability remains pending final approval, push, and Pages deployment.
 
 ### T005 — Verify and publish
 
@@ -104,8 +104,8 @@ Status: implemented and verified locally; filled PDF SHA-256 is `595aa42ed2d1c9e
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 is complete across `eb704f6` and `6aca6dd`; T004 is implemented and verified locally.
+Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 is complete across `eb704f6` and `6aca6dd`; T004 is complete in `7192b8b`. Independent T005 verification found Git treating generated PDFs as text during `diff --check`; `.gitattributes` now marks PDFs binary and awaits verification.
 
 ## Next step
 
-Commit T004, then run the full independent verification and native review preflight before requesting final publication approval.
+Commit the PDF binary-attribute fix, rerun independent verification, then run the native review preflight before requesting final publication approval.
