@@ -49,7 +49,7 @@
           <details open><summary>Proyecto</summary><a href="#vision">Visión y audiencias</a><a href="#roles">Roles y oferta</a><a href="#arquitectura">Límites de simulación</a></details>
           <details open><summary>Cómo probar</summary><a href="#preparacion">Preparación</a><a href="#home-help">Inicio y ayuda visible</a><a href="#orden-pruebas">Orden sugerido</a><a href="#feedback">Plantilla de feedback</a></details>
           <details open><summary>Casos de uso</summary><a href="#onboarding">Onboarding</a><a href="#cuenta">Cuenta</a><a href="#privado">Conductor privado</a><a href="#incidentes">Incidentes</a><a href="#urbano">Zona urbana</a><a href="#actividad">Actividad</a><a href="#copilot">Copilot</a><a href="#proveedor">Anfitrión</a><a href="#operacion">Operación</a><a href="#express">Express</a></details>
-          <details open><summary>Para creadores</summary><a href="#acceso-buzz">Acceso al workspace de Buzz</a><a href="#refs">Refs estables</a><a href="#creditos-openmoji">Media y licencias</a><a href="#plantilla-srs">Plantilla SRS</a><a href="#workflow">Workflow</a><a href="#checklist">Checklist</a></details>
+          <details open><summary>Para creadores</summary><a href="#acceso-buzz">Acceso al workspace de Buzz</a><a href="#refs">Refs estables</a><a href="#creditos-openmoji">Media y licencias</a><a href="#plantilla-srs">Recursos SRS</a><a href="#workflow">Workflow</a><a href="#checklist">Checklist</a></details>
         </nav>
       </aside>
       <main id="contenido" tabindex="-1">
@@ -156,21 +156,28 @@ Evidencia: captura o pasos.</pre>
         <section class="doc" id="creditos-openmoji" data-search="openmoji licencia media svg accesibilidad reduced motion local assets attribution">
           <h2><span class="ref">MEDIA-CREDITS-01</span> Media y licencias</h2><p>Las composiciones visuales usan SVG locales sin llamadas remotas en runtime. Los SVG de OpenMoji 17.0.0 se conservan sin cambios en <code>assets/openmoji/</code>, con hashes y URL de origen en <code>assets/openmoji/ATTRIBUTION.md</code> y licencia local en <code>assets/openmoji/LICENSE.txt</code>.</p><p>Las animaciones son CSS locales y se desactivan con <code>prefers-reduced-motion: reduce</code>; las imágenes decorativas/semánticas tienen <code>alt</code> apropiado.</p><div class="callout warn">No usar estos íconos para insinuar integración real con cámaras, operadores, bancos, municipios, OpenMoji o EasyPark real.</div></section>
 
-        <section class="doc" id="plantilla-srs" data-search="plantilla srs ieee 830 requisitos software markdown pdf descarga CREATOR-SRS-01 SRS-DOWNLOAD-MD-01 SRS-DOWNLOAD-PDF-01">
-          <h2><span class="ref">CREATOR-SRS-01</span> Plantilla SRS descargable</h2>
-          <p>Usá esta plantilla cuando una idea necesite convertirse en especificación revisable antes de implementación: alcance, actores, interfaces, requisitos funcionales, datos, no funcionales, aceptación, trazabilidad y riesgos.</p>
-          <div class="callout warn"><strong>Límite de referencia:</strong> es una guía original de proyecto, no una plantilla oficial IEEE ni una afirmación de conformidad o certificación. La página oficial <a href="https://standards.ieee.org/ieee/830/1222/" target="_blank" rel="noopener noreferrer">IEEE 830</a> indica que IEEE 830-1998 fue reemplazado por ISO/IEC/IEEE 29148:2011. Verificá siempre la norma, edición y licencia vigentes.</div>
-          <h3>Cómo completarla y aprobarla</h3>
-          <ol><li>Copiá el Markdown y reemplazá todos los campos <code>{{...}}</code>.</li><li>Escribí requisitos con “El sistema debe...” y criterios verificables.</li><li>Revisá con producto, ingeniería, QA, seguridad/privacidad y operaciones.</li><li>Aprobá versión, evidencias y matriz de trazabilidad antes de construir.</li><li>Regenerá el PDF desde el Markdown si cambia el contenido.</li></ol>
-          <div class="downloads" aria-label="Descargas de plantilla SRS">
-            <a class="download" data-ref="SRS-DOWNLOAD-MD-01" href="templates/srs-ieee-830-template.md" download><span class="ref">SRS-DOWNLOAD-MD-01</span><br>Descargar Markdown<br><span class="muted">MD · 15.620 bytes · fuente editable</span></a>
-            <a class="download" data-ref="SRS-DOWNLOAD-PDF-01" href="templates/srs-ieee-830-template.pdf" download><span class="ref">SRS-DOWNLOAD-PDF-01</span><br>Descargar PDF<br><span class="muted">PDF · 32.168 bytes · derivado del Markdown</span></a>
+        <section class="doc" id="plantilla-srs" data-search="plantilla srs ieee 830 requisitos software markdown pdf descarga referencia easypark filled borrador CREATOR-SRS-01 SRS-DOWNLOAD-MD-01 SRS-DOWNLOAD-PDF-01 SRS-REFERENCE-MD-01 SRS-REFERENCE-PDF-01">
+          <h2><span class="ref">CREATOR-SRS-01</span> Recursos SRS para creadores</h2>
+          <p>Usá estos recursos cuando una idea necesite convertirse en especificación revisable antes de implementación. Hay dos familias: una plantilla reutilizable en blanco y una referencia EasyPark ya completada como borrador de trabajo.</p>
+          <div class="callout warn"><strong>Límite de referencia:</strong> son guías originales de proyecto, no plantillas oficiales IEEE ni afirmaciones de conformidad o certificación. La página oficial <a href="https://standards.ieee.org/ieee/830/1222/" target="_blank" rel="noopener noreferrer">IEEE 830</a> indica que IEEE 830-1998 fue reemplazado por ISO/IEC/IEEE 29148:2011. Verificá siempre la norma, edición y licencia vigentes.</div>
+          <h3>Plantilla reutilizable en blanco</h3>
+          <p>Copiá el Markdown y reemplazá todos los campos <code>{{...}}</code>. La plantilla conserva la estructura para alcance, actores, interfaces, requisitos, datos, no funcionales, aceptación, trazabilidad y riesgos.</p>
+          <div class="downloads" aria-label="Descargas de plantilla SRS en blanco">
+            <a class="download" data-ref="SRS-DOWNLOAD-MD-01" href="templates/srs-ieee-830-template.md" download><span class="ref">SRS-DOWNLOAD-MD-01</span><br>Descargar plantilla Markdown<br><span class="muted">MD · 15.620 bytes · fuente editable</span></a>
+            <a class="download" data-ref="SRS-DOWNLOAD-PDF-01" href="templates/srs-ieee-830-template.pdf" download><span class="ref">SRS-DOWNLOAD-PDF-01</span><br>Descargar plantilla PDF<br><span class="muted">PDF · 32.168 bytes · derivado del Markdown</span></a>
           </div>
-          <p><a href="templates/srs-ieee-830-template.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF en otra pestaña</a> sin descargar.</p>
+          <p><a href="templates/srs-ieee-830-template.pdf" target="_blank" rel="noopener noreferrer">Abrir plantilla PDF en otra pestaña</a> sin descargar.</p>
+          <h3>Referencia EasyPark completada</h3>
+          <p>El borrador completado muestra cómo usar etiquetas de estado, refs visibles, requisitos estables, TODOs explícitos y límites de prototipo. Es una referencia de trabajo: no reemplaza aprobación humana, no autoriza producción y no debe publicarse fuera del flujo aprobado.</p>
+          <div class="downloads" aria-label="Descargas de referencia SRS EasyPark">
+            <a class="download" data-ref="SRS-REFERENCE-MD-01" href="templates/easypark-srs-reference.md" download><span class="ref">SRS-REFERENCE-MD-01</span><br>Descargar referencia Markdown<br><span class="muted">MD · 79.224 bytes · fuente completada</span></a>
+            <a class="download" data-ref="SRS-REFERENCE-PDF-01" href="templates/easypark-srs-reference.pdf" download><span class="ref">SRS-REFERENCE-PDF-01</span><br>Descargar referencia PDF<br><span class="muted">PDF · 101.634 bytes · derivado determinístico</span></a>
+          </div>
+          <p><a href="templates/easypark-srs-reference.pdf" target="_blank" rel="noopener noreferrer">Abrir referencia PDF en otra pestaña</a> sin descargar.</p>
+          <h3>Cómo usar la referencia</h3>
+          <ol><li>Buscá una sección o ID real, por ejemplo <code>FR-URB-002</code>, <code>BR-URB-001</code> o <code>NFR-ACC-002</code>.</li><li>Verificá que cada fila tenga aceptación y evidencia o TODO explícito.</li><li>Copiá el patrón de etiqueta: <code>[PROTOTIPO IMPLEMENTADO]</code>, <code>[REQUISITO PROPUESTO]</code>, <code>[DECISIÓN PENDIENTE]</code> o <code>[FUERA DE ALCANCE ACTUAL]</code>.</li><li>Regenerá el PDF desde el Markdown si cambia el contenido.</li></ol>
           <h3>Vista previa de estructura</h3>
           <ul><li>Control del documento, aprobaciones e historial.</li><li>Propósito, alcance, audiencia, referencias y glosario.</li><li>Perspectiva del producto, usuarios, entorno, restricciones y supuestos.</li><li>Interfaces externas, casos de uso, requisitos funcionales y reglas.</li><li>Datos, retención, no funcionales, aceptación, trazabilidad, riesgos y apéndices.</li></ul>
-          <h3>Ejemplo EasyPark</h3>
-          <p><strong>REQ-F-URB-001:</strong> El sistema debe impedir iniciar o extender una sesión urbana ficticia por encima del máximo regulatorio visible de la zona seleccionada. Criterio: dado máximo 120 min, intentar 150 min muestra bloqueo y conserva la sesión previa.</p>
         </section>
         <section class="doc" id="workflow" data-search="workflow proponer implementar verificar documentar git buzz">
           <h2>Workflow de cambio</h2><ol><li>Proponer con ref, problema y resultado esperado.</li><li>Implementar en el archivo permitido.</li><li>Verificar sintaxis, refs, límites de seguridad y flujos existentes.</li><li>Actualizar README o ayuda si cambia comportamiento.</li><li>Usar Git como fuente de verdad y Buzz para coordinación/ejecución.</li></ol></section>

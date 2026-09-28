@@ -73,13 +73,15 @@ Status: complete in work-unit commit `d8f82df`; verified public repository/proto
 - [x] Add current and proposed NFRs for security, privacy, accessibility, portability, availability, observability, performance, and maintainability.
 - [x] Add acceptance strategy, traceability matrix, risks, decisions, assumptions, and open questions.
 
-Status: complete across work-unit commit `eb704f6` for sections 4–7 and the following sections 8–12 commit.
+Status: complete across work-unit commits `eb704f6` for sections 4–7 and `6aca6dd` for sections 8–12.
 
 ### T004 — Publish the reference alongside the blank template
 
-- [ ] Generate `templates/easypark-srs-reference.pdf` from `templates/easypark-srs-reference.md`.
-- [ ] Add separate Help downloads/refs for filled Markdown and PDF without changing blank-template URLs.
-- [ ] Update README with both artifact families and regeneration commands.
+- [x] Generate `templates/easypark-srs-reference.pdf` from `templates/easypark-srs-reference.md`.
+- [x] Add separate Help downloads/refs for filled Markdown and PDF without changing blank-template URLs.
+- [x] Update README with both artifact families and regeneration commands.
+
+Status: implemented and verified locally; filled PDF SHA-256 is `595aa42ed2d1c9e1a10393d6e75a1ffadcbbb6c580868b1c8bdbc9a4a86e25f0`, 101,634 bytes, 35 pages. Public availability remains pending final approval, push, and Pages deployment.
 
 ### T005 — Verify and publish
 
@@ -102,8 +104,8 @@ Status: complete across work-unit commit `eb704f6` for sections 4–7 and the fo
 
 ## Progress
 
-Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 sections 4–7 are complete in `eb704f6`; sections 8–12 are implemented and verified.
+Exploration and repository mapping complete. User selected “filled example plus preserved blank template” and `feature-branch-chain`. T001 is complete in `5be3c40`; T002 is complete in `d8f82df`; T003 is complete across `eb704f6` and `6aca6dd`; T004 is implemented and verified locally.
 
 ## Next step
 
-Commit T003 sections 8–12, then generate the canonical filled PDF and expose both filled and blank resources in Help/README.
+Commit T004, then run the full independent verification and native review preflight before requesting final publication approval.

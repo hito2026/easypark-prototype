@@ -52,21 +52,35 @@ Las composiciones visuales usan SVG locales de OpenMoji 17.0.0 y CSS propio. No 
 
 Abrí `help.html` para una documentación dedicada con arquitectura tipo documentación cloud: encabezado fijo, breadcrumb, enlace de vuelta al prototipo, menú lateral con grupos anidados, tabla de contenido, búsqueda/filtro local sin red, estado vacío, foco visible, landmarks semánticos, menú móvil y soporte de movimiento reducido. Cubre proyecto, cómo probar, destino primero, mapa/panel de resultados, detalles progresivos, línea de estado simulada, pase/servicios/incidentes, media/licencias, todos los casos de uso actuales y guía para creadores.
 
-## Plantilla SRS
+## Recursos SRS
 
-La sección “Para creadores” incluye descargas de una plantilla original en español para Especificación de Requisitos de Software:
+La sección “Para creadores” incluye dos familias de artefactos SRS en español. Son enlaces relativos del repositorio y su disponibilidad pública depende de aprobación final, push y publicación.
+
+### Plantilla reutilizable en blanco
 
 - Fuente editable: `templates/srs-ieee-830-template.md`
 - PDF derivado: `templates/srs-ieee-830-template.pdf`
-- Generador determinístico: `scripts/generate-srs-pdf.py`
+- Uso: copiar, completar placeholders y adaptar a otro proyecto.
 
-Para regenerar el PDF ejecutá:
+Para regenerar el PDF en blanco con los valores por defecto ejecutá:
 
 ```bash
 python3 scripts/generate-srs-pdf.py
 ```
 
-Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; el PDF se deriva de ese archivo. La plantilla es guía de proyecto inspirada en preocupaciones clásicas de SRS/IEEE 830, no es plantilla oficial IEEE ni certifica conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
+### Referencia EasyPark completada
+
+- Fuente completada: `templates/easypark-srs-reference.md`
+- PDF derivado: `templates/easypark-srs-reference.pdf`
+- Uso: ejemplo de trabajo con etiquetas de estado, refs visibles, requisitos estables, TODOs explícitos y límites de prototipo. No reemplaza aprobación humana ni autoriza producción.
+
+Para regenerar el PDF completado con metadatos explícitos ejecutá:
+
+```bash
+python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos EasyPark en elaboración'
+```
+
+Generador determinístico: `scripts/generate-srs-pdf.py`. Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; cada PDF se deriva de su Markdown correspondiente. Estos recursos son guías originales de proyecto inspiradas en preocupaciones clásicas de SRS/IEEE 830, no son plantillas oficiales IEEE ni certifican conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
 
 ## Etiquetas de referencia
 
