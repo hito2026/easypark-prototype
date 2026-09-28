@@ -53,7 +53,7 @@ A destination-first experience with a persistent map context, compact bottom-she
 - [x] Introduce a neutral, original visual system inspired by map-led mobility usability rather than Uber trade dress.
 - [x] Preserve Help, refs, and all existing home entry points.
 
-Status: implemented by delegated writer; static verification passed; independent verification pending.
+Status: complete in work-unit commit `0997975`; static and independent verification passed within the declared manual-test limitation.
 
 ### T002 — Build map and bottom-sheet decision flow
 
@@ -62,7 +62,7 @@ Status: implemented by delegated writer; static verification passed; independent
 - [x] Move secondary services, rules, block/peak metadata, and caveats behind progressive disclosure.
 - [x] Preserve empty states, filters, guidance-only boundaries, and safe local selection.
 
-Status: implemented by delegated writer; static verification passed; independent verification pending.
+Status: complete in work-unit commit `0997975`; static and independent verification passed within the declared manual-test limitation.
 
 ### T003 — Clarify detail, confirmation, and active status
 
@@ -71,7 +71,7 @@ Status: implemented by delegated writer; static verification passed; independent
 - [x] Add a deterministic reservation/session timeline from selection through completion.
 - [x] Keep payment, pass, incident, and session actions fictitious and transactionally unchanged.
 
-Status: implemented by delegated writer; static verification passed; independent verification pending.
+Status: complete in work-unit commit `0997975`; static and independent verification passed within the declared manual-test limitation.
 
 ### T004 — Document and verify
 
@@ -79,7 +79,7 @@ Status: implemented by delegated writer; static verification passed; independent
 - [x] Update Help and README with the new driver interaction model and its simulation limits.
 - [ ] Run static, syntax, link/ref, security, reduced-motion, responsive-structure, and transaction-boundary checks. Static checks passed; manual browser/accessibility checks remain pending and were explicitly accepted as publication risk by the user.
 - [x] Obtain independent read-only verification.
-- [ ] Commit/push and verify Pages. Publication was explicitly authorized by the user.
+- [ ] Push and verify Pages. Work-unit commit `0997975` was created after explicit user authorization.
 
 ## Acceptance criteria
 
@@ -106,8 +106,10 @@ T001-T003 and T004 documentation are implemented. Writer static checks passed. N
 - Independent verification: `PARTIAL` only because manual checks are unavailable; no blocking static/source defect was found.
 - Base/candidate flow comparison: all 59 existing flow IDs remain; none were removed.
 - Independent checks confirmed accessible pin roles, explicit selection-only controls, results footer suppression, guidance/private checkout guard, deterministic four-stage timeline, no live-map/tracking claim, and no new XSS path.
-- Manual browser, mobile layout, keyboard, screen-reader, computed-contrast, and actual reduced-motion checks remain pending.
+- Manual browser, mobile layout, keyboard, screen-reader, computed-contrast, and actual reduced-motion checks remain pending; the user explicitly accepted this publication risk.
+- Work-unit commit: `0997975` (`feat: add destination-first driver experience`).
+- Native RDD review: attempted for the committed range at tier `medium`; unavailable because no model is configured for `review-reliability`. Independent read-only verification remains the fallback evidence.
 
 ## Next step
 
-Create the work-unit commit, attempt the native review path, publish the authorized change, and verify Pages.
+Commit this verification record, push the authorized change, and verify Pages.
