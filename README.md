@@ -47,6 +47,22 @@ Referencias consultadas:
 
 Abrí `help.html` para una documentación dedicada con arquitectura tipo documentación cloud: encabezado fijo, breadcrumb, enlace de vuelta al prototipo, menú lateral con grupos anidados, tabla de contenido, búsqueda/filtro local sin red, estado vacío, foco visible, landmarks semánticos, menú móvil y soporte de movimiento reducido. Cubre proyecto, cómo probar, todos los casos de uso actuales y guía para creadores.
 
+## Plantilla SRS
+
+La sección “Para creadores” incluye descargas de una plantilla original en español para Especificación de Requisitos de Software:
+
+- Fuente editable: `templates/srs-ieee-830-template.md`
+- PDF derivado: `templates/srs-ieee-830-template.pdf`
+- Generador determinístico: `scripts/generate-srs-pdf.py`
+
+Para regenerar el PDF ejecutá:
+
+```bash
+python3 scripts/generate-srs-pdf.py
+```
+
+Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; el PDF se deriva de ese archivo. La plantilla es guía de proyecto inspirada en preocupaciones clásicas de SRS/IEEE 830, no es plantilla oficial IEEE ni certifica conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
+
 ## Etiquetas de referencia
 
 Las etiquetas rojas son parte intencional del prototipo. Usalas en Buzz, por ejemplo: `Cambiar EXPRESS-CONSENT-01 para aclarar que no usa cámara real`. Son referencias estables del prototipo, no texto final para clientes. El prototipo incluye un botón para mostrarlas u ocultarlas y el portal documenta el catálogo de prefijos.

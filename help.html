@@ -18,7 +18,7 @@
       nav a { display:block; min-height:36px; padding:8px 10px; border-radius:10px; text-decoration:none; color:var(--ink); } nav a[aria-current="true"], nav a:hover { background:var(--soft); color:#174ea6; }
       main { min-width:0; } .breadcrumb { color:var(--muted); font-size:14px; margin-bottom:12px; } .hero, section.doc { background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:22px; margin-bottom:18px; box-shadow:0 8px 24px #d7e1f04d; }
       h1 { margin:0 0 8px; font-size:34px; } h2 { margin:0 0 12px; font-size:26px; } h3 { margin:18px 0 8px; font-size:18px; } p, li { line-height:1.55; } .muted { color:var(--muted); }
-      .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .card { border:1px solid var(--line); border-radius:16px; padding:14px; background:#fbfdff; }
+      .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .card { border:1px solid var(--line); border-radius:16px; padding:14px; background:#fbfdff; } .downloads { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; } .download { display:block; min-height:44px; border:1px solid var(--line); border-radius:14px; padding:12px; text-decoration:none; background:#f8fbff; font-weight:850; }
       .callout { border-radius:16px; padding:14px; margin:12px 0; border:1px solid var(--line); background:var(--soft); } .callout.warn { background:var(--warn); border-color:#fed7aa; } .callout.ok { background:var(--ok); border-color:#bbf7d0; }
       .ref { display:inline-flex; padding:2px 6px; border:1px dashed #fca5a5; border-radius:6px; background:#fff5f5; color:#dc2626; font-size:11px; font-weight:850; }
       .topic { border-top:1px solid var(--line); padding-top:14px; margin-top:14px; } .topic dl { display:grid; gap:8px; } dt { font-weight:850; } dd { margin:0 0 8px; color:var(--muted); }
@@ -26,7 +26,7 @@
       .hidden-by-search { display:none !important; } #emptyState { display:none; } #emptyState.show { display:block; }
       footer { border-top:1px solid var(--line); padding:24px 20px; color:var(--muted); text-align:center; }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; animation:none !important; } }
-      @media (max-width: 980px) { .layout { grid-template-columns:1fr; padding:14px; } aside { position:static; max-height:none; display:none; } aside.open { display:block; } .toc { display:none; } .top { flex-wrap:wrap; } .searchbar { order:3; min-width:100%; } .cards { grid-template-columns:1fr; } }
+      @media (max-width: 980px) { .layout { grid-template-columns:1fr; padding:14px; } aside { position:static; max-height:none; display:none; } aside.open { display:block; } .toc { display:none; } .top { flex-wrap:wrap; } .searchbar { order:3; min-width:100%; } .cards, .downloads { grid-template-columns:1fr; } }
     </style>
   </head>
   <body>
@@ -49,7 +49,7 @@
           <details open><summary>Proyecto</summary><a href="#vision">Visión y audiencias</a><a href="#roles">Roles y oferta</a><a href="#arquitectura">Límites de simulación</a></details>
           <details open><summary>Cómo probar</summary><a href="#preparacion">Preparación</a><a href="#home-help">Inicio y ayuda visible</a><a href="#orden-pruebas">Orden sugerido</a><a href="#feedback">Plantilla de feedback</a></details>
           <details open><summary>Casos de uso</summary><a href="#onboarding">Onboarding</a><a href="#cuenta">Cuenta</a><a href="#privado">Conductor privado</a><a href="#urbano">Zona urbana</a><a href="#actividad">Actividad</a><a href="#copilot">Copilot</a><a href="#proveedor">Anfitrión</a><a href="#operacion">Operación</a><a href="#express">Express</a></details>
-          <details open><summary>Para creadores</summary><a href="#refs">Refs estables</a><a href="#workflow">Workflow</a><a href="#checklist">Checklist</a></details>
+          <details open><summary>Para creadores</summary><a href="#refs">Refs estables</a><a href="#plantilla-srs">Plantilla SRS</a><a href="#workflow">Workflow</a><a href="#checklist">Checklist</a></details>
         </nav>
       </aside>
       <main id="contenido" tabindex="-1">
@@ -132,6 +132,23 @@ Evidencia: captura o pasos.</pre>
 
         <section class="doc" id="refs" data-search="creadores refs catalogo home help onb account drv session activity ai prov ops express">
           <h2>Para creadores: refs estables</h2><p>Las etiquetas rojas tienen forma <code>PREFIJO-AREA-01</code>. Catálogo actual: APP/HOME, REF/HELP, ONB, ACCOUNT, DRV, SESSION, ACTIVITY, AI, PROV, OPS, EXPRESS.</p><p>Refs de entrada global: <span class="ref">APP-HOME-01</span>, <span class="ref">REF-GUIDE-01</span>, <span class="ref">HELP-PORTAL-01</span>.</p><div class="callout">Ejemplo: “Cambiar <span class="ref">EXPRESS-CONSENT-01</span> para hacer más claro que no usa cámara real”.</div></section>
+
+        <section class="doc" id="plantilla-srs" data-search="plantilla srs ieee 830 requisitos software markdown pdf descarga CREATOR-SRS-01 SRS-DOWNLOAD-MD-01 SRS-DOWNLOAD-PDF-01">
+          <h2><span class="ref">CREATOR-SRS-01</span> Plantilla SRS descargable</h2>
+          <p>Usá esta plantilla cuando una idea necesite convertirse en especificación revisable antes de implementación: alcance, actores, interfaces, requisitos funcionales, datos, no funcionales, aceptación, trazabilidad y riesgos.</p>
+          <div class="callout warn"><strong>Límite de referencia:</strong> es una guía original de proyecto, no una plantilla oficial IEEE ni una afirmación de conformidad o certificación. La página oficial <a href="https://standards.ieee.org/ieee/830/1222/" target="_blank" rel="noopener noreferrer">IEEE 830</a> indica que IEEE 830-1998 fue reemplazado por ISO/IEC/IEEE 29148:2011. Verificá siempre la norma, edición y licencia vigentes.</div>
+          <h3>Cómo completarla y aprobarla</h3>
+          <ol><li>Copiá el Markdown y reemplazá todos los campos <code>{{...}}</code>.</li><li>Escribí requisitos con “El sistema debe...” y criterios verificables.</li><li>Revisá con producto, ingeniería, QA, seguridad/privacidad y operaciones.</li><li>Aprobá versión, evidencias y matriz de trazabilidad antes de construir.</li><li>Regenerá el PDF desde el Markdown si cambia el contenido.</li></ol>
+          <div class="downloads" aria-label="Descargas de plantilla SRS">
+            <a class="download" data-ref="SRS-DOWNLOAD-MD-01" href="templates/srs-ieee-830-template.md" download><span class="ref">SRS-DOWNLOAD-MD-01</span><br>Descargar Markdown<br><span class="muted">MD · 15.620 bytes · fuente editable</span></a>
+            <a class="download" data-ref="SRS-DOWNLOAD-PDF-01" href="templates/srs-ieee-830-template.pdf" download><span class="ref">SRS-DOWNLOAD-PDF-01</span><br>Descargar PDF<br><span class="muted">PDF · 32.168 bytes · derivado del Markdown</span></a>
+          </div>
+          <p><a href="templates/srs-ieee-830-template.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF en otra pestaña</a> sin descargar.</p>
+          <h3>Vista previa de estructura</h3>
+          <ul><li>Control del documento, aprobaciones e historial.</li><li>Propósito, alcance, audiencia, referencias y glosario.</li><li>Perspectiva del producto, usuarios, entorno, restricciones y supuestos.</li><li>Interfaces externas, casos de uso, requisitos funcionales y reglas.</li><li>Datos, retención, no funcionales, aceptación, trazabilidad, riesgos y apéndices.</li></ul>
+          <h3>Ejemplo EasyPark</h3>
+          <p><strong>REQ-F-URB-001:</strong> El sistema debe impedir iniciar o extender una sesión urbana ficticia por encima del máximo regulatorio visible de la zona seleccionada. Criterio: dado máximo 120 min, intentar 150 min muestra bloqueo y conserva la sesión previa.</p>
+        </section>
         <section class="doc" id="workflow" data-search="workflow proponer implementar verificar documentar git buzz">
           <h2>Workflow de cambio</h2><ol><li>Proponer con ref, problema y resultado esperado.</li><li>Implementar en el archivo permitido.</li><li>Verificar sintaxis, refs, límites de seguridad y flujos existentes.</li><li>Actualizar README o ayuda si cambia comportamiento.</li><li>Usar Git como fuente de verdad y Buzz para coordinación/ejecución.</li></ol></section>
         <section class="doc" id="checklist" data-search="checklist nueva pantalla ref seguridad transaccion">
