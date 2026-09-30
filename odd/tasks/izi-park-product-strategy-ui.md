@@ -69,14 +69,16 @@ Status: complete in work-unit commit `41059a3`. The driver backbone already cove
 - [x] Represent destination entry, Copilot recommendation, mixed alternatives, explicit selection, and simulated navigation.
 - [x] Preserve keyboard operation, visible focus, progressive disclosure, safe escaping, and non-reservable checkout guards.
 
-Status: implemented and verified locally in `index.html`; visible brand is IZI PARK, all prior entry points remain reachable, new refs are single-valued, and guidance navigation returns visibly to results without entering payment. Work-unit commit pending.
+Status: complete in work-unit commit `7b8a550`; visible brand is IZI PARK, all prior entry points remain reachable, new refs are single-valued, and guidance navigation returns visibly to results without entering payment.
 
 ### T003 — Build arrival, reservation, and safe payment states
 
-- [ ] Add differentiated simulated arrival for parking and house.
-- [ ] Add house reservation CTA, stable hold state, deterministic countdown, expiration guard, and idempotent confirmation.
-- [ ] Add safe mock payment presentation inspired by the strategy without real credentials or branded provider integration.
-- [ ] Add confirmation state and persistence without changing transactional truth.
+- [x] Add differentiated simulated arrival for parking and house.
+- [x] Add house reservation CTA, stable hold state, deterministic countdown, expiration guard, and idempotent confirmation.
+- [x] Add safe mock payment presentation inspired by the strategy without real credentials or branded provider integration.
+- [x] Add confirmation state and persistence without changing transactional truth.
+
+Status: implemented and verified locally in `index.html`; guidance arrival is non-transactional, only a published reservable house can create `iziParkMockHold`, expired/cancelled holds show `00:00`, checkout is preset-only, and `issueReceipt()` directly enforces active-hold and idempotence invariants. Work-unit commit pending.
 
 ### T004 — Build active-session context and preserve other flows
 
@@ -106,8 +108,8 @@ Status: implemented and verified locally in `index.html`; visible brand is IZI P
 
 ## Progress
 
-T001 is complete in `41059a3`. T002 is implemented and verified locally; T003 is next after the T002 work-unit commit.
+T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is implemented and verified locally. T004 is next after the T003 work-unit commit.
 
 ## Next step
 
-Commit T002, then implement differentiated arrival, reservation hold, countdown, safe payment, and confirmation in T003.
+Commit T003, then implement the active-session map context and full regression preservation in T004.
