@@ -78,13 +78,15 @@ Status: complete in work-unit commit `7b8a550`; visible brand is IZI PARK, all p
 - [x] Add safe mock payment presentation inspired by the strategy without real credentials or branded provider integration.
 - [x] Add confirmation state and persistence without changing transactional truth.
 
-Status: implemented and verified locally in `index.html`; guidance arrival is non-transactional, only a published reservable house can create `iziParkMockHold`, expired/cancelled holds show `00:00`, checkout is preset-only, and `issueReceipt()` directly enforces active-hold and idempotence invariants. Work-unit commit pending.
+Status: complete in work-unit commit `801f72f`; guidance arrival is non-transactional, only a published reservable house can create `iziParkMockHold`, expired/cancelled holds show `00:00`, checkout is preset-only, and `issueReceipt()` directly enforces active-hold and idempotence invariants.
 
 ### T004 — Build active-session context and preserve other flows
 
-- [ ] Add active-session map card, time remaining, end time, extension, and finalization states.
-- [ ] Keep Copilot available before, during, and after simulated parking.
-- [ ] Regression-check provider, operator, urban, Express, account, onboarding, incident, Activity, Help, and ref visibility.
+- [x] Add active-session map card, time remaining, end time, extension, and finalization states.
+- [x] Keep Copilot available before, during, and after simulated parking.
+- [x] Regression-check provider, operator, urban, Express, account, onboarding, incident, Activity, Help, and ref visibility.
+
+Status: implemented and verified locally in `index.html`; private sessions persist separately under `iziParkMockPrivateSession`, countdown and expiry survive rerender/reload state, extension is explicit and charge-free, finalization is active-only and history-idempotent, Copilot remains advisory, and urban/Express storage remains separate. Work-unit commit pending.
 
 ### T005 — Reconcile brand, documentation, and verification
 
@@ -108,8 +110,8 @@ Status: implemented and verified locally in `index.html`; guidance arrival is no
 
 ## Progress
 
-T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is implemented and verified locally. T004 is next after the T003 work-unit commit.
+T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete in `801f72f`; T004 is implemented and verified locally. T005 is next after the T004 work-unit commit.
 
 ## Next step
 
-Commit T003, then implement the active-session map context and full regression preservation in T004.
+Commit T004, then reconcile Help/README/SRS branding and complete cross-artifact verification in T005.
