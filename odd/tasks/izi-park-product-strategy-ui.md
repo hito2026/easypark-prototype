@@ -61,13 +61,15 @@ The current prototype covers most of the product behaviors but presents them as 
 - [x] Map every strategy state to stable refs, existing behavior, gaps, and safe simulation caveats.
 - [x] Define the brand transition boundary and preserved legacy technical identifiers.
 
-Status: complete. The driver backbone already covers destination, mixed supply, selection guards, mock payment, receipt/pass/session, Copilot, incidents, and idempotence. Missing states are the unified IZI shell, simulated navigation/arrival, explicit hold countdown, safe payment presentation, full-screen confirmation, and active-session map context. Legacy repository and artifact URLs remain unchanged.
+Status: complete in work-unit commit `41059a3`. The driver backbone already covers destination, mixed supply, selection guards, mock payment, receipt/pass/session, Copilot, incidents, and idempotence. Missing states are the unified IZI shell, simulated navigation/arrival, explicit hold countdown, safe payment presentation, full-screen confirmation, and active-session map context. Legacy repository and artifact URLs remain unchanged.
 
 ### T002 — Build the IZI map-first discovery journey
 
-- [ ] Rework the mobile shell, map home, persistent destination/Copilot composer, suggestion chips, and alternatives rail.
-- [ ] Represent destination entry, Copilot recommendation, mixed alternatives, explicit selection, and simulated navigation.
-- [ ] Preserve keyboard operation, visible focus, progressive disclosure, safe escaping, and non-reservable checkout guards.
+- [x] Rework the mobile shell, map home, persistent destination/Copilot composer, suggestion chips, and alternatives rail.
+- [x] Represent destination entry, Copilot recommendation, mixed alternatives, explicit selection, and simulated navigation.
+- [x] Preserve keyboard operation, visible focus, progressive disclosure, safe escaping, and non-reservable checkout guards.
+
+Status: implemented and verified locally in `index.html`; visible brand is IZI PARK, all prior entry points remain reachable, new refs are single-valued, and guidance navigation returns visibly to results without entering payment. Work-unit commit pending.
 
 ### T003 — Build arrival, reservation, and safe payment states
 
@@ -104,8 +106,8 @@ Status: complete. The driver backbone already covers destination, mixed supply, 
 
 ## Progress
 
-T001 exploration is complete. Pages 6–17 are mapped to current refs/functions with equivalent, partial, missing, and safety-conflict classifications. T002 is next.
+T001 is complete in `41059a3`. T002 is implemented and verified locally; T003 is next after the T002 work-unit commit.
 
 ## Next step
 
-Commit the T001 mapping record, then implement T002 as the first visual behavior slice without changing payment/session truth.
+Commit T002, then implement differentiated arrival, reservation hold, countdown, safe payment, and confirmation in T003.
