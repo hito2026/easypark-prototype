@@ -86,15 +86,17 @@ Status: complete in work-unit commit `801f72f`; guidance arrival is non-transact
 - [x] Keep Copilot available before, during, and after simulated parking.
 - [x] Regression-check provider, operator, urban, Express, account, onboarding, incident, Activity, Help, and ref visibility.
 
-Status: implemented and verified locally in `index.html`; private sessions persist separately under `iziParkMockPrivateSession`, countdown and expiry survive rerender/reload state, extension is explicit and charge-free, finalization is active-only and history-idempotent, Copilot remains advisory, and urban/Express storage remains separate. Work-unit commit pending.
+Status: complete in work-unit commit `d6a567b`; private sessions persist separately under `iziParkMockPrivateSession`, countdown and expiry survive rerender/reload state, extension is explicit and charge-free, finalization is active-only and history-idempotent, Copilot remains advisory, and urban/Express storage remains separate.
 
 ### T005 — Reconcile brand, documentation, and verification
 
-- [ ] Update visible Help/README/SRS language for IZI PARK while retaining legacy repo/file URLs where required.
-- [ ] Document the PDF provenance, simulation boundaries, functional coverage, remaining gaps, and manual checks.
-- [ ] Run syntax, structural, ref, localStorage, secret, link, PDF/document, and independent read-only verification.
+- [x] Update visible Help/README/SRS language for IZI PARK while retaining legacy repo/file URLs where required.
+- [x] Document the PDF provenance, simulation boundaries, functional coverage, remaining gaps, and manual checks.
+- [x] Run syntax, structural, ref, localStorage, secret, link, PDF/document, and independent read-only verification.
 - [ ] Run native review preflight if available.
 - [ ] Request final approval before push/publication and verify Pages only if approved.
+
+Status: documentation and filled SRS reconciliation are implemented; the filled PDF is deterministic at 116,876 bytes / 38 pages / SHA-256 `0311075a52266771bd00ce018bce8b1323143edc0b5b7cf897080b435103d134`. Independent read-only verification passed after resolving source-level duplicate `data-ref` ownership (49 global refs, 49 unique). Manual browser/mobile/keyboard/screen-reader/contrast/voice/live-timer/reduced-motion checks remain explicitly pending. Native review preflight and publication approval remain pending.
 
 ## Acceptance criteria
 
@@ -103,15 +105,15 @@ Status: implemented and verified locally in `index.html`; private sessions persi
 - The visible brand is IZI PARK; legacy repository/public paths continue working.
 - Street and traditional parking remain guidance-only in this version; houses remain the only reservable/payable option.
 - Navigation, arrival, availability, payment, settlement, countdown, and tracking are visibly simulated and deterministic.
-- No real payment, location, plate, camera, voice, identity, or secret data is requested or stored.
+- No real payment, location, plate, camera, identity, or secret data is requested or stored; optional browser voice may process speech through the browser/platform, while the prototype stores no audio.
 - Existing stable refs and non-driver flows remain reachable.
 - Reduced motion, focus visibility, keyboard selection, and escaped rendering remain intact.
 - Documentation and SRS match observable behavior.
 
 ## Progress
 
-T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete in `801f72f`; T004 is implemented and verified locally. T005 is next after the T004 work-unit commit.
+T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete in `801f72f`; T004 is complete in `d6a567b`. T005 documentation and cross-artifact verification are in progress.
 
 ## Next step
 
-Commit T004, then reconcile Help/README/SRS branding and complete cross-artifact verification in T005.
+Commit the verified T005 implementation, run native review preflight, then request explicit approval before any push/publication.

@@ -1,6 +1,6 @@
-# SRS EasyPark — borrador completado de referencia
+# SRS IZI PARK / EasyPark — borrador completado de referencia
 
-> **Estado legal y de uso**: este documento es un borrador completado de referencia para el prototipo EasyPark. No es una plantilla oficial de IEEE, no reproduce el texto de ningún estándar, no implica cumplimiento formal, aval, aprobación regulatoria ni autorización productiva. La referencia histórica IEEE 830-1998 se cita solo como contexto y la página oficial indicada la identifica como reemplazada por ISO/IEC/IEEE 29148:2011. Mantener este aviso visible en toda copia, PDF derivado o versión publicada.
+> **Estado legal y de uso**: este documento es un borrador completado de referencia para el prototipo IZI PARK, conservado en artefactos históricos EasyPark/easypark-prototype. No es una plantilla oficial de IEEE, no reproduce el texto de ningún estándar, no implica cumplimiento formal, aval, aprobación regulatoria ni autorización productiva. La referencia histórica IEEE 830-1998 se cita solo como contexto y la página oficial indicada la identifica como reemplazada por ISO/IEC/IEEE 29148:2011. Mantener este aviso visible en toda copia, PDF derivado o versión publicada.
 
 > **Instrucción de mantenimiento**: este Markdown es la fuente de verdad. Todo PDF debe generarse desde este archivo con `scripts/generate-srs-pdf.py`. No reemplazar etiquetas de estado por afirmaciones definitivas sin evidencia revisada. No inventar propietarios, aprobaciones, SLAs, jurisdicciones, integraciones, obligaciones legales ni métricas productivas.
 
@@ -8,12 +8,12 @@
 
 | Campo | Valor |
 | --- | --- |
-| Proyecto | EasyPark prototype |
-| Documento | SRS EasyPark — borrador completado de referencia |
-| Código interno | SRS-EASYPARK-001 |
-| Versión | 0.1.0 |
+| Proyecto | IZI PARK visible / easypark-prototype legado |
+| Documento | SRS IZI PARK / EasyPark — borrador completado de referencia |
+| Código interno | SRS-EASYPARK-001 (legado de artefacto; visible actual IZI PARK) |
+| Versión | 0.2.0 |
 | Estado | Borrador de referencia en elaboración |
-| Fecha | 2026-09-28 |
+| Fecha | 2026-10-01 |
 | Idioma | Español |
 | Fuente Markdown | `templates/easypark-srs-reference.md` |
 | PDF previsto | `templates/easypark-srs-reference.pdf` |
@@ -64,7 +64,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 1.1 Propósito
 
-[PROTOTIPO IMPLEMENTADO] EasyPark es un prototipo estático en HTML, CSS y JavaScript para validar una experiencia móvil de estacionamiento antes de elegir una pila productiva. Este SRS de referencia explica el alcance visible, las fronteras de confianza y las interfaces simuladas del prototipo, y separa esas evidencias de requisitos propuestos para una posible implementación real.
+[PROTOTIPO IMPLEMENTADO] IZI PARK es el producto visible actual. EasyPark/easypark-prototype se conserva como identidad técnica histórica de repositorio, URLs, rutas de artefactos y código SRS. El sistema es un prototipo estático en HTML, CSS y JavaScript para validar una experiencia móvil de estacionamiento antes de elegir una pila productiva. Este SRS de referencia explica el alcance visible, las fronteras de confianza y las interfaces simuladas del prototipo, y separa esas evidencias de requisitos propuestos para una posible implementación real.
 
 [REQUISITO PROPUESTO] El documento debe servir como base de conversación entre producto, ingeniería, QA, seguridad, privacidad, operaciones, anfitriones, conductores y stakeholders de negocio. Debe enseñar cómo escribir requisitos verificables sin presentar decisiones no tomadas como si fueran aprobadas.
 
@@ -114,7 +114,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 | Término | Definición operacional |
 | --- | --- |
-| SRS | Documento de requisitos verificables y trazables para EasyPark. |
+| SRS | Documento de requisitos verificables y trazables para IZI PARK; conserva EasyPark/easypark-prototype como alias técnico histórico. |
 | Prototipo | Sitio estático local compuesto por `index.html`, `help.html`, assets y plantillas. |
 | Ref visible | Identificador rojo estable usado para pedir cambios y ubicar pantallas. |
 | Conductor | Persona usuaria que busca, compara y simula estacionamiento. |
@@ -154,6 +154,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 | REF-PUBLIC-003 | https://www.easypark.com/es-es/ayuda/empieza-a-aparcar-con-easypark/configuracion-de-la-cuenta-como-crear-tu-cuenta--26776175036572 | Inspiración pública general de onboarding y cuenta. |
 | REF-ODD-001 | `odd/tasks/easypark-srs-reference.md` | Objetivo y aceptación de esta referencia SRS. |
 | REF-ODD-002 | `odd/tasks/driver-map-experience.md` | Evidencia de destino primero, mapa simulado y timeline. |
+| REF-PDF-IZI-001 | `IZI PARK - Product Strategy - V2.pdf` | Fuente local autorizada; SHA-256 `d6da2f3ef6dcfbce83ab8b1cb80ee239656af9d0ec57353dc5899b289ca5aacc`; 17 páginas; contraparte UI páginas 6–17; no distribuida ni cargada en runtime. |
 | REF-ODD-003 | `odd/tasks/trust-visual-iteration.md` | Evidencia de pase, incidentes y OpenMoji. |
 | REF-ODD-004 | `odd/tasks/help-documentation-portal.md` | Evidencia del portal de ayuda. |
 | REF-ODD-005 | `odd/tasks/srs-template-download.md` | Evidencia de descargas de plantilla SRS. |
@@ -162,11 +163,11 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 2.1 Perspectiva del producto
 
-[PROTOTIPO IMPLEMENTADO] EasyPark, en este repositorio, es una prueba de experiencia móvil y documental. El sistema actual corre como archivos estáticos sin servidor. Sus datos persistentes viven en `localStorage` del navegador y son deliberadamente ficticios.
+[PROTOTIPO IMPLEMENTADO] IZI PARK, en este repositorio legado easypark-prototype, es una prueba de experiencia móvil y documental. El sistema actual corre como archivos estáticos sin servidor. Sus datos persistentes viven en `localStorage` del navegador y son deliberadamente ficticios.
 
 [REQUISITO PROPUESTO] Un producto real podría evolucionar hacia una plataforma con app móvil, backend transaccional, administración de anfitriones, operaciones, pagos, soporte e integraciones reguladas. Esa evolución requiere decisiones de arquitectura, cumplimiento, proveedores y operaciones que todavía no están aprobadas.
 
-[DECISIÓN PENDIENTE] La relación entre marca EasyPark del prototipo, entidad operadora, mercados, moneda, impuestos, facturación, protección al consumidor y permisos municipales no está definida en esta referencia.
+[DECISIÓN PENDIENTE] La relación entre marca visible IZI PARK, legado EasyPark/easypark-prototype, entidad operadora, mercados, moneda, impuestos, facturación, protección al consumidor y permisos municipales no está definida en esta referencia.
 
 ### 2.2 Objetivos y métricas de éxito propuestas
 
@@ -277,7 +278,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 ### 3.1 Contexto y límites de confianza
 
-[PROTOTIPO IMPLEMENTADO] El límite del sistema actual es el navegador que abre los archivos estáticos. El usuario interactúa con pantallas, botones, formularios y refs. El prototipo guarda metadatos ficticios en `localStorage`. No existe servidor de EasyPark, cuenta real, pago real, reserva real ni operador conectado.
+[PROTOTIPO IMPLEMENTADO] El límite del sistema actual es el navegador que abre los archivos estáticos. El usuario interactúa con pantallas, botones, formularios y refs. El prototipo guarda metadatos ficticios en `localStorage`. No existe backend/servidor real de IZI PARK, cuenta real, pago real, reserva real ni operador conectado.
 
 [PROTOTIPO IMPLEMENTADO] Límites de confianza actuales:
 
@@ -351,7 +352,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 
 | Sistema | Estado | Observación |
 | --- | --- | --- |
-| Backend EasyPark | [DECISIÓN PENDIENTE] | TODO-ARCH-001 definir arquitectura |
+| Backend IZI PARK | [DECISIÓN PENDIENTE] | TODO-ARCH-001 definir arquitectura |
 | Autenticación | [DECISIÓN PENDIENTE] | TODO-AUTH-001 definir identidad |
 | Pagos | [DECISIÓN PENDIENTE] | TODO-PAY-001 definir proveedor y cumplimiento |
 | Mapas y geocoding | [DECISIÓN PENDIENTE] | TODO-MAP-001 definir proveedor |
@@ -729,7 +730,7 @@ Este documento mezcla hechos observables del prototipo con propuestas y decision
 python3 -m py_compile scripts/generate-srs-pdf.py
 python3 scripts/generate-srs-pdf.py
 shasum -a 256 templates/srs-ieee-830-template.pdf
-python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.verify.pdf --title 'SRS EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos EasyPark en elaboración'
+python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.verify.pdf --title 'SRS IZI PARK / EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos IZI PARK en elaboración'
 pdfinfo templates/easypark-srs-reference.verify.pdf
 pdftotext templates/easypark-srs-reference.verify.pdf -
 rm -f templates/easypark-srs-reference.verify.pdf
@@ -883,7 +884,7 @@ git diff --check
 ```bash
 python3 scripts/generate-srs-pdf.py
 shasum -a 256 templates/srs-ieee-830-template.pdf
-python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos EasyPark en elaboración'
+python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS IZI PARK / EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos IZI PARK en elaboración'
 ```
 
 El SHA-256 esperado de la plantilla PDF en blanco sin argumentos es:
@@ -929,3 +930,94 @@ Fuera del runtime actual:
 6. Reportar PASS, PARTIAL o BLOCKED con comandos y resultados.
 7. Crear commits locales de work unit cuando el workflow dueño lo indique y la verificación pase.
 8. Solicitar autorización explícita antes de push, merge, release, publicación externa o links públicos en Help o README.
+
+
+## 13. Reconciliación IZI PARK Product Strategy UI (T002–T005)
+
+[PROTOTIPO IMPLEMENTADO] Esta sección actualiza la referencia completada para reflejar la marca visible **IZI PARK** y la implementación de las pantallas autorizadas del documento `IZI PARK - Product Strategy - V2.pdf` (SHA-256 `d6da2f3ef6dcfbce83ab8b1cb80ee239656af9d0ec57353dc5899b289ca5aacc`). El documento fuente tiene 17 páginas y el alcance UI implementado corresponde a páginas 6–17. El equipo/usuario confirmó autorización para reproducir esta referencia dentro del prototipo. El PDF no se distribuye, no se publica, no se enlaza y no se carga en runtime. No se copian identidades propietarias externas ni assets ajenos.
+
+[PROTOTIPO IMPLEMENTADO] La identidad visible actual es IZI PARK. Los nombres EasyPark, `easypark-prototype`, `templates/easypark-srs-reference.*`, `SRS-EASYPARK-001`, URLs públicas y claves `easypark...` permanecen como identidad técnica, histórica o de compatibilidad. Esta dualidad es intencional y no debe resolverse mediante reemplazo mecánico.
+
+### 13.1 Trazabilidad páginas 6–17 a refs observables
+
+| Página(s) | Contraparte implementada | Refs/evidencia | Límites explícitos |
+| --- | --- | --- | --- |
+| 6–8 | Home map-first, compositor persistente y sugerencias | `IZI-MAP-HOME-01`, `HOME-DESTINATION-01`, `IZI-COPILOT-COMPOSER-01`, `IZI-ALTERNATIVES-01` | Mapa CSS simulado; sin GPS, geolocalización ni proveedor externo. |
+| 9 | Alternativas mixtas en mapa y panel inferior | `DRV-RESULTS-01`, `DRV-MAP-SHEET-01`, `DRV-RESULT-CARD-01`, `DRV-PROGRESSIVE-01` | Disponibilidad, precio y distancia son ficticios/locales. |
+| 10 | Navegación estática | `IZI-NAV-01`, `DRV-NAV-01` | Sin routing real, tracking, Mapbox ni llegada automática. |
+| 11 | Llegada a parking/tradicional | `IZI-ARRIVAL-01`, `IZI-PARKING-ARRIVAL-01` | Orientación solamente; no crea hold, pago, recibo, pase ni sesión privada. |
+| 12 | Llegada a casa reservable | `IZI-ARRIVAL-01`, `IZI-HOUSE-ARRIVAL-01` | Solo casas publicadas y reservables pueden pasar a hold. |
+| 13 | Hold de 5 minutos | `IZI-HOLD-01`, `IZI-HOLD-TIMER-01`, `iziParkMockHold` | Persistente local; expirado/cancelado muestra `00:00` y bloquea checkout. |
+| 14 | Checkout mock seguro | `IZI-MOCK-CHECKOUT-01`, `DRV-PAYMENT-01` | Preset-only; sin Mercado Pago SDK, PAN, CVV, vencimiento, nombre, banco ni red. |
+| 15 | Confirmación verde | `IZI-BOOKED-01`, `DRV-CONFIRM-01` | Confirmación ficticia; no reserva real ni recibo fiscal. |
+| 16 | Mapa de sesión activa | `IZI-SESSION-MAP-01`, `IZI-MAP-COPILOT-01` | Mapa/card local; sin GPS, tracking, llegada en vivo ni IA remota. |
+| 17 | Detalle de sesión/countdown | `IZI-ACTIVE-SESSION-01`, `IZI-SESSION-TIMER-01`, `IZI-SESSION-COPILOT-01`, `DRV-SESSION-01`, `DRV-STATUS-TIMELINE-01` | Countdown local; extender no cobra; finalizar agrega a historial una sola vez si la sesión está activa. |
+
+### 13.2 Requisitos funcionales agregados o corregidos
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| FR-IZI-001 | Alta | Implementado en prototipo | El producto visible debe presentarse como IZI PARK sin romper identidad técnica `easypark-prototype`. | Aceptación: README, Help y este SRS declaran alias visible/legado; URLs y paths `easypark-prototype` permanecen. Evidencia: `README.md`, `help.html`, `templates/easypark-srs-reference.md`. |
+| FR-IZI-002 | Alta | Implementado en prototipo | Las páginas 6–17 del PDF autorizado deben tener contraparte observable o límite explícito. | Aceptación: tabla 13.1 mapea páginas a refs; refs existen en `index.html`. Evidencia: `REF-PDF-IZI-001`, `IZI-MAP-HOME-01` a `IZI-SESSION-COPILOT-01`. |
+| FR-IZI-ARR-001 | Alta | Implementado en prototipo | La llegada debe diferenciar orientación de parking/tradicional y casa reservable. | Aceptación: parking/tradicional muestra copy no transaccional; casa publicada permite hold. Evidencia: `IZI-PARKING-ARRIVAL-01`, `IZI-HOUSE-ARRIVAL-01`. |
+| FR-IZI-HOLD-001 | Alta | Implementado en prototipo | Una casa publicada reservable debe crear un hold local de 5 minutos idempotente por selección. | Aceptación: `beginHold` valida `isReservableHouse`, reutiliza hold activo y escribe `iziParkMockHold`; expirado/cancelado muestra `00:00`. Evidencia: `IZI-HOLD-01`, `IZI-HOLD-TIMER-01`. |
+| FR-IZI-CHECKOUT-001 | Alta | Implementado en prototipo | El checkout debe ser seguro, preset-only y sin campos ni SDK de pago real. | Aceptación: no hay PAN, CVV, vencimiento, nombre, banco, SDK ni red; solo tarjetas ficticias. Evidencia: `IZI-MOCK-CHECKOUT-01`, `DRV-PAYMENT-01`. |
+| FR-IZI-RECEIPT-001 | Alta | Implementado en prototipo | Emitir recibo requiere hold activo válido y debe ser idempotente. | Aceptación: `issueReceipt()` devuelve falso sin `holdValidForPayment()` y true si ya existe recibo para el mismo hold. Evidencia: `DRV-CONFIRM-01`, `DRV-RECEIPT-01`, `easyparkLastMockReceipt`. |
+| FR-IZI-SESSION-001 | Alta | Implementado en prototipo | La sesión privada debe iniciar solo desde recibo válido de casa publicada y separarse de la sesión urbana. | Aceptación: `startPrivateSession()` exige `reservationId`, `receiptId` e `isReservableHouse`; persiste en `iziParkMockPrivateSession` y no pisa `easyparkMockSession`. Evidencia: `IZI-SESSION-MAP-01`, `DRV-SESSION-01`. |
+| FR-IZI-SESSION-002 | Alta | Implementado en prototipo | El countdown privado debe sobrevivir recarga, limpiar intervalos al salir y mostrar `00:00` al expirar/finalizar. | Aceptación: `safePrivateSession`, `clearPrivateTimer`, `expirePrivateIfNeeded` y estado inactivo actualizan mapa/detalle. Evidencia: `IZI-SESSION-TIMER-01`. |
+| FR-IZI-SESSION-003 | Alta | Implementado en prototipo | Extender sesión privada debe requerir sesión activa y no debe afirmar cargo/pago. | Aceptación: `extendPrivateSession()` valida `privateActive` y copy visible dice que no hay cargo/pago. Evidencia: `IZI-ACTIVE-SESSION-01`. |
+| FR-IZI-SESSION-004 | Alta | Implementado en prototipo | Finalizar sesión privada debe requerir sesión activa y agregar exactamente una fila de historial por reserva. | Aceptación: `finalizePrivateSession()` no muta si está inactiva/expirada/finalizada y usa `historyKey` para evitar duplicados. Evidencia: `easyparkMockHistory`, `ACTIVITY-HISTORY-01`. |
+| FR-IZI-COPILOT-001 | Alta | Implementado en prototipo | Los compositores IZI de sesión deben ser asesoría local y no mutar sesión, pago, reembolso ni reserva. | Aceptación: `privateCopilotReply` solo cambia estado textual y dirige a botones. Evidencia: `IZI-MAP-COPILOT-01`, `IZI-SESSION-COPILOT-01`. |
+| FR-IZI-ACTIVITY-001 | Media | Implementado en prototipo | Actividad debe reflejar estado privado IZI e historial sin romper urbano/Express. | Aceptación: `ACTIVITY-HOME-01` lee `state.privateSession`; historial conserva entradas urbanas/Express y private keyed rows. Evidencia: `ACTIVITY-HOME-01`, `ACTIVITY-HISTORY-01`. |
+
+### 13.3 Reglas de negocio agregadas o corregidas
+
+| ID | Estado | Regla | Aceptación y evidencia |
+| --- | --- | --- | --- |
+| BR-IZI-001 | Implementado en prototipo | Solo una casa publicada y reservable puede crear hold, checkout, recibo, pase y sesión privada. | Aceptación: `isReservableHouse` se usa en hold, receipt y private session. Evidencia: `IZI-HOUSE-ARRIVAL-01`, `FR-IZI-HOLD-001`. |
+| BR-IZI-002 | Implementado en prototipo | Parking tradicional y guía de calle son orientación y nunca generan verdad transaccional privada. | Aceptación: llegada no transaccional vuelve a alternativas. Evidencia: `IZI-PARKING-ARRIVAL-01`. |
+| BR-IZI-003 | Implementado en prototipo | Hold expirado/cancelado bloquea pago y recibo. | Aceptación: `holdValidForPayment` y `issueReceipt` bloquean sin hold activo. Evidencia: `IZI-HOLD-TIMER-01`, `FR-IZI-RECEIPT-001`. |
+| BR-IZI-004 | Implementado en prototipo | Extender sesión privada no ejecuta ni afirma cargo, pago ni liquidación. | Aceptación: copy dice “No se realizó ningún cargo ni pago” y la documentación lo describe como ausencia de ejecución/afirmación de cargo. Evidencia: `IZI-ACTIVE-SESSION-01`. |
+| BR-IZI-005 | Implementado en prototipo | Finalizar sesión privada es idempotente y produce como máximo un movimiento histórico por `historyKey`. | Aceptación: `state.history.some(h=>h.key===historyKey)` impide duplicados. Evidencia: `easyparkMockHistory`. |
+| BR-IZI-006 | Implementado en prototipo | Copilot no tiene autoridad sobre disponibilidad, reserva, hold, pago, recibo, reembolso, incidente ni sesión. | Aceptación: funciones de Copilot solo actualizan texto asesor. Evidencia: `AI-CHAT-01`, `IZI-SESSION-COPILOT-01`. |
+
+### 13.4 Datos locales agregados o corregidos
+
+| ID | Estado | Dato | Aceptación y evidencia |
+| --- | --- | --- | --- |
+| DR-IZI-001 | Implementado en prototipo | `iziParkMockHold` conserva `id`, `selectionId`, `spaceId`, `status`, `deadline` y `receiptId`. | Aceptación: se safe-parsea y persiste desde `saveHold`. Evidencia: `IZI-HOLD-01`. |
+| DR-IZI-002 | Implementado en prototipo | `iziParkMockPrivateSession` conserva `sessionId`, `reservationId`, `receiptId`, `status`, `houseId`, `title`, `address`, `start`, `deadline`, `originalDeadline`, `finalized`, `historyKey`, `extensions`, `extendedAt` y `finalizedAt` cuando aplica. | Aceptación: se safe-parsea desde `safePrivateSession` y persiste desde `savePrivateSession`. Evidencia: `IZI-SESSION-MAP-01`, `DRV-SESSION-01`. |
+| DR-IZI-003 | Implementado en prototipo | `easyparkMockSession` queda reservado para sesión urbana; Express mantiene estado transitorio durante su flujo y aporta filas idempotentes de historial/recibo sin sobrescribirlo. No se sobrescribe al crear/finalizar sesión privada. | Aceptación: la sesión privada usa clave IZI separada; finalizar privada escribe solo `easyparkMockHistory`. Evidencia: `SESSION-ACTIVE-01`, `IZI-ACTIVE-SESSION-01`. |
+| DR-IZI-004 | Implementado en prototipo | `easyparkMockHistory` puede incluir filas privadas con `key`, `title`, `when`, `status`, `amount` y `receipt`, sin duplicación por `key`. | Aceptación: finalización privada consulta `historyKey` antes de insertar. Evidencia: `ACTIVITY-HISTORY-01`. |
+
+### 13.5 Requisitos no funcionales agregados o corregidos
+
+| ID | Prioridad | Estado | Requisito | Aceptación y evidencia |
+| --- | --- | --- | --- | --- |
+| NFR-IZI-LOCAL-001 | Alta | Implementado en prototipo | La UI derivada del PDF debe usar solo runtime local y no cargar el PDF ni assets remotos. | Aceptación: README/Help/SRS declaran que el PDF no se distribuye ni se carga; runtime mantiene recursos locales. Evidencia: `REF-PDF-IZI-001`, `MEDIA-CREDITS-01`. |
+| NFR-IZI-PRIV-001 | Alta | Implementado en prototipo | El prototipo no debe solicitar ni guardar GPS, PAN, CVV, vencimiento, credenciales, cámara real ni audio. | Aceptación: copy y formularios no contienen esos campos; voz es opcional del navegador y no se guarda audio. Evidencia: `HELP-SAFETY-01`, `AI-VOICE-01`. |
+| NFR-IZI-ACC-001 | Alta | Implementado en prototipo | Countdown y estado activo/inactivo deben tener texto accesible además del anillo visual. | Aceptación: estado visible y `role=status` existen para hold/sesión; refs no distorsionan anillos. Evidencia: `IZI-HOLD-TIMER-01`, `IZI-SESSION-TIMER-01`. |
+| NFR-IZI-REF-001 | Alta | Implementado en prototipo | Cada `data-ref` debe contener un único ID estable. | Aceptación: verificación estática reportó single-ID refs. Evidencia: checks T002/T003/T004. |
+
+### 13.6 Riesgos y decisiones agregados
+
+| ID | Estado | Riesgo o decisión | Mitigación/evidencia |
+| --- | --- | --- | --- |
+| RISK-IZI-001 | Abierto | Usuarios pueden confundir mapa/countdown con servicio en vivo. | Copy explícito sin GPS, tracking, disponibilidad ni llegada real en README, Help e UI. |
+| RISK-IZI-002 | Abierto | Estado local persistente puede confundir pruebas repetidas. | Reset documentado con `localStorage.clear()`; claves separadas. |
+| RISK-IZI-003 | Abierto | Mezcla de marca visible IZI PARK y rutas EasyPark puede causar cambios mecánicos peligrosos. | Alias visible/legado documentado; URLs, paths y claves preservados. |
+| DEC-IZI-001 | Decidido | Marca visible actual: IZI PARK; repositorio/artefactos históricos: easypark-prototype/EasyPark. | README, Help y SRS lo declaran. |
+| DEC-IZI-002 | Decidido | PDF `IZI PARK - Product Strategy - V2.pdf` es fuente autorizada local y no dependencia runtime. | `REF-PDF-IZI-001`; no se enlaza ni distribuye. |
+| DEC-IZI-003 | Decidido | Sesión privada usa `iziParkMockPrivateSession`; sesión urbana conserva `easyparkMockSession`. | DR-IZI-002 y DR-IZI-003. |
+| DEC-IZI-004 | Decidido | Street/traditional guidance queda fuera de checkout privado. | BR-IZI-002. |
+| DEC-IZI-005 | Pendiente | Producción de pagos, impuestos, permisos, soporte e identidad legal sigue sin definirse. | Marcar como `[DECISIÓN PENDIENTE]`; no inferir requisitos productivos. |
+
+### 13.7 Evidencia de verificación T002–T005
+
+| Evidencia | Estado | Detalle |
+| --- | --- | --- |
+| Work unit T002 | Implementado | Commit `7b8a550`; mapa inicial, alternativas, navegación y refactor visual IZI. |
+| Work unit T003 | Implementado | Commit `801f72f`; llegada, hold, checkout mock y confirmación. |
+| Work unit T004 | Implementado | Commit `d6a567b`; sesión activa mapa/detalle, private session y countdown. |
+| Checks estáticos | Implementado | data-ref single IDs, flow order, hold/payment/receipt guards, private session separation/idempotence, no runtime remote/geolocation/payment assets. |
+| Manual browser/mobile/keyboard/screen-reader/contrast/voice/timer/reduced-motion | Pendiente | No declarar aprobado hasta ejecutar evidencia manual en navegadores/dispositivos objetivo. |
