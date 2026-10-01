@@ -72,8 +72,8 @@ Relationship types are `Principal`, `Alternativa`, `Excepcion`, or `Transversal`
 ### Controlled vocabularies
 
 - Priority: `Must`, `Should`, `Could`, `Won't`.
-- Record status: `Borrador`, `Propuesto`, `En revision`, `Aprobado`, `Rechazado`, `Obsoleto`.
-- Flow type: `Principal`, `Alternativo`, `Excepcion`.
+- Record status: `Borrador`, `Propuesto`, `En revisión`, `Aprobado`, `Rechazado`, `Obsoleto`.
+- Flow type: `Principal`, `Alternativo`, `Excepción`.
 - Coverage: `Completa`, `Parcial`, `Pendiente`, `No aplica`.
 - Review status: `Pendiente`, `Revisado`, `Aprobado`, `Rechazado`.
 
@@ -88,9 +88,11 @@ Status: complete in this task artifact; the contract uses a normalized many-to-m
 
 ### T002 — Implement deterministic workbook generator
 
-- [ ] Implement repository-confined Python standard-library generation.
-- [ ] Generate exactly four sheets with frozen headers, filters, wrapped text, examples, validations, formulas, and readable widths.
-- [ ] Generate the `.xlsx` artifact deterministically and mark it binary.
+- [x] Implement repository-confined Python standard-library generation.
+- [x] Generate exactly four sheets with frozen headers, filters, wrapped text, examples, validations, formulas, and readable widths.
+- [x] Generate the `.xlsx` artifact deterministically and mark it binary.
+
+Status: implemented and verified locally. The dependency-free generator writes and validates an atomic deterministic OOXML candidate, preserves a prior artifact on failure, emits the exact four visible sheets, distinguishes required/optional headers, includes aligned fictitious examples, formula-based coverage and controlled dropdowns, and produces `templates/izi-park-product-owner-workbook.xlsx` at 363,094 bytes with SHA-256 `2853735508c65e0a19d4973c881d9fc4fc7f498763dc57e17a49f0084711ec32`. Manual Google Sheets import remains pending. Work-unit commit pending.
 
 ### T003 — Document Product Owner workflow
 
@@ -122,8 +124,8 @@ Status: complete in this task artifact; the contract uses a normalized many-to-m
 
 ## Progress
 
-T001 is complete. T002 is next.
+T001 is complete in `18546a6`. T002 is implemented and verified locally; T003 is next after the T002 work-unit commit.
 
 ## Next step
 
-Implement the deterministic standard-library generator and derived workbook artifact.
+Commit T002, then document the Product Owner workflow and workbook download in README and Help.
