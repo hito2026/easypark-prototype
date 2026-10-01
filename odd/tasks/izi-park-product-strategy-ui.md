@@ -94,9 +94,16 @@ Status: complete in work-unit commit `d6a567b`; private sessions persist separat
 - [x] Document the PDF provenance, simulation boundaries, functional coverage, remaining gaps, and manual checks.
 - [x] Run syntax, structural, ref, localStorage, secret, link, PDF/document, and independent read-only verification.
 - [x] Run native review preflight if available.
-- [ ] Request final approval before push/publication and verify Pages only if approved.
+- [x] Request final approval before push/publication and verify Pages only if approved.
 
-Status: implementation and documentation are complete in work-unit commit `bca6a7f`. The filled PDF is deterministic at 116,876 bytes / 38 pages / SHA-256 `0311075a52266771bd00ce018bce8b1323143edc0b5b7cf897080b435103d134`. Independent read-only verification passed after resolving source-level duplicate `data-ref` ownership (49 global refs, 49 unique). Native review preflight returned `lens_context_budget_exceeded`; no lineage or review authority was created. The read-only fallback assessment was unavailable/schema-incompatible and required writer self-verification plus an independent verifier, both of which were completed. Manual browser/mobile/keyboard/screen-reader/contrast/voice/live-timer/reduced-motion checks remain explicitly pending. Publication approval remains pending.
+Status: complete. The user explicitly approved immediate publication while accepting the documented manual-test gap. Implementation/documentation are in `bca6a7f`; verification evidence is in `6e11c73`. The filled PDF is deterministic at 116,876 bytes / 38 pages / SHA-256 `0311075a52266771bd00ce018bce8b1323143edc0b5b7cf897080b435103d134`. Independent read-only verification passed after resolving source-level duplicate `data-ref` ownership (49 global refs, 49 unique). Native review preflight returned `lens_context_budget_exceeded`; no lineage or review authority was created. The read-only fallback assessment was unavailable/schema-incompatible and required writer self-verification plus an independent verifier, both completed. Manual browser/mobile/keyboard/screen-reader/contrast/voice/live-timer/reduced-motion checks remain explicitly pending and were explicitly accepted for publication.
+
+Publication evidence for candidate `6e11c7350fa90f14dc95e17cf595543cc787e5d3`:
+
+- GitHub Actions workflow `36797734436`: success.
+- Deploy job `110164925309`: success.
+- GitHub Pages deployment `6773397661`: `github-pages`.
+- Public `index.html`, Help, filled Markdown, and filled PDF returned HTTP 200 with expected MIME types and byte-identical SHA-256 values versus the local artifacts.
 
 ## Acceptance criteria
 
@@ -112,8 +119,8 @@ Status: implementation and documentation are complete in work-unit commit `bca6a
 
 ## Progress
 
-T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete in `801f72f`; T004 is complete in `d6a567b`. T005 documentation and cross-artifact verification are in progress.
+T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete in `801f72f`; T004 is complete in `d6a567b`; T005 implementation/publication verification is complete in `bca6a7f` and `6e11c73`, with final publication evidence recorded here.
 
 ## Next step
 
-Record verification evidence, then request explicit approval before any push/publication.
+Keep manual device/accessibility/voice/timer validation as the next optional follow-up; no further publication action is required.
