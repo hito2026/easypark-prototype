@@ -90,7 +90,7 @@ python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md
 
 - Artefacto importable: `templates/izi-park-product-owner-workbook.xlsx`
 - Generador determinístico: `scripts/generate-po-workbook.py`
-- XLSX actual: 363.094 bytes, SHA-256 `2853735508c65e0a19d4973c881d9fc4fc7f498763dc57e17a49f0084711ec32`
+- XLSX actual: 363.331 bytes, SHA-256 `aad43078d09cf74df551816fc35986e6d2438518be28d475fe94dca0a087b639`
 
 El workbook es una ayuda de planificación para Product Owners y no reemplaza el SRS aprobado ni la verdad de producto. Contiene ejemplos ficticios; no ingreses teléfonos, patentes, ubicaciones, pagos, credenciales, secretos ni datos personales reales. Está preparado para importarse en Google Sheets, pero la fidelidad completa queda pendiente hasta observar una importación manual.
 

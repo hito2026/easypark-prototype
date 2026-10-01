@@ -384,6 +384,7 @@ def styles_xml() -> str:
         '<fill><patternFill patternType="solid"><fgColor rgb="FFE0F2FE"/><bgColor indexed="64"/></patternFill></fill>'
         '<fill><patternFill patternType="solid"><fgColor rgb="FF1D4ED8"/><bgColor indexed="64"/></patternFill></fill>'
         '<fill><patternFill patternType="solid"><fgColor rgb="FFDCFCE7"/><bgColor indexed="64"/></patternFill></fill>'
+        '<fill><patternFill patternType="solid"><fgColor rgb="FF7C2D12"/><bgColor indexed="64"/></patternFill></fill>'
         '</fills>'
         '<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>'
         '<border><left style="thin"><color rgb="FFCBD5E1"/></left><right style="thin"><color rgb="FFCBD5E1"/></right><top style="thin"><color rgb="FFCBD5E1"/></top><bottom style="thin"><color rgb="FFCBD5E1"/></bottom><diagonal/></border></borders>'
@@ -396,6 +397,7 @@ def styles_xml() -> str:
         '<xf numFmtId="0" fontId="2" fillId="4" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
         '<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"><alignment horizontal="center" vertical="top" wrapText="1"/></xf>'
         '<xf numFmtId="0" fontId="0" fillId="5" borderId="1" xfId="0"><alignment vertical="top" wrapText="1"/></xf>'
+        '<xf numFmtId="0" fontId="2" fillId="6" borderId="1" xfId="0"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
         '</cellXfs>'
         '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>'
         '<dxfs count="0"/><tableStyles count="0" defaultTableStyle="TableStyleMedium2" defaultPivotStyle="PivotStyleLight16"/>'
@@ -493,6 +495,56 @@ def validate(path: Path) -> None:
             for name, root in xml_roots.items():
                 if name.endswith(".rels") and not rel_targets_are_internal(root):
                     errors.append(f"external relationship found in {name}")
+            ns_style = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+            styles = xml_roots.get("xl/styles.xml")
+            xf_count = 0
+            if styles is None:
+                errors.append("styles.xml missing")
+            else:
+                style_sections = [("fonts", "font"), ("fills", "fill"), ("borders", "border"), ("cellXfs", "xf")]
+                actual_counts: dict[str, int] = {}
+                for section_name, child_name in style_sections:
+                    section = styles.find(f"m:{section_name}", ns_style)
+                    if section is None:
+                        errors.append(f"styles section missing: {section_name}")
+                        actual_counts[section_name] = 0
+                        continue
+                    actual = len(section.findall(f"m:{child_name}", ns_style))
+                    actual_counts[section_name] = actual
+                    if section.attrib.get("count") != str(actual):
+                        errors.append(f"styles {section_name} count mismatch: {section.attrib.get('count')} != {actual}")
+                fonts_n = actual_counts.get("fonts", 0)
+                fills_n = actual_counts.get("fills", 0)
+                borders_n = actual_counts.get("borders", 0)
+                cell_xfs = styles.findall("m:cellXfs/m:xf", ns_style)
+                xf_count = len(cell_xfs)
+                for index, xf in enumerate(cell_xfs):
+                    for attr, upper in [("fontId", fonts_n), ("fillId", fills_n), ("borderId", borders_n)]:
+                        raw = xf.attrib.get(attr, "0")
+                        if not raw.isdigit() or int(raw) < 0 or int(raw) >= upper:
+                            errors.append(f"cellXfs[{index}] {attr} out of range: {raw} / {upper}")
+                if xf_count <= 7:
+                    errors.append("required header style index 7 missing")
+                else:
+                    required_xf = cell_xfs[7]
+                    if required_xf.attrib.get("fontId") != "2" or required_xf.attrib.get("fillId") != "6" or required_xf.attrib.get("borderId") != "1":
+                        errors.append(f"required header style 7 unexpected attrs: {required_xf.attrib}")
+                    alignment = required_xf.find("m:alignment", ns_style)
+                    if alignment is None or alignment.attrib.get("horizontal") != "center" or alignment.attrib.get("vertical") != "center" or alignment.attrib.get("wrapText") != "1":
+                        errors.append("required header style 7 alignment mismatch")
+                    fill6 = styles.find("m:fills/m:fill[7]/m:patternFill/m:fgColor", ns_style)
+                    if fill6 is None or fill6.attrib.get("rgb") != "FF7C2D12":
+                        errors.append("required header fillId 6 orange-dark color missing")
+            for sheet_name in [f"xl/worksheets/sheet{i}.xml" for i in range(1, 5)]:
+                root = xml_roots.get(sheet_name)
+                if root is None:
+                    continue
+                for cell in root.findall(".//m:c", ns_style):
+                    style_raw = cell.attrib.get("s")
+                    if style_raw is None:
+                        continue
+                    if not style_raw.isdigit() or int(style_raw) < 0 or int(style_raw) >= xf_count:
+                        errors.append(f"worksheet style index out of range in {sheet_name} {cell.attrib.get('r')}: {style_raw} / {xf_count}")
             workbook = xml_roots.get("xl/workbook.xml")
             if workbook is not None:
                 ns = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}

@@ -92,7 +92,7 @@ Status: complete in this task artifact; the contract uses a normalized many-to-m
 - [x] Generate exactly four sheets with frozen headers, filters, wrapped text, examples, validations, formulas, and readable widths.
 - [x] Generate the `.xlsx` artifact deterministically and mark it binary.
 
-Status: implemented and verified locally. The dependency-free generator writes and validates an atomic deterministic OOXML candidate, preserves a prior artifact on failure, emits the exact four visible sheets, distinguishes required/optional headers, includes aligned fictitious examples, formula-based coverage and controlled dropdowns, and produces `templates/izi-park-product-owner-workbook.xlsx` at 363,094 bytes with SHA-256 `2853735508c65e0a19d4973c881d9fc4fc7f498763dc57e17a49f0084711ec32`. Manual Google Sheets import remains pending. Work-unit commit pending.
+Status: initial implementation is in `1d8e96b` and has been locally re-verified after correcting an independent HIGH style blocker. The dependency-free generator writes and validates an atomic deterministic OOXML candidate, preserves a prior artifact on failure, emits the exact four visible sheets, distinguishes required/optional headers, includes aligned fictitious examples, formula-based coverage and controlled dropdowns, and produces `templates/izi-park-product-owner-workbook.xlsx` at 363.331 bytes with SHA-256 `aad43078d09cf74df551816fc35986e6d2438518be28d475fe94dca0a087b639`. The blocker was fixed by adding the real orange-dark fill and required-header `cellXfs` style index 7, plus validation for declared/actual style counts, in-range `xf` references, worksheet style indexes, and style-7 orange fill wiring. Manual Google Sheets import remains pending; the follow-up correction work-unit commit is pending.
 
 ### T003 — Document Product Owner workflow
 
@@ -100,13 +100,16 @@ Status: implemented and verified locally. The dependency-free generator writes a
 - [x] Add Help download cards, field guidance, relationship legend, and stable refs.
 - [x] Preserve Help search/navigation and all existing resources.
 
-Status: implemented and verified locally in README and Help. The documentation identifies the four-sheet model, required/optional header legend, fictional examples, normalized many-to-many traceability, coverage workflow, safe-data boundary, deterministic generator, exact artifact metadata, Google Sheets import steps, and the pending manual-fidelity check. Help refs are `PO-WORKBOOK-01`, `PO-WORKBOOK-XLSX-01`, `PO-WORKBOOK-GEN-01`, and `PO-WORKBOOK-MATRIX-01`. Work-unit commit pending.
+Status: complete in `d22e010`. The documentation identifies the four-sheet model, required/optional header legend, fictional examples, normalized many-to-many traceability, coverage workflow, safe-data boundary, deterministic generator, exact artifact metadata, Google Sheets import steps, and the pending manual-fidelity check. Help refs are `PO-WORKBOOK-01`, `PO-WORKBOOK-XLSX-01`, `PO-WORKBOOK-GEN-01`, and `PO-WORKBOOK-MATRIX-01`.
 
 ### T004 — Verify workbook and documentation
 
-- [ ] Verify generator syntax, path confinement, deterministic output, ZIP integrity, XML parsing, relationships, exact sheets, formulas, validations, examples, and absence of external relationships.
-- [ ] Verify README/Help links, metadata, bytes/hash, inline JavaScript, duplicate IDs, secrets, and unchanged existing artifacts.
-- [ ] Obtain independent read-only verification and run native review preflight if available.
+- [x] Verify generator syntax, path confinement, deterministic output, ZIP integrity, XML parsing, relationships, exact sheets, formulas, validations, examples, and absence of external relationships.
+- [x] Verify README/Help links, metadata, bytes/hash, inline JavaScript, duplicate IDs, secrets, and unchanged existing artifacts.
+- [x] Obtain independent read-only verification.
+- [ ] Run native review preflight if available.
+
+Status: independent verification initially found a HIGH OOXML style-table defect (`s=7` referenced a missing `cellXf` and declared counts exceeded actual elements). The correction added the missing fill/xf and hardened self-validation. Focused independent re-verification passed: fonts 4/4, fills 7/7, borders 2/2, cellXfs 8/8; every worksheet style index is valid; generator, determinism, shared strings, formulas, validations, sheets, documentation metadata, Help JavaScript, refs, and safety checks passed. Native review preflight remains pending. Manual Google Sheets import remains pending.
 
 ### T005 — Publish only with approval
 
@@ -126,8 +129,8 @@ Status: implemented and verified locally in README and Help. The documentation i
 
 ## Progress
 
-T001 is complete in `18546a6`; T002 is complete in `1d8e96b`; T003 is implemented and verified locally. T004 is next after the T003 work-unit commit.
+T001 is complete in `18546a6`; T002 initial implementation is in `1d8e96b`; T003 is complete in `d22e010`; the T002 style correction and T004 independent verification are complete locally.
 
 ## Next step
 
-Commit T003, then run full structural, deterministic, documentation, and independent verification.
+Commit the style correction, run native review preflight, then record final verification evidence.
