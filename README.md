@@ -86,6 +86,50 @@ Para regenerar el PDF completado con metadatos explícitos ejecutá:
 python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS IZI PARK / EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos IZI PARK en elaboración'
 ```
 
+### Workbook para Product Owners
+
+- Artefacto importable: `templates/izi-park-product-owner-workbook.xlsx`
+- Generador determinístico: `scripts/generate-po-workbook.py`
+- XLSX actual: 363.094 bytes, SHA-256 `2853735508c65e0a19d4973c881d9fc4fc7f498763dc57e17a49f0084711ec32`
+
+El workbook es una ayuda de planificación para Product Owners y no reemplaza el SRS aprobado ni la verdad de producto. Contiene ejemplos ficticios; no ingreses teléfonos, patentes, ubicaciones, pagos, credenciales, secretos ni datos personales reales. Está preparado para importarse en Google Sheets, pero la fidelidad completa queda pendiente hasta observar una importación manual.
+
+Modelo exacto de cuatro hojas:
+
+1. `Casos de uso`: una fila por caso de uso, con objetivo, actores, disparador, precondiciones, resultados, alcance, prioridad, estado, responsable, criterios y refs.
+2. `Flujos`: una fila por paso principal, alternativo o de excepción; los pasos alternativos/excepciones referencian su `Paso_Origen`.
+3. `Requerimientos`: una fila por requerimiento verificable, clasificado como `RF`, `RN`, `RNF`, `RD` o `INT`.
+4. `Matriz`: una relación normalizada muchos-a-muchos por fila entre requerimiento, caso de uso y opcionalmente paso. Esta matriz puede convertirse en una tabla dinámica de Google Sheets, por lo que no impone un límite fijo de columnas de casos de uso.
+
+Convenciones de edición:
+
+- Encabezado naranja oscuro: campo obligatorio. Encabezado azul: campo opcional.
+- La fila 6 es un ejemplo ficticio alineado entre las cuatro hojas (`CU-EJEMPLO-001`, `REQ-EJEMPLO-001`, `FL-EJEMPLO-001`, `REL-EJEMPLO-001`).
+- Las columnas de cobertura usan fórmulas `COUNTIF`/`IF` para detectar vínculos de matriz; las clasificaciones controladas usan dropdowns.
+- Usá IDs separados por coma solo en campos explícitamente multi-ID, como `Requerimientos_IDs`, `Reglas_Negocio_IDs` o `Referencias_Visuales`; la hoja `Matriz` debe mantener una relación por fila.
+
+Orden sugerido de completado:
+
+1. Definir requerimientos verificables.
+2. Completar casos de uso de negocio.
+3. Desglosar pasos de flujo principales, alternativos y de excepción.
+4. Cargar la matriz de trazabilidad una relación por fila.
+5. Revisar cobertura hasta que casos y requerimientos esperados queden vinculados.
+
+Para regenerar el workbook en la ruta por defecto ejecutá:
+
+```bash
+python3 scripts/generate-po-workbook.py
+```
+
+Para generar una copia de verificación dentro del repositorio:
+
+```bash
+python3 scripts/generate-po-workbook.py --output templates/po-workbook-verify.xlsx
+```
+
+Importación sugerida en Google Sheets: crear o abrir una hoja, usar Archivo → Importar → Subir, seleccionar `templates/izi-park-product-owner-workbook.xlsx` y revisar hojas, dropdowns, fórmulas y filtros antes de adoptarlo como insumo formal.
+
 Generador determinístico: `scripts/generate-srs-pdf.py`. Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; cada PDF se deriva de su Markdown correspondiente. Estos recursos son guías originales de proyecto inspiradas en preocupaciones clásicas de SRS/IEEE 830, no son plantillas oficiales IEEE ni certifican conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
 
 ## Etiquetas de referencia

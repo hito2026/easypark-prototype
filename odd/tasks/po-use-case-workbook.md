@@ -96,9 +96,11 @@ Status: implemented and verified locally. The dependency-free generator writes a
 
 ### T003 — Document Product Owner workflow
 
-- [ ] Add README purpose, sheet model, generation command, and Google Sheets import steps.
-- [ ] Add Help download cards, field guidance, relationship legend, and stable refs.
-- [ ] Preserve Help search/navigation and all existing resources.
+- [x] Add README purpose, sheet model, generation command, and Google Sheets import steps.
+- [x] Add Help download cards, field guidance, relationship legend, and stable refs.
+- [x] Preserve Help search/navigation and all existing resources.
+
+Status: implemented and verified locally in README and Help. The documentation identifies the four-sheet model, required/optional header legend, fictional examples, normalized many-to-many traceability, coverage workflow, safe-data boundary, deterministic generator, exact artifact metadata, Google Sheets import steps, and the pending manual-fidelity check. Help refs are `PO-WORKBOOK-01`, `PO-WORKBOOK-XLSX-01`, `PO-WORKBOOK-GEN-01`, and `PO-WORKBOOK-MATRIX-01`. Work-unit commit pending.
 
 ### T004 — Verify workbook and documentation
 
@@ -124,8 +126,8 @@ Status: implemented and verified locally. The dependency-free generator writes a
 
 ## Progress
 
-T001 is complete in `18546a6`. T002 is implemented and verified locally; T003 is next after the T002 work-unit commit.
+T001 is complete in `18546a6`; T002 is complete in `1d8e96b`; T003 is implemented and verified locally. T004 is next after the T003 work-unit commit.
 
 ## Next step
 
-Commit T002, then document the Product Owner workflow and workbook download in README and Help.
+Commit T003, then run full structural, deterministic, documentation, and independent verification.
