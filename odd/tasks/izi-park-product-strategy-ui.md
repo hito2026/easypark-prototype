@@ -93,10 +93,10 @@ Status: complete in work-unit commit `d6a567b`; private sessions persist separat
 - [x] Update visible Help/README/SRS language for IZI PARK while retaining legacy repo/file URLs where required.
 - [x] Document the PDF provenance, simulation boundaries, functional coverage, remaining gaps, and manual checks.
 - [x] Run syntax, structural, ref, localStorage, secret, link, PDF/document, and independent read-only verification.
-- [ ] Run native review preflight if available.
+- [x] Run native review preflight if available.
 - [ ] Request final approval before push/publication and verify Pages only if approved.
 
-Status: documentation and filled SRS reconciliation are implemented; the filled PDF is deterministic at 116,876 bytes / 38 pages / SHA-256 `0311075a52266771bd00ce018bce8b1323143edc0b5b7cf897080b435103d134`. Independent read-only verification passed after resolving source-level duplicate `data-ref` ownership (49 global refs, 49 unique). Manual browser/mobile/keyboard/screen-reader/contrast/voice/live-timer/reduced-motion checks remain explicitly pending. Native review preflight and publication approval remain pending.
+Status: implementation and documentation are complete in work-unit commit `bca6a7f`. The filled PDF is deterministic at 116,876 bytes / 38 pages / SHA-256 `0311075a52266771bd00ce018bce8b1323143edc0b5b7cf897080b435103d134`. Independent read-only verification passed after resolving source-level duplicate `data-ref` ownership (49 global refs, 49 unique). Native review preflight returned `lens_context_budget_exceeded`; no lineage or review authority was created. The read-only fallback assessment was unavailable/schema-incompatible and required writer self-verification plus an independent verifier, both of which were completed. Manual browser/mobile/keyboard/screen-reader/contrast/voice/live-timer/reduced-motion checks remain explicitly pending. Publication approval remains pending.
 
 ## Acceptance criteria
 
@@ -116,4 +116,4 @@ T001 is complete in `41059a3`; T002 is complete in `7b8a550`; T003 is complete i
 
 ## Next step
 
-Commit the verified T005 implementation, run native review preflight, then request explicit approval before any push/publication.
+Record verification evidence, then request explicit approval before any push/publication.
