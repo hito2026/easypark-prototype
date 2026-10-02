@@ -94,10 +94,13 @@ Acceptance checks:
 
 - 2026-10-02: User selected one visible simplified sheet, hidden legacy tabs, combined ID/name, and ongoing Apps Script maintenance.
 - 2026-10-02: Implemented the 12-case projection, safe Apps Script migration/upsert, local service harness, and stakeholder documentation.
-- 2026-10-02: Local implementation and verification are complete. Commit, push, PR, merge, Pages publication, and the first live Google execution remain pending explicit authorization/human execution.
+- 2026-10-02: Local implementation and verification are complete.
+- 2026-10-02: The user authorized commit, push, and PR publication. Work-unit commit `adc19ed` was pushed and PR #7 was opened. Merge, Pages deployment, and the first live Google execution remain pending authorization/human execution.
 
 ## Evidence
 
+- Work-unit commit: `adc19ed` (`feat(workbook): simplify use-case sheet`).
+- Pull request: https://github.com/hito2026/easypark-prototype/pull/7
 - `python3 -m py_compile scripts/generate-google-sheet-sync.py`: passed.
 - Two independently rendered outputs compared byte-for-byte with `cmp`: passed.
 - Generated script SHA-256: `a2201cd12950c0648a75bb6f71432fda8ae4b3627808e05a1d24fce21b9f3460`.
