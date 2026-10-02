@@ -1,3 +1,6 @@
 # Generated PDFs and workbooks are deterministic binary artifacts; do not run text diff/merge rules.
 *.pdf binary
 *.xlsx binary
+
+# The downloadable Apps Script is deterministically derived from the reviewed SRS and generator.
+templates/izi-park-google-sheet-sync.gs linguist-generated=true
