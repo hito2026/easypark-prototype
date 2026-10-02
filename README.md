@@ -130,6 +130,23 @@ python3 scripts/generate-po-workbook.py --output templates/po-workbook-verify.xl
 
 Importación sugerida en Google Sheets: crear o abrir una hoja, usar Archivo → Importar → Subir, seleccionar `templates/izi-park-product-owner-workbook.xlsx` y revisar hojas, dropdowns, fórmulas y filtros antes de adoptarlo como insumo formal.
 
+### Sincronización del prototipo en Google Sheets
+
+- Apps Script generado: `templates/izi-park-google-sheet-sync.gs`
+- Generador desde el SRS: `scripts/generate-google-sheet-sync.py`
+- Harness local: `scripts/test-google-sheet-sync.mjs`
+- Dataset actual: 12 casos de uso, 24 flujos, 82 requerimientos/reglas y 118 relaciones.
+
+El script se instala manualmente desde Extensiones → Apps Script dentro de la hoja autorizada. Agrega el menú `IZI PARK`, ofrece una vista previa sin escritura y, tras confirmación humana, crea una copia completa con timestamp antes de sincronizar. Valida el ID exacto de la planilla y sus encabezados, usa un lock de documento y hace upsert por IDs estables sin borrar filas ajenas. Las filas administradas por el prototipo vuelven a los valores canónicos del SRS en cada sincronización.
+
+```bash
+python3 scripts/generate-google-sheet-sync.py
+node scripts/test-google-sheet-sync.mjs
+node --check < templates/izi-park-google-sheet-sync.gs
+```
+
+La autorización ocurre dentro de la sesión de Google de quien ejecuta el script. El repositorio no contiene ni solicita credenciales, OAuth tokens o API keys. La hoja colaborativa sigue siendo una superficie de trabajo: Git y el SRS revisado conservan autoridad.
+
 Generador determinístico: `scripts/generate-srs-pdf.py`. Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; cada PDF se deriva de su Markdown correspondiente. Estos recursos son guías originales de proyecto inspiradas en preocupaciones clásicas de SRS/IEEE 830, no son plantillas oficiales IEEE ni certifican conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
 
 ## Etiquetas de referencia
