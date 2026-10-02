@@ -66,10 +66,10 @@ Acceptance checks:
 
 ### T003 — Document installation and operation
 
-- [ ] Add Help guidance for installing the script through Extensions → Apps Script.
-- [ ] Explain preview, permissions, backup creation, synchronization, and recovery.
-- [ ] State that the user—not Pi—authorizes Google access and runs the mutation.
-- [ ] Preserve the XLSX fallback and Git/SRS authority boundary.
+- [x] Add Help guidance for installing the script through Extensions → Apps Script.
+- [x] Explain preview, permissions, backup creation, synchronization, and recovery.
+- [x] State that the user—not Pi—authorizes Google access and runs the mutation.
+- [x] Preserve the XLSX fallback and Git/SRS authority boundary.
 
 Acceptance checks:
 
@@ -80,7 +80,7 @@ Acceptance checks:
 ### T004 — Verify before publication
 
 - [x] Run syntax, dataset integrity, idempotency, wrong-target, duplicate-ID, missing-header, and backup-before-write tests with a local mock harness.
-- [ ] Run HTML/link/ref and repository hygiene checks.
+- [x] Run HTML/link/ref and repository hygiene checks.
 - [ ] Obtain independent read-only verification if the runtime supports the target repository.
 - [ ] Publish only after explicit user approval for commit, push, PR, merge, and Pages deployment.
 
@@ -98,6 +98,7 @@ Acceptance checks:
 - 2026-10-02: Official Apps Script documentation confirmed `Spreadsheet.copy(name)`, document-scoped locks, and range writes as supported primitives for backup and safe synchronization.
 - 2026-10-02: Generated a 12-case, 24-flow, 82-requirement/rule, 118-relationship dataset from the reviewed SRS. Proposed production requirements are excluded.
 - 2026-10-02: The feature contains 1,285 new artifact lines plus 22 net documentation lines, primarily the generator, generated Apps Script dataset, test harness, and ODD evidence. The user selected two chained review slices: generator/sync first, then Help/README guidance.
+- 2026-10-02: Core slice merged through PR #5. The documentation slice adds installation, authorization, preview, backup, sync, idempotency, preservation and recovery guidance.
 
 ## Evidence
 
@@ -107,6 +108,6 @@ Acceptance checks:
 - `node scripts/test-google-sheet-sync.mjs`: passed preview/no-write, wrong target, missing sheet, wrong header, duplicate existing ID, backup-before-write, preservation of unrelated rows, complete upsert, idempotent second sync, managed-row correction, cancellation, lock, flush, and release assertions.
 - Generator validation confirms every use case has flows and traceability, every imported requirement is linked, and all matrix references resolve.
 - Core secret scan and `git diff --check`: passed.
-- Help/README integration and HTML/link/ref checks belong to the second review slice.
+- Help HTML, stable download ref, local asset link, inline JavaScript, secret scan, and `git diff --check`: passed for the documentation slice.
 - Native subagent verification remains unavailable because the current Pi session is bound to a different Git clone; this limitation is explicit rather than inferred as a pass.
 - Live Google mutation remains a human-run check because this runtime has no authenticated Google session.
