@@ -59,7 +59,8 @@ Acceptance checks:
 - [x] Run Apps Script syntax and mock behavior checks.
 - [x] Run documentation/link, secret, and diff-hygiene checks.
 - [x] Attempt independent verification and native review, recording unavailable runtime support honestly.
-- [ ] Commit, push, PR, merge, and live execution require their corresponding explicit authorizations.
+- [x] Commit, push, and open a PR after explicit user authorization.
+- [ ] Merge and live execution require separate authorization/human execution.
 
 ## Testing configuration
 
@@ -76,6 +77,8 @@ Acceptance checks:
 
 ## Evidence
 
+- Work-unit commit: `04494be` (`feat(workbook): contextualize use-case flow references`).
+- Pull request: https://github.com/hito2026/easypark-prototype/pull/8
 - Test-first RED observed: the existing onboarding fallback failed the new requirement because it did not contain multiple contextualized elements.
 - `python3 -m py_compile scripts/generate-google-sheet-sync.py`: passed.
 - Independently generated output compared byte-for-byte with `cmp`: passed.
