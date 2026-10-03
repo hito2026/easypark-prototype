@@ -91,7 +91,8 @@ Acceptance checks:
 - [x] Run Python compile and deterministic generation checks.
 - [x] Run Apps Script syntax, mock service, HTML/link, security, and diff-hygiene checks.
 - [x] Attempt independent verification and native review, recording unavailable runtime support honestly.
-- [ ] Commit, push, PR, merge, Pages, and live sync require their corresponding explicit authorizations.
+- [x] Commit, push, and open the user-authorized cohesive PR.
+- [ ] Merge, Pages, and live sync require separate authorization/human execution.
 
 ## Testing configuration
 
@@ -107,6 +108,8 @@ Acceptance checks:
 
 ## Evidence
 
+- Work-unit commit: `8cb8cb2` (`feat(workbook): add requirements relationship sheets`).
+- Pull request: https://github.com/hito2026/easypark-prototype/pull/9
 - Test-first RED observed: the previous dataset exposed only `Casos de uso simplificado` instead of the required three sheets.
 - Generator output: 12 use cases, 82 implemented/current requirements or rules, and 118 normalized relationships.
 - Local harness covers the existing deployed-state migration: 12 unchanged cases plus creation of two sheets and 200 managed rows.
