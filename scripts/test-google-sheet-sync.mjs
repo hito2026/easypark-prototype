@@ -156,6 +156,28 @@ assert.deepEqual(Object.keys(api.IZI_SYNC_DATA), [simpleName]);
 assert.equal(spec.headers.length, 11);
 assert.equal(spec.rows.length, 12);
 assert.equal(new Set(spec.rows.map((row) => api.caseId_(row[0]))).size, 12);
+const documentationRefSource = String.raw`(?:[A-Z][A-Z0-9]*-){2,}[A-Z0-9]+`;
+const documentationRefPattern = new RegExp(String.raw`\b${documentationRefSource}\b`);
+const parenthesizedRefGroupSource = String.raw`\((?:${documentationRefSource})(?:,\s*(?:${documentationRefSource}))*\)`;
+const parenthesizedRefGroupAtEnd = new RegExp(`${parenthesizedRefGroupSource}$`);
+const parenthesizedRefGroupGlobal = new RegExp(parenthesizedRefGroupSource, "g");
+const storageKeyPattern = /\b(?:easypark|iziPark)[A-Za-z0-9]+\b/;
+spec.rows.forEach((row) => {
+  [
+    ["main", row[5]],
+    ["alternative", row[6]],
+  ].forEach(([flowKind, flow]) => {
+    assert.ok(flow.trim(), `${row[0]} must have a ${flowKind} flow`);
+    const elements = flow.split(";").map((element) => element.trim()).filter(Boolean);
+    assert.ok(elements.length >= 2, `${row[0]} ${flowKind} flow must describe multiple elements`);
+    elements.forEach((element) => {
+      assert.match(element, parenthesizedRefGroupAtEnd, `${row[0]} ${flowKind} element needs contextual refs: ${element}`);
+    });
+    const proseOnly = flow.replace(parenthesizedRefGroupGlobal, "");
+    assert.equal(documentationRefPattern.test(proseOnly), false, `${row[0]} ${flowKind} flow contains an uncontextualized ref`);
+    assert.equal(storageKeyPattern.test(flow), false, `${row[0]} ${flowKind} flow contains a storage key`);
+  });
+});
 
 const preview = api.previewPrototypeWorkbookSync();
 assert.equal(preview.createSheet, true);

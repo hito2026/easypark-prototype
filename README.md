@@ -102,7 +102,7 @@ La planilla colaborativa usa una única pestaña visible: `Casos de uso simplifi
 10. `Actores principales`
 11. `Estado`
 
-El ID estable y el nombre se combinan como `UC-… — Nombre`. La columna `Requerimientos` resume la trazabilidad con IDs funcionales, reglas de negocio y requisitos no funcionales. Las pestañas históricas `Casos de uso`, `Flujos`, `Requerimientos` y `Matriz` se ocultan, pero nunca se eliminan. El XLSX detallado (`templates/izi-park-product-owner-workbook.xlsx`) permanece como referencia reproducible.
+El ID estable y el nombre se combinan como `UC-… — Nombre`. Los flujos describen cada acción o componente con palabras reconocibles y colocan sus tags inmediatamente después entre paréntesis, por ejemplo `revisa el detalle de la cochera (DRV-DETAIL-01)`; nunca presentan referencias sueltas sin contexto. La columna `Requerimientos` resume la trazabilidad con IDs funcionales, reglas de negocio y requisitos no funcionales. Las pestañas históricas `Casos de uso`, `Flujos`, `Requerimientos` y `Matriz` se ocultan, pero nunca se eliminan. El XLSX detallado (`templates/izi-park-product-owner-workbook.xlsx`) permanece como referencia reproducible.
 
 ### Sincronización simplificada en Google Sheets
 
