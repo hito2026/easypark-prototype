@@ -80,6 +80,116 @@ NFR_CASES = {
     "NFR-IZI-REF-001": ["UC-DOC-001"],
 }
 
+FLOW_DESCRIPTIONS = {
+    "UC-ONB-001": (
+        "Abre la bienvenida del alta guiada (ONB-WELCOME-01); elige su rol (ONB-ROLE-01); "
+        "valida el código de demostración (ONB-VERIFY-01); completa el perfil (ONB-PROFILE-01); "
+        "configura sus datos de uso y preferencias (ONB-SETUP-01, ONB-PREFS-01); "
+        "llega a la confirmación y al inicio correspondiente (ONB-DONE-01)",
+        "Si el código de demostración es incorrecto, el avance se bloquea (ONB-VERIFY-01); "
+        "si elige el rol de anfitrión o proveedor, continúa hacia el formulario para ofrecer una cochera "
+        "(ONB-ROLE-01, ONB-DONE-01)",
+    ),
+    "UC-ACC-001": (
+        "Abre Cuenta segura (ACCOUNT-HOME-01); revisa o completa el perfil (ACCOUNT-PROFILE-01); "
+        "configura un vehículo ficticio (ACCOUNT-VEHICLE-01); elige un pago de prueba (ACCOUNT-PAYMENT-01); "
+        "revisa el cobro ficticio (ACCOUNT-PAYOUT-01); completa datos comerciales de muestra "
+        "(ACCOUNT-BUSINESS-01); guarda sus preferencias (ACCOUNT-PREFS-01, ACCOUNT-SUMMARY-01)",
+        "El pago de prueba no solicita números completos de tarjeta ni credenciales (ACCOUNT-PAYMENT-01); "
+        "el cobro ficticio no solicita números completos de cuenta bancaria (ACCOUNT-PAYOUT-01); "
+        "los datos comerciales no solicitan identificación fiscal real ni secretos (ACCOUNT-BUSINESS-01)",
+    ),
+    "UC-DRV-001": (
+        "Elige la búsqueda de cochera privada (DRV-CHOICE-01); ingresa un destino y configura horario, "
+        "duración, vehículo y filtros (DRV-START-01, DRV-TIME-01); compara opciones en el mapa y las tarjetas "
+        "(DRV-RESULTS-01, DRV-MAP-SHEET-01); revisa el detalle de una cochera reservable (DRV-DETAIL-01); "
+        "elige una tarjeta de prueba (DRV-PAYMENT-01); confirma la operación simulada (DRV-CONFIRM-01); "
+        "consulta el recibo y el pase (DRV-RECEIPT-01, PARKING-PASS-01); revisa la sesión privada (DRV-SESSION-01)",
+        "Si el pago simulado falla, no se confirma la reserva (DRV-PAY-FAIL-01); si vence la reserva temporal, "
+        "debe volver a elegir una opción (DRV-HOLD-EXP-01); si los filtros no encuentran coincidencias, "
+        "la lista de resultados queda vacía (DRV-TIME-01, DRV-RESULTS-01)",
+    ),
+    "UC-DRV-002": (
+        "Compara opciones no reservables en los resultados (DRV-RESULTS-01); elige una tarjeta de parking "
+        "tradicional o guía de calle (DRV-RESULT-CARD-01); revisa distancia, precio orientativo, condiciones "
+        "y servicios en el detalle (DRV-DETAIL-01); intenta continuar y vuelve a los resultados sin checkout "
+        "(DRV-DETAIL-01, DRV-RESULTS-01)",
+        "Si llega desde Copilot, el asistente explica que la opción solo brinda orientación (AI-HANDOFF-01); "
+        "no se muestran pago, recibo, pase ni sesión privada (DRV-DETAIL-01, DRV-RESULTS-01)",
+    ),
+    "UC-URB-001": (
+        "Elige una zona urbana o parking común (DRV-ZONE-01); confirma un vehículo ficticio (DRV-VEHICLE-01); "
+        "selecciona una duración dentro del máximo (DRV-DURATION-01, DRV-LIMIT-01); inicia la sesión urbana "
+        "(SESSION-ACTIVE-01); extiende o termina la sesión (SESSION-EXTEND-01, SESSION-END-01)",
+        "Si la extensión supera el máximo permitido, queda bloqueada (DRV-LIMIT-01, SESSION-EXTEND-01); "
+        "si intenta terminar una sesión ya finalizada, el prototipo lo informa sin duplicar la actividad "
+        "(SESSION-END-01)",
+    ),
+    "UC-ACT-001": (
+        "Abre el resumen de Actividad (ACTIVITY-HOME-01); revisa la sesión actual y el historial "
+        "(ACTIVITY-HISTORY-01); abre el último recibo disponible (ACTIVITY-RECEIPT-01); solicita una descarga "
+        "simulada desde el detalle (ACTIVITY-RECEIPT-01)",
+        "Si todavía no hay actividad, el historial muestra un estado vacío (ACTIVITY-HISTORY-01); "
+        "si una entrada no tiene recibo, el detalle lo indica sin crear un comprobante real (ACTIVITY-RECEIPT-01)",
+    ),
+    "UC-AI-001": (
+        "Abre Copilot (AI-ENTRY-01); describe su plan por texto, sugerencias o voz opcional (AI-CHAT-01, AI-VOICE-01); "
+        "revisa el contexto y las preferencias detectadas (AI-CONTEXT-01, AI-REFINE-01); compara el itinerario "
+        "propuesto (AI-ITINERARY-01); evalúa estrategias explicadas (AI-STRATEGY-01, AI-EXPLAIN-01); "
+        "elige una opción para abrir su detalle (AI-HANDOFF-01)",
+        "Si la opción no es reservable, Copilot explica el límite y no cobra ni reserva (AI-EXPLAIN-01, AI-HANDOFF-01); "
+        "si el navegador no admite voz, mantiene disponible la entrada por texto (AI-VOICE-01, AI-CHAT-01)",
+    ),
+    "UC-PROV-001": (
+        "Completa una ubicación ficticia (PROV-LOCATION-01); describe la cochera y sus servicios "
+        "(PROV-SPACE-01, PROV-AMENITIES-01); define las reglas de acceso (PROV-ACCESS-01); configura la disponibilidad "
+        "(PROV-AVAIL-01); establece una tarifa ficticia (PROV-TARIFF-01); revisa el cobro simulado (PROV-PAYMENT-01); "
+        "revisa y guarda la publicación como publicada o pendiente (PROV-REVIEW-01)",
+        "Si faltan datos opcionales, el formulario aplica valores seguros de demostración (PROV-SPACE-01, PROV-AMENITIES-01); "
+        "los estados se presentan en español (PROV-REVIEW-01); el contenido ingresado se muestra como texto sin ejecutar código "
+        "(PROV-LOCATION-01, PROV-ACCESS-01)",
+    ),
+    "UC-OPS-001": (
+        "Abre el panel de operación y revisa sus conteos (OPS-HOME-01); consulta cocheras pendientes (OPS-PENDING-01); "
+        "revisa incidentes y puede clasificarlos o resolverlos (OPS-INCIDENTS-01, OPS-TRIAGE-01, OPS-RESOLUTION-01); "
+        "consulta liquidaciones simuladas (OPS-SETTLEMENTS-01)",
+        "Cuando no hay publicaciones o incidentes, las secciones muestran estados vacíos (OPS-PENDING-01, OPS-INCIDENTS-01); "
+        "las acciones actualizan solo la demostración local y no contactan soporte ni sistemas de pago reales "
+        "(OPS-RESOLUTION-01, OPS-SETTLEMENTS-01)",
+    ),
+    "UC-EXP-001": (
+        "Abre Express y revisa un sitio compatible ficticio (EXPRESS-HOME-01); acepta el consentimiento o elige el "
+        "ingreso manual (EXPRESS-CONSENT-01); registra la entrada simulada (EXPRESS-ENTRY-01); revisa la sesión "
+        "(EXPRESS-SESSION-01); registra la salida y guarda el recibo en Actividad (EXPRESS-EXIT-01)",
+        "Si no acepta el consentimiento, continúa por el ingreso manual simulado (EXPRESS-CONSENT-01, EXPRESS-ENTRY-01); "
+        "si guarda el recibo nuevamente, no duplica la actividad y no intervienen cámaras, barreras ni operadores reales "
+        "(EXPRESS-EXIT-01)",
+    ),
+    "UC-INC-001": (
+        "Abre la recuperación desde el menú, el pase o una sesión (INCIDENT-HOME-01); elige el tipo de incidente "
+        "(INCIDENT-TYPE-01); selecciona una alternativa de recuperación (INCIDENT-RECOVERY-01); guarda el reporte y "
+        "consulta el resultado (INCIDENT-RESULT-01); Operación puede clasificarlo o resolverlo después "
+        "(OPS-TRIAGE-01, OPS-RESOLUTION-01)",
+        "Un cargo incorrecto no genera un reembolso real (INCIDENT-RECOVERY-01); un problema de seguridad solo eleva "
+        "la severidad del reporte (INCIDENT-TYPE-01); repetir una acción no duplica efectos (INCIDENT-RESULT-01)",
+    ),
+    "UC-DOC-001": (
+        "Abre Ayuda y revisa el propósito del prototipo (HELP-HOME-01, HELP-PROJECT-01); consulta roles y recorridos "
+        "(HELP-ROLES-01, HELP-FLOWS-01); revisa límites de seguridad (HELP-SAFETY-01); usa el formato de feedback "
+        "(HELP-FEEDBACK-01); consulta los recursos y descargas del SRS (CREATOR-SRS-01, SRS-DOWNLOAD-MD-01, SRS-DOWNLOAD-PDF-01); "
+        "revisa las instrucciones de acceso a Buzz y los créditos multimedia (BUZZ-ACCESS-01, MEDIA-CREDITS-01)",
+        "Si necesita acceso a Buzz, comparte únicamente su clave pública por el canal acordado (BUZZ-ACCESS-01); "
+        "las claves privadas, contraseñas, códigos de recuperación, semillas y tokens nunca se solicitan (HELP-SAFETY-01, BUZZ-ACCESS-01)",
+    ),
+}
+
+REFERENCE_TAG_PATTERN_TEXT = r"(?:[A-Z][A-Z0-9]*-){2,}[A-Z0-9]+"
+DOCUMENTATION_REF_PATTERN = re.compile(rf"\b{REFERENCE_TAG_PATTERN_TEXT}\b")
+CONTEXTUAL_REF_GROUP_PATTERN = re.compile(
+    rf"\((?:{REFERENCE_TAG_PATTERN_TEXT})(?:,\s*(?:{REFERENCE_TAG_PATTERN_TEXT}))*\)$"
+)
+STORAGE_KEY_PATTERN = re.compile(r"\b(?:easypark|iziPark)[A-Za-z0-9]+\b")
+
 
 @dataclass(frozen=True)
 class UseCase:
@@ -226,14 +336,25 @@ def build_dataset(text: str) -> dict[str, dict[str, object]]:
     case_ids = [case.id for case in cases]
     rows: list[list[str]] = []
 
+    if set(FLOW_DESCRIPTIONS) != set(case_ids):
+        missing = sorted(set(case_ids) - set(FLOW_DESCRIPTIONS))
+        extra = sorted(set(FLOW_DESCRIPTIONS) - set(case_ids))
+        raise ValueError(f"flow description coverage mismatch: missing={missing}, extra={extra}")
+    known_reference_tags = set(DOCUMENTATION_REF_PATTERN.findall(text))
+    flow_reference_tags = {
+        tag
+        for flows in FLOW_DESCRIPTIONS.values()
+        for flow in flows
+        for tag in DOCUMENTATION_REF_PATTERN.findall(flow)
+    }
+    unknown_flow_tags = sorted(flow_reference_tags - known_reference_tags)
+    if unknown_flow_tags:
+        raise ValueError(f"flow descriptions use unknown SRS refs: {unknown_flow_tags}")
+
     for case in cases:
         refs = case.fields["Refs"]
         result = case.fields["Resultado observable"]
-        principal = case.fields.get(
-            "Flujo principal",
-            f"El actor recorre {case.name.lower()} mediante las referencias documentadas: {refs}.",
-        )
-        alternative = case.fields["Variantes o fallas"]
+        principal, alternative = FLOW_DESCRIPTIONS[case.id]
         req_ids = linked_requirement_ids(case.id, requirements, case_ids)
         rows.append([
             f"{case.id} — {case.name}",
@@ -258,6 +379,23 @@ def build_dataset(text: str) -> dict[str, dict[str, object]]:
     }
 
 
+def validate_flow_description(case_label: str, flow_kind: str, flow: str) -> None:
+    elements = [element.strip() for element in flow.split(";") if element.strip()]
+    if len(elements) < 2:
+        raise ValueError(f"{case_label} {flow_kind} flow must describe multiple elements")
+    for element in elements:
+        group = CONTEXTUAL_REF_GROUP_PATTERN.search(element)
+        if not group:
+            raise ValueError(f"{case_label} {flow_kind} element lacks contextual refs: {element}")
+        prose = element[:group.start()].strip()
+        if not prose:
+            raise ValueError(f"{case_label} {flow_kind} element lacks a component description")
+        if DOCUMENTATION_REF_PATTERN.search(prose):
+            raise ValueError(f"{case_label} {flow_kind} element has an uncontextualized ref: {element}")
+        if STORAGE_KEY_PATTERN.search(element):
+            raise ValueError(f"{case_label} {flow_kind} element exposes a storage key: {element}")
+
+
 def validate_dataset(dataset: dict[str, dict[str, object]]) -> None:
     if list(dataset) != [SIMPLE_SHEET_NAME]:
         raise ValueError("simplified sheet mismatch")
@@ -276,6 +414,8 @@ def validate_dataset(dataset: dict[str, dict[str, object]]) -> None:
         if not match:
             raise ValueError(f"invalid combined use-case label: {row[0]}")
         case_ids.append(match.group(1))
+        validate_flow_description(row[0], "main", row[5])
+        validate_flow_description(row[0], "alternative", row[6])
         if not row[8]:
             raise ValueError(f"use case without linked requirements: {row[0]}")
     if len(case_ids) != len(set(case_ids)):
