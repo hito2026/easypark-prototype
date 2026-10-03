@@ -86,34 +86,26 @@ Para regenerar el PDF completado con metadatos explícitos ejecutá:
 python3 scripts/generate-srs-pdf.py --source templates/easypark-srs-reference.md --output templates/easypark-srs-reference.pdf --title 'SRS IZI PARK / EasyPark - borrador completado de referencia' --subject 'Especificación de requisitos IZI PARK en elaboración'
 ```
 
-### Casos de uso para Product Owners
+### Planilla operativa para Product Owners
 
-La planilla colaborativa usa una única pestaña visible: `Casos de uso simplificado`. Contiene 12 casos del prototipo, una fila por caso y exactamente estas 11 columnas:
+La planilla colaborativa usa tres pestañas visibles y simples:
 
-1. `Nro y nombre de caso`
-2. `Objetivo`
-3. `Alcance`
-4. `Precondición`
-5. `Post condición`
-6. `Flujo principal`
-7. `Flujo alternativo`
-8. `Criterio de aceptación`
-9. `Requerimientos`
-10. `Actores principales`
-11. `Estado`
+1. `Casos de uso simplificado`: 12 casos, una fila por caso y 11 columnas de objetivo, alcance, condiciones, flujos, aceptación, requisitos, actores y estado. El ID y nombre se combinan como `UC-… — Nombre`; cada elemento de flujo usa el formato descriptivo `componente o acción (TAG)`.
+2. `Requerimientos simplificado`: 82 requisitos implementados/actuales, uno por fila, con `ID`, `Tipo`, `Requerimiento`, `Criterio de aceptación`, `Prioridad`, `Estado`, `Responsable` y `Notas`. No incluye requisitos propuestos.
+3. `Relaciones`: 118 vínculos, uno por fila, con `ID relación`, `ID requerimiento`, `Caso de uso (ID — Nombre)`, `Tipo de relación`, `Cobertura` y `Notas`.
 
-El ID estable y el nombre se combinan como `UC-… — Nombre`. Los flujos describen cada acción o componente con palabras reconocibles y colocan sus tags inmediatamente después entre paréntesis, por ejemplo `revisa el detalle de la cochera (DRV-DETAIL-01)`; nunca presentan referencias sueltas sin contexto. La columna `Requerimientos` resume la trazabilidad con IDs funcionales, reglas de negocio y requisitos no funcionales. Las pestañas históricas `Casos de uso`, `Flujos`, `Requerimientos` y `Matriz` se ocultan, pero nunca se eliminan. El XLSX detallado (`templates/izi-park-product-owner-workbook.xlsx`) permanece como referencia reproducible.
+La columna `Requerimientos` de cada caso resume sus IDs y `Relaciones` los normaliza para filtrar, revisar cobertura o construir una tabla dinámica. Las pestañas históricas `Casos de uso`, `Flujos`, `Requerimientos` y `Matriz` se mantienen ocultas, pero nunca se eliminan. El XLSX detallado (`templates/izi-park-product-owner-workbook.xlsx`) permanece como referencia reproducible.
 
 ### Sincronización simplificada en Google Sheets
 
 - Apps Script generado: `templates/izi-park-google-sheet-sync.gs`
 - Generador desde el SRS: `scripts/generate-google-sheet-sync.py`
 - Harness local: `scripts/test-google-sheet-sync.mjs`
-- Dataset actual: 12 casos de uso en 11 columnas.
+- Dataset actual: 12 casos, 82 requisitos actuales y 118 relaciones.
 
-Instalá el script desde Extensiones → Apps Script en la planilla autorizada. El menú `IZI PARK` ofrece `Preview simplified use cases`, que no escribe, y `Sync simplified use cases`. Tras confirmación, el script crea una copia completa con timestamp antes de crear la pestaña, modificar filas o cambiar visibilidad.
+Instalá el script desde Extensiones → Apps Script en la planilla autorizada. El menú `IZI PARK` ofrece `Preview simplified workbook`, que no escribe, y `Sync simplified workbook`. Tras confirmación, el script crea una copia completa con timestamp antes de crear hojas, modificar filas, aplicar encabezados o cambiar visibilidad.
 
-El sincronizador valida el ID exacto de la planilla y los encabezados, usa un lock de documento, actualiza por el ID anterior al guion largo, conserva filas ajenas y no borra pestañas. Los 12 casos administrados vuelven a los valores canónicos del SRS; una segunda ejecución sin cambios informa cero modificaciones.
+El sincronizador valida el ID exacto de la planilla y los encabezados, usa un lock de documento y hace upsert por los IDs estables de cada hoja. Conserva filas ajenas, muestra las tres hojas simplificadas, oculta las cuatro históricas y no elimina ninguna pestaña. Una segunda ejecución sin cambios informa cero modificaciones.
 
 ```bash
 python3 scripts/generate-google-sheet-sync.py
@@ -121,7 +113,7 @@ node scripts/test-google-sheet-sync.mjs
 node --check < templates/izi-park-google-sheet-sync.gs
 ```
 
-La autorización ocurre dentro de la sesión de Google de quien ejecuta el script. El repositorio no contiene ni solicita credenciales, OAuth tokens o API keys. No ingreses teléfonos, patentes, ubicaciones, pagos, credenciales, secretos ni datos personales reales. Git y el SRS revisado conservan autoridad; la hoja es una superficie colaborativa.
+La autorización ocurre dentro de la sesión de Google de quien ejecuta el script. El repositorio no contiene ni solicita credenciales, OAuth tokens o API keys. No ingreses teléfonos, patentes, ubicaciones, pagos, credenciales, secretos ni datos personales reales. Git y el SRS revisado conservan autoridad; la planilla es una superficie colaborativa.
 
 Generador determinístico: `scripts/generate-srs-pdf.py`. Requisito local: `reportlab` instalado para Python. El Markdown es la fuente de verdad; cada PDF se deriva de su Markdown correspondiente. Estos recursos son guías originales de proyecto inspiradas en preocupaciones clásicas de SRS/IEEE 830, no son plantillas oficiales IEEE ni certifican conformidad. La página oficial de IEEE 830-1998 indica que fue reemplazada por ISO/IEC/IEEE 29148:2011; verificá siempre la norma y edición vigentes.
 

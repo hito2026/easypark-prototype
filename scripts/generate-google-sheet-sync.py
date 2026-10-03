@@ -21,6 +21,9 @@ DEFAULT_OUTPUT = ROOT / "templates/izi-park-google-sheet-sync.gs"
 TARGET_SPREADSHEET_ID = "15ioouFFFV9f3EumAZQHTu8mIBm5XjpzX1zrvR-2QDio"
 
 SIMPLE_SHEET_NAME = "Casos de uso simplificado"
+REQUIREMENTS_SHEET_NAME = "Requerimientos simplificado"
+RELATIONSHIPS_SHEET_NAME = "Relaciones"
+SIMPLIFIED_SHEET_NAMES = [SIMPLE_SHEET_NAME, REQUIREMENTS_SHEET_NAME, RELATIONSHIPS_SHEET_NAME]
 LEGACY_SHEET_NAMES = ["Casos de uso", "Flujos", "Requerimientos", "Matriz"]
 HEADERS = {
     SIMPLE_SHEET_NAME: [
@@ -28,9 +31,15 @@ HEADERS = {
         "Flujo principal", "Flujo alternativo", "Criterio de aceptación", "Requerimientos",
         "Actores principales", "Estado",
     ],
+    REQUIREMENTS_SHEET_NAME: [
+        "ID", "Tipo", "Requerimiento", "Criterio de aceptación", "Prioridad", "Estado",
+        "Responsable", "Notas",
+    ],
+    RELATIONSHIPS_SHEET_NAME: [
+        "ID relación", "ID requerimiento", "Caso de uso (ID — Nombre)", "Tipo de relación",
+        "Cobertura", "Notas",
+    ],
 }
-
-PRIORITY = {"Alta": "Must", "Media": "Should", "Baja": "Could"}
 
 USE_CASE_REQUIREMENT_PREFIXES = {
     "UC-ONB-001": ("FR-ONB-",),
@@ -259,8 +268,8 @@ def parse_requirement_rows(text: str) -> list[dict[str, str]]:
             "title": title,
             "description": inline_text(requirement),
             "justification": "Mantener trazabilidad entre el prototipo observable y su especificación revisable.",
-            "priority": PRIORITY.get(priority, "Should"),
-            "status": "En revisión",
+            "priority": priority,
+            "status": status,
             "acceptance": inline_text(acceptance),
             "source": "SRS IZI PARK / EasyPark - prototipo implementado",
             "owner": "Producto",
@@ -287,8 +296,8 @@ def parse_requirement_rows(text: str) -> list[dict[str, str]]:
             "title": inline_text(rule).rstrip("."),
             "description": inline_text(rule),
             "justification": "Preservar una regla observada y documentada del prototipo.",
-            "priority": "Must" if rule_id in {"BR-FLOW-001", "BR-CHECKOUT-001", "BR-DATA-001", "BR-AI-001", "BR-IDEMP-001"} else "Should",
-            "status": "En revisión",
+            "priority": "Alta" if rule_id in {"BR-FLOW-001", "BR-CHECKOUT-001", "BR-DATA-001", "BR-AI-001", "BR-IDEMP-001"} else "Media",
+            "status": "Implementado en prototipo",
             "acceptance": inline_text(verification),
             "source": "SRS IZI PARK / EasyPark - regla implementada",
             "owner": "Producto",
@@ -334,7 +343,8 @@ def build_dataset(text: str) -> dict[str, dict[str, object]]:
     cases = parse_use_cases(text)
     requirements = parse_requirement_rows(text)
     case_ids = [case.id for case in cases]
-    rows: list[list[str]] = []
+    case_rows: list[list[str]] = []
+    relationship_rows: list[list[str]] = []
 
     if set(FLOW_DESCRIPTIONS) != set(case_ids):
         missing = sorted(set(case_ids) - set(FLOW_DESCRIPTIONS))
@@ -356,8 +366,9 @@ def build_dataset(text: str) -> dict[str, dict[str, object]]:
         result = case.fields["Resultado observable"]
         principal, alternative = FLOW_DESCRIPTIONS[case.id]
         req_ids = linked_requirement_ids(case.id, requirements, case_ids)
-        rows.append([
-            f"{case.id} — {case.name}",
+        case_label = f"{case.id} — {case.name}"
+        case_rows.append([
+            case_label,
             f"Validar {case.name.lower()} dentro de los límites locales y ficticios del prototipo.",
             "Incluye el comportamiento observable documentado y sus límites de simulación. "
             "Excluye integraciones, decisiones y efectos productivos reales.",
@@ -370,11 +381,37 @@ def build_dataset(text: str) -> dict[str, dict[str, object]]:
             case.actor,
             "Prototipo implementado",
         ])
+        for req_id in req_ids:
+            relationship_rows.append([
+                f"REL-{req_id}-{case.id}",
+                req_id,
+                case_label,
+                "Principal" if req_id.startswith("FR-") else "Transversal",
+                "Completa",
+                "Relación derivada del SRS implementado/actual; revisar si cambia el alcance.",
+            ])
+
+    requirement_rows = [
+        [
+            requirement["id"], requirement["type"], requirement["description"],
+            requirement["acceptance"], requirement["priority"], requirement["status"],
+            requirement["owner"], requirement["notes"],
+        ]
+        for requirement in requirements
+    ]
 
     return {
         SIMPLE_SHEET_NAME: {
             "headers": HEADERS[SIMPLE_SHEET_NAME],
-            "rows": rows,
+            "rows": case_rows,
+        },
+        REQUIREMENTS_SHEET_NAME: {
+            "headers": HEADERS[REQUIREMENTS_SHEET_NAME],
+            "rows": requirement_rows,
+        },
+        RELATIONSHIPS_SHEET_NAME: {
+            "headers": HEADERS[RELATIONSHIPS_SHEET_NAME],
+            "rows": relationship_rows,
         },
     }
 
@@ -397,39 +434,91 @@ def validate_flow_description(case_label: str, flow_kind: str, flow: str) -> Non
 
 
 def validate_dataset(dataset: dict[str, dict[str, object]]) -> None:
-    if list(dataset) != [SIMPLE_SHEET_NAME]:
-        raise ValueError("simplified sheet mismatch")
-    spec = dataset[SIMPLE_SHEET_NAME]
-    headers = spec["headers"]
-    rows = spec["rows"]
-    if headers != HEADERS[SIMPLE_SHEET_NAME]:
-        raise ValueError("simplified headers mismatch")
-    if not isinstance(rows, list) or len(rows) != 12:
+    if list(dataset) != SIMPLIFIED_SHEET_NAMES:
+        raise ValueError("simplified sheet order mismatch")
+    for sheet_name in SIMPLIFIED_SHEET_NAMES:
+        spec = dataset[sheet_name]
+        headers = spec["headers"]
+        rows = spec["rows"]
+        if headers != HEADERS[sheet_name]:
+            raise ValueError(f"simplified headers mismatch for {sheet_name}")
+        if not isinstance(rows, list) or not rows:
+            raise ValueError(f"empty simplified dataset for {sheet_name}")
+        if any(len(row) != len(headers) for row in rows):
+            raise ValueError(f"simplified row width mismatch for {sheet_name}")
+        ids = [str(row[0]).strip() for row in rows]
+        if any(not row_id for row_id in ids) or len(ids) != len(set(ids)):
+            raise ValueError(f"empty or duplicate managed IDs in {sheet_name}")
+
+    case_rows = dataset[SIMPLE_SHEET_NAME]["rows"]
+    requirement_rows = dataset[REQUIREMENTS_SHEET_NAME]["rows"]
+    relationship_rows = dataset[RELATIONSHIPS_SHEET_NAME]["rows"]
+    if len(case_rows) != 12:
         raise ValueError("expected exactly 12 simplified use cases")
-    if any(len(row) != len(headers) for row in rows):
-        raise ValueError("simplified row width mismatch")
-    case_ids = []
-    for row in rows:
+
+    case_ids: list[str] = []
+    case_labels: set[str] = set()
+    case_requirement_ids: dict[str, set[str]] = {}
+    for row in case_rows:
         match = re.match(r"^(UC-[A-Z]+-\d{3}) — .+", row[0])
         if not match:
             raise ValueError(f"invalid combined use-case label: {row[0]}")
-        case_ids.append(match.group(1))
+        case_id = match.group(1)
+        case_ids.append(case_id)
+        case_labels.add(row[0])
         validate_flow_description(row[0], "main", row[5])
         validate_flow_description(row[0], "alternative", row[6])
-        if not row[8]:
+        linked_ids = {value.strip() for value in row[8].split(",") if value.strip()}
+        if not linked_ids:
             raise ValueError(f"use case without linked requirements: {row[0]}")
+        case_requirement_ids[row[0]] = linked_ids
     if len(case_ids) != len(set(case_ids)):
         raise ValueError("duplicate simplified use-case IDs")
 
-    available_requirements = {row["id"] for row in parse_requirement_rows(SOURCE.read_text(encoding="utf-8"))}
-    for row in rows:
-        for req_id in [value.strip() for value in row[8].split(",") if value.strip()]:
-            if req_id not in available_requirements:
-                raise ValueError(f"unresolved requirement {req_id} in {row[0]}")
+    requirement_ids = {row[0] for row in requirement_rows}
+    expected_requirement_ids = {
+        row["id"] for row in parse_requirement_rows(SOURCE.read_text(encoding="utf-8"))
+    }
+    if requirement_ids != expected_requirement_ids:
+        missing = sorted(expected_requirement_ids - requirement_ids)
+        extra = sorted(requirement_ids - expected_requirement_ids)
+        raise ValueError(f"requirement projection mismatch: missing={missing}, extra={extra}")
+    for row in requirement_rows:
+        if row[1] not in {"RF", "RN", "RNF"}:
+            raise ValueError(f"invalid requirement type in {row[0]}")
+        if row[5] not in {"Implementado en prototipo", "Actual"}:
+            raise ValueError(f"non-current requirement included: {row[0]}")
+
+    linked_pairs: set[tuple[str, str]] = set()
+    linked_requirement_ids: set[str] = set()
+    linked_case_labels: set[str] = set()
+    for row in relationship_rows:
+        relation_id, requirement_id, case_label = row[:3]
+        if not relation_id.startswith("REL-"):
+            raise ValueError(f"invalid relationship ID: {relation_id}")
+        if requirement_id not in requirement_ids:
+            raise ValueError(f"unresolved relationship requirement: {relation_id}")
+        if case_label not in case_labels:
+            raise ValueError(f"unresolved relationship use case: {relation_id}")
+        pair = (requirement_id, case_label)
+        if pair in linked_pairs:
+            raise ValueError(f"duplicate requirement/use-case relationship: {relation_id}")
+        linked_pairs.add(pair)
+        linked_requirement_ids.add(requirement_id)
+        linked_case_labels.add(case_label)
+    if linked_requirement_ids != requirement_ids:
+        raise ValueError("a generated requirement has no use-case relationship")
+    if linked_case_labels != case_labels:
+        raise ValueError("a managed use case has no requirement relationship")
+    for case_label, linked_ids in case_requirement_ids.items():
+        if not linked_ids <= requirement_ids:
+            raise ValueError(f"use case has unresolved requirement IDs: {case_label}")
+        if any((requirement_id, case_label) not in linked_pairs for requirement_id in linked_ids):
+            raise ValueError(f"use-case requirement list and relationships diverge: {case_label}")
 
 
 APPS_SCRIPT_TEMPLATE = r'''/**
- * IZI PARK prototype → simplified Product Owner use-case sheet.
+ * IZI PARK prototype → simplified Product Owner workbook.
  * Generated from templates/easypark-srs-reference.md.
  * Install this file in the target Google Sheet through Extensions → Apps Script.
  * The human Google account running it owns every permission grant and mutation.
@@ -441,8 +530,8 @@ const IZI_SYNC_DATA = __DATA__;
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("IZI PARK")
-    .addItem("Preview simplified use cases", "previewPrototypeWorkbookSync")
-    .addItem("Sync simplified use cases", "syncPrototypeWorkbook")
+    .addItem("Preview simplified workbook", "previewPrototypeWorkbookSync")
+    .addItem("Sync simplified workbook", "syncPrototypeWorkbook")
     .addToUi();
 }
 
@@ -464,7 +553,7 @@ function syncPrototypeWorkbook() {
     return plan;
   }
   const answer = ui.alert(
-    "Confirm simplified use-case sync",
+    "Confirm simplified workbook sync",
     formatPlan_(plan, false) + "\n\nA full timestamped backup will be created before sheet, row, or visibility changes.",
     ui.ButtonSet.YES_NO,
   );
@@ -482,7 +571,7 @@ function syncPrototypeWorkbook() {
       ui.alert("IZI PARK sync", formatPlan_(plan, true), ui.ButtonSet.OK);
       return plan;
     }
-    const backupName = spreadsheet.getName() + " — backup before simplified IZI sync — " + new Date().toISOString();
+    const backupName = spreadsheet.getName() + " — backup before simplified workbook sync — " + new Date().toISOString();
     const backup = spreadsheet.copy(backupName);
     applySyncPlan_(spreadsheet, plan);
     SpreadsheetApp.flush();
@@ -504,98 +593,116 @@ function validateTarget_(spreadsheet) {
   IZI_SYNC_CONFIG.legacySheetNames.forEach(function(sheetName) {
     if (!spreadsheet.getSheetByName(sheetName)) throw new Error("Missing legacy sheet required for safe migration: " + sheetName);
   });
-  const simpleSheet = spreadsheet.getSheetByName(IZI_SYNC_CONFIG.simpleSheetName);
-  if (simpleSheet) validateSimpleHeaders_(simpleSheet);
+  IZI_SYNC_CONFIG.simplifiedSheetNames.forEach(function(sheetName) {
+    const sheet = spreadsheet.getSheetByName(sheetName);
+    if (sheet) validateSimplifiedHeaders_(sheetName, sheet);
+  });
 }
 
-function validateSimpleHeaders_(sheet) {
-  const expected = IZI_SYNC_DATA[IZI_SYNC_CONFIG.simpleSheetName].headers;
+function validateSimplifiedHeaders_(sheetName, sheet) {
+  const expected = IZI_SYNC_DATA[sheetName].headers;
   const actual = sheet.getRange(IZI_SYNC_CONFIG.headerRow, 1, 1, expected.length).getValues()[0];
   expected.forEach(function(header, index) {
     if (String(actual[index]).trim() !== header) {
-      throw new Error("Unexpected simplified header in column " + (index + 1) + ": expected " + header);
+      throw new Error("Unexpected header in " + sheetName + " column " + (index + 1) + ": expected " + header);
     }
   });
 }
 
 function buildSyncPlan_(spreadsheet) {
-  const spec = IZI_SYNC_DATA[IZI_SYNC_CONFIG.simpleSheetName];
-  const sheet = spreadsheet.getSheetByName(IZI_SYNC_CONFIG.simpleSheetName);
   const plan = {
-    createSheet: !sheet,
-    showSimpleSheet: Boolean(sheet && sheet.isSheetHidden()),
+    sheets: {},
     hideLegacySheets: IZI_SYNC_CONFIG.legacySheetNames.filter(function(sheetName) {
       return !spreadsheet.getSheetByName(sheetName).isSheetHidden();
     }),
-    changes: [],
-    unchanged: [],
     totalChanges: 0,
   };
 
-  if (!sheet) {
-    spec.rows.forEach(function(row, index) {
-      plan.changes.push({kind: "add", id: caseId_(row[0]), rowNumber: IZI_SYNC_CONFIG.dataStartRow + index, values: row});
-    });
-  } else {
-    validateSimpleHeaders_(sheet);
-    const available = sheet.getMaxRows() - IZI_SYNC_CONFIG.dataStartRow + 1;
-    const values = sheet.getRange(IZI_SYNC_CONFIG.dataStartRow, 1, available, spec.headers.length).getValues();
-    const rowById = {};
-    const emptyRows = [];
-    const managedIds = {};
-    spec.rows.forEach(function(row) { managedIds[caseId_(row[0])] = true; });
-    values.forEach(function(row, offset) {
-      const label = String(row[0]).trim();
-      const rowNumber = IZI_SYNC_CONFIG.dataStartRow + offset;
-      if (!label) {
-        emptyRows.push(rowNumber);
-        return;
-      }
-      const id = caseId_(label);
-      if (!id || !managedIds[id]) return; // Preserve every row outside the generated dataset.
-      if (rowById[id]) throw new Error("Duplicate managed use-case ID in simplified sheet: " + id);
-      rowById[id] = {rowNumber: rowNumber, values: row};
-    });
+  IZI_SYNC_CONFIG.simplifiedSheetNames.forEach(function(sheetName) {
+    const spec = IZI_SYNC_DATA[sheetName];
+    const sheet = spreadsheet.getSheetByName(sheetName);
+    const sheetPlan = {
+      createSheet: !sheet,
+      showSheet: Boolean(sheet && sheet.isSheetHidden()),
+      changes: [],
+      unchanged: [],
+    };
 
-    spec.rows.forEach(function(managedRow) {
-      const id = caseId_(managedRow[0]);
-      const existing = rowById[id];
-      if (existing) {
-        if (rowsEqual_(existing.values.slice(0, managedRow.length), managedRow)) {
-          plan.unchanged.push(id);
-        } else {
-          plan.changes.push({kind: "update", id: id, rowNumber: existing.rowNumber, values: managedRow});
+    if (!sheet) {
+      spec.rows.forEach(function(row, index) {
+        sheetPlan.changes.push({
+          kind: "add",
+          id: managedId_(sheetName, row[0]),
+          rowNumber: IZI_SYNC_CONFIG.dataStartRow + index,
+          values: row,
+        });
+      });
+    } else {
+      validateSimplifiedHeaders_(sheetName, sheet);
+      const available = sheet.getMaxRows() - IZI_SYNC_CONFIG.dataStartRow + 1;
+      const values = sheet.getRange(IZI_SYNC_CONFIG.dataStartRow, 1, available, spec.headers.length).getValues();
+      const rowById = {};
+      const emptyRows = [];
+      const managedIds = {};
+      spec.rows.forEach(function(row) { managedIds[managedId_(sheetName, row[0])] = true; });
+      values.forEach(function(row, offset) {
+        const firstCell = String(row[0]).trim();
+        const rowNumber = IZI_SYNC_CONFIG.dataStartRow + offset;
+        if (!firstCell) {
+          emptyRows.push(rowNumber);
+          return;
         }
-      } else {
-        const rowNumber = emptyRows.shift();
-        if (!rowNumber) throw new Error("No empty row remains in the simplified sheet. Add empty rows before syncing.");
-        plan.changes.push({kind: "add", id: id, rowNumber: rowNumber, values: managedRow});
-      }
-    });
-  }
+        const id = managedId_(sheetName, firstCell);
+        if (!id || !managedIds[id]) return; // Preserve every row outside the generated dataset.
+        if (rowById[id]) throw new Error("Duplicate managed ID in " + sheetName + ": " + id);
+        rowById[id] = {rowNumber: rowNumber, values: row};
+      });
 
-  plan.totalChanges = plan.changes.length + (plan.createSheet ? 1 : 0) +
-    (plan.showSimpleSheet ? 1 : 0) + plan.hideLegacySheets.length;
+      spec.rows.forEach(function(managedRow) {
+        const id = managedId_(sheetName, managedRow[0]);
+        const existing = rowById[id];
+        if (existing) {
+          if (rowsEqual_(existing.values.slice(0, managedRow.length), managedRow)) {
+            sheetPlan.unchanged.push(id);
+          } else {
+            sheetPlan.changes.push({kind: "update", id: id, rowNumber: existing.rowNumber, values: managedRow});
+          }
+        } else {
+          const rowNumber = emptyRows.shift();
+          if (!rowNumber) throw new Error("No empty row remains in " + sheetName + ". Add empty rows before syncing.");
+          sheetPlan.changes.push({kind: "add", id: id, rowNumber: rowNumber, values: managedRow});
+        }
+      });
+    }
+
+    plan.sheets[sheetName] = sheetPlan;
+    plan.totalChanges += sheetPlan.changes.length + (sheetPlan.createSheet ? 1 : 0) + (sheetPlan.showSheet ? 1 : 0);
+  });
+
+  plan.totalChanges += plan.hideLegacySheets.length;
   return plan;
 }
 
 function applySyncPlan_(spreadsheet, plan) {
-  const spec = IZI_SYNC_DATA[IZI_SYNC_CONFIG.simpleSheetName];
-  let sheet = spreadsheet.getSheetByName(IZI_SYNC_CONFIG.simpleSheetName);
-  if (plan.createSheet) {
-    sheet = spreadsheet.insertSheet(IZI_SYNC_CONFIG.simpleSheetName);
-    sheet.getRange(IZI_SYNC_CONFIG.headerRow, 1, 1, spec.headers.length)
-      .setValues([spec.headers])
-      .setFontWeight("bold")
-      .setBackground("#8a3f00")
-      .setFontColor("#ffffff");
-    sheet.setFrozenRows(1);
-    sheet.autoResizeColumns(1, spec.headers.length);
-  }
-  plan.changes.forEach(function(change) {
-    sheet.getRange(change.rowNumber, 1, 1, change.values.length).setValues([change.values]);
+  IZI_SYNC_CONFIG.simplifiedSheetNames.forEach(function(sheetName) {
+    const spec = IZI_SYNC_DATA[sheetName];
+    const sheetPlan = plan.sheets[sheetName];
+    let sheet = spreadsheet.getSheetByName(sheetName);
+    if (sheetPlan.createSheet) {
+      sheet = spreadsheet.insertSheet(sheetName);
+      sheet.getRange(IZI_SYNC_CONFIG.headerRow, 1, 1, spec.headers.length)
+        .setValues([spec.headers])
+        .setFontWeight("bold")
+        .setBackground("#8a3f00")
+        .setFontColor("#ffffff");
+      sheet.setFrozenRows(1);
+      sheet.autoResizeColumns(1, spec.headers.length);
+    }
+    sheetPlan.changes.forEach(function(change) {
+      sheet.getRange(change.rowNumber, 1, 1, change.values.length).setValues([change.values]);
+    });
+    if (sheetPlan.showSheet || sheetPlan.createSheet) sheet.showSheet();
   });
-  if (plan.showSimpleSheet || plan.createSheet) sheet.showSheet();
   plan.hideLegacySheets.forEach(function(sheetName) {
     spreadsheet.getSheetByName(sheetName).hideSheet();
   });
@@ -606,6 +713,11 @@ function caseId_(label) {
   return match ? match[1] : "";
 }
 
+function managedId_(sheetName, value) {
+  if (sheetName === IZI_SYNC_CONFIG.simplifiedSheetNames[0]) return caseId_(value);
+  return String(value || "").trim();
+}
+
 function rowsEqual_(left, right) {
   if (left.length !== right.length) return false;
   return left.every(function(value, index) {
@@ -614,12 +726,15 @@ function rowsEqual_(left, right) {
 }
 
 function formatPlan_(plan, completed) {
-  const adds = plan.changes.filter(function(change) { return change.kind === "add"; }).length;
-  const updates = plan.changes.filter(function(change) { return change.kind === "update"; }).length;
   const lines = [completed ? "Sync result:" : "Proposed changes:"];
-  lines.push(IZI_SYNC_CONFIG.simpleSheetName + ": " + adds + " add, " + updates + " update, " + plan.unchanged.length + " unchanged");
-  lines.push("Create simplified sheet: " + (plan.createSheet ? "yes" : "no"));
-  lines.push("Show simplified sheet: " + (plan.showSimpleSheet ? "yes" : "no"));
+  IZI_SYNC_CONFIG.simplifiedSheetNames.forEach(function(sheetName) {
+    const sheetPlan = plan.sheets[sheetName];
+    const adds = sheetPlan.changes.filter(function(change) { return change.kind === "add"; }).length;
+    const updates = sheetPlan.changes.filter(function(change) { return change.kind === "update"; }).length;
+    lines.push(sheetName + ": " + adds + " add, " + updates + " update, " + sheetPlan.unchanged.length +
+      " unchanged; create " + (sheetPlan.createSheet ? "yes" : "no") +
+      "; show " + (sheetPlan.showSheet ? "yes" : "no"));
+  });
   lines.push("Hide legacy sheets: " + (plan.hideLegacySheets.length ? plan.hideLegacySheets.join(", ") : "none"));
   lines.push("Total changes: " + plan.totalChanges);
   return lines.join("\n");
@@ -646,7 +761,7 @@ def render_dataset_js(dataset: dict[str, dict[str, object]]) -> str:
 def render(dataset: dict[str, dict[str, object]]) -> str:
     config = {
         "spreadsheetId": TARGET_SPREADSHEET_ID,
-        "simpleSheetName": SIMPLE_SHEET_NAME,
+        "simplifiedSheetNames": SIMPLIFIED_SHEET_NAMES,
         "legacySheetNames": LEGACY_SHEET_NAMES,
         "headerRow": 1,
         "dataStartRow": 2,
